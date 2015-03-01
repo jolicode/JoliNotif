@@ -23,3 +23,6 @@ deps.lock
 
 # Composer
 composer.phar
+
+# Box
+build

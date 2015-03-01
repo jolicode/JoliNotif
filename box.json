@@ -1,0 +1,26 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "example",
+        "src"
+    ],
+    "files": [
+        "LICENSE",
+        "vendor/autoload.php"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "in": "vendor/composer"
+        },
+        {
+            "name": "*.php",
+            "exclude": ["Tests"],
+            "in": "vendor/symfony/process"
+        }
+    ],
+    "git-version": "package_version",
+    "main": "example/index.php",
+    "output": "build/jolinotif.phar",
+    "stub": true
+}
