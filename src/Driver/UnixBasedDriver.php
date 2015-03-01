@@ -20,7 +20,7 @@ abstract class UnixBasedDriver extends CliBasedDriver
      */
     public function isSupported()
     {
-        if (DIRECTORY_SEPARATOR !== '/') {
+        if ('/' !== DIRECTORY_SEPARATOR) {
             return false;
         }
 
