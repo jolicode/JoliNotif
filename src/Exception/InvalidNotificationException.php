@@ -16,7 +16,7 @@ use JoliNotif\Notification;
 class InvalidNotificationException extends \LogicException implements Exception
 {
     /**
-     * @var \JoliNotif\Notification
+     * @var Notification
      */
     private $notification;
 

@@ -19,7 +19,7 @@ use JoliNotif\Notification;
 trait CliBasedDriverTestTrait
 {
     /**
-     * @param \JoliNotif\Notification $notification
+     * @param Notification $notification
      *
      * @dataProvider provideValidNotifications
      */

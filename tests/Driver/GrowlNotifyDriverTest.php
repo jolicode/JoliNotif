@@ -42,7 +42,7 @@ class GrowlNotifyDriverTest extends DriverTestCase
     }
 
     /**
-     * @param \JoliNotif\Notification $notification
+     * @param Notification $notification
      * @param array        $expectedArguments
      *
      * @dataProvider provideNotifications
