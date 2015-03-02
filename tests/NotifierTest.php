@@ -197,7 +197,7 @@ PHAR_STUB;
             str_replace(
                 [
                     '__DIR__',
-                    'YOUR_ICON'
+                    'YOUR_ICON',
                 ],
                 [
                     '\'phar://'.$pharPath.'\'',

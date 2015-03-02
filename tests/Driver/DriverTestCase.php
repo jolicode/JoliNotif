@@ -12,7 +12,6 @@
 namespace JoliNotif\tests\Driver;
 
 use JoliNotif\Driver\Driver;
-use JoliNotif\Notification;
 
 abstract class DriverTestCase extends \PHPUnit_Framework_TestCase
 {

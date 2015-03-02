@@ -24,19 +24,16 @@ abstract class UnixBasedDriver extends CliBasedDriver
             return false;
         }
 
-        $bin = $this->getBinary();
-
         // Do not use the which programm to check if a binary exists.
         // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
         $builder = new ProcessBuilder([
             'command',
             '-v',
-            $bin,
+            $this->getBinary(),
             '>/dev/null',
             '2>&1',
         ]);
         $process = $builder->getProcess();
-
         $process->run();
 
         return $process->isSuccessful();

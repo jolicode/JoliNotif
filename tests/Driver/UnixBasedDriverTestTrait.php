@@ -18,13 +18,13 @@ trait UnixBasedDriverTestTrait
 {
     public function testIsSupported()
     {
-        $supported = DIRECTORY_SEPARATOR === '/';
+        $supported = '/' === DIRECTORY_SEPARATOR;
 
         if ($supported) {
-            $commandLine = 'command -v '.static::BINARY.' >/dev/null 2>&1 ';
+            $commandLine = 'command -v '.static::BINARY.' >/dev/null 2>&1';
             passthru($commandLine, $return);
 
-            $supported = $return === 0;
+            $supported = 0 === $return;
         }
 
         $this->assertSame($supported, $this->getDriver()->isSupported());

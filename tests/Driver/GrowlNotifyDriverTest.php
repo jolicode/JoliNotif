@@ -53,7 +53,7 @@ class GrowlNotifyDriverTest extends DriverTestCase
             $arguments = $this->invokeMethod($this->getDriver(), 'getProcessArguments', [$notification]);
             $this->assertInternalType('array', $arguments);
             $this->assertEquals($expectedArguments, $arguments);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
     }
@@ -69,7 +69,7 @@ class GrowlNotifyDriverTest extends DriverTestCase
                     ->setBody('The notification body'),
                 [
                     self::BINARY,
-                    '--message', 'The notification body'
+                    '--message', 'The notification body',
                 ],
             ],
             [
@@ -79,7 +79,7 @@ class GrowlNotifyDriverTest extends DriverTestCase
                 [
                     self::BINARY,
                     '--message', 'The notification body',
-                    '--title', 'The notification title'
+                    '--title', 'The notification title',
                 ],
             ],
             [
@@ -89,7 +89,7 @@ class GrowlNotifyDriverTest extends DriverTestCase
                 [
                     self::BINARY,
                     '--message', 'The notification body',
-                    '--image', '/home/toto/Images/my-icon.png'
+                    '--image', '/home/toto/Images/my-icon.png',
                 ],
             ],
             [
@@ -101,7 +101,7 @@ class GrowlNotifyDriverTest extends DriverTestCase
                     self::BINARY,
                     '--message', 'The notification body',
                     '--title', 'The notification title',
-                    '--image', '/home/toto/Images/my-icon.png'
+                    '--image', '/home/toto/Images/my-icon.png',
                 ],
             ],
         ];

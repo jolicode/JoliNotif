@@ -27,7 +27,7 @@ Run the tests using the following script:
 Use [PHP CS fixer](http://cs.sensiolabs.org/) to make your code compliant with
 JoliNotif's coding standards:
 
-    vendor/bin/php-cs-fixer fix --config=sf23 .
+    vendor/bin/php-cs-fixer fix .
 
 ## Keeping your fork up-to-date
 

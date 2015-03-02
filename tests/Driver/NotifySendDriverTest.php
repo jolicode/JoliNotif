@@ -53,7 +53,7 @@ class NotifySendDriverTest extends DriverTestCase
             $arguments = $this->invokeMethod($this->getDriver(), 'getProcessArguments', [$notification]);
             $this->assertInternalType('array', $arguments);
             $this->assertEquals($expectedArguments, $arguments);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
     }
@@ -101,7 +101,7 @@ class NotifySendDriverTest extends DriverTestCase
                     self::BINARY,
                     '--icon', '/home/toto/Images/my-icon.png',
                     'The notification title',
-                    'The notification body'
+                    'The notification body',
                 ],
             ],
         ];

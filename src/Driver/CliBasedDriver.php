@@ -41,7 +41,6 @@ abstract class CliBasedDriver implements Driver
 
         $builder = new ProcessBuilder($arguments);
         $process = $builder->getProcess();
-
         $process->run();
 
         return $process->isSuccessful();

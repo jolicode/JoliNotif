@@ -50,8 +50,7 @@ class GrowlNotifyDriver extends UnixBasedDriver
             $arguments[] = $notification->getTitle();
         }
 
-        // Require 10.9+
-        if (0 < strlen($notification->getIcon())) {
+        if ($notification->getIcon()) {
             $arguments[] = '--image';
             $arguments[] = $notification->getIcon();
         }

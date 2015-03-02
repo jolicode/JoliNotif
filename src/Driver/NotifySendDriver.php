@@ -44,7 +44,7 @@ class NotifySendDriver extends UnixBasedDriver
             $this->getBinary(),
         ];
 
-        if (0 < strlen($notification->getIcon())) {
+        if ($notification->getIcon()) {
             $arguments[] = '--icon';
             $arguments[] = $notification->getIcon();
         }

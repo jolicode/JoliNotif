@@ -29,7 +29,7 @@ trait CliBasedDriverTestTrait
             $arguments = $this->invokeMethod($this->getDriver(), 'getProcessArguments', [$notification]);
             $this->assertInternalType('array', $arguments);
             $this->assertGreaterThan(1, count($arguments));
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
     }
@@ -40,18 +40,26 @@ trait CliBasedDriverTestTrait
     public static function provideValidNotifications()
     {
         return [
-            [(new Notification())
-                ->setBody('The notification body')],
-            [(new Notification())
-                ->setBody('The notification body')
-                ->setTitle('The notification title')],
-            [(new Notification())
-                ->setBody('The notification body')
-                ->setIcon('example/notification-icon.png')],
-            [(new Notification())
-                ->setBody('The notification body')
-                ->setTitle('The notification title')
-                ->setIcon('example/notification-icon.png')],
+            [
+                (new Notification())
+                    ->setBody('The notification body'),
+            ],
+            [
+                (new Notification())
+                    ->setBody('The notification body')
+                    ->setTitle('The notification title'),
+            ],
+            [
+                (new Notification())
+                    ->setBody('The notification body')
+                    ->setIcon('example/notification-icon.png'),
+            ],
+            [
+                (new Notification())
+                    ->setBody('The notification body')
+                    ->setTitle('The notification title')
+                    ->setIcon('example/notification-icon.png'),
+            ],
         ];
     }
 }

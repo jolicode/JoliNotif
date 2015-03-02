@@ -51,7 +51,7 @@ class TerminalNotifierDriver extends UnixBasedDriver
         }
 
         // Require 10.9+
-        if (0 < strlen($notification->getIcon())) {
+        if ($notification->getIcon()) {
             $arguments[] = '-contentImage';
             $arguments[] = $notification->getIcon();
         }

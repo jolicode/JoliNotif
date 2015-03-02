@@ -54,7 +54,7 @@ class Notifier
      */
     public function send(Notification $notification)
     {
-        if (strlen($notification->getBody()) < 1) {
+        if (!$notification->getBody()) {
             throw new InvalidNotificationException($notification, 'Notification body can not be empty');
         }
 

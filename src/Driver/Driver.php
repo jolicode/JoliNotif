@@ -36,7 +36,7 @@ interface Driver
     /**
      * Send a the given notification.
      *
-     * @param \JoliNotif\Notification $notification
+     * @param Notification $notification
      *
      * @return bool
      */
