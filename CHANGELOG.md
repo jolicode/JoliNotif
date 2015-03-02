@@ -7,3 +7,4 @@
 * added TerminalNotifierDriver (can be used on Mac OS X 10.8 and higher)
 * added GrowlNotifyDriver (can be used on Mac OS if growlnotify is available)
 * added icon extract when provided from a phar archive
+* added AppleScriptDriver (can be used on Mac OS X 10.9 and higher)
