@@ -61,7 +61,7 @@ class TerminalNotifierDriverTest extends DriverTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-contentImage' '/home/toto/Images/my-icon.png'";
+        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-appIcon' '/home/toto/Images/my-icon.png'";
     }
 
     /**
@@ -69,6 +69,6 @@ class TerminalNotifierDriverTest extends DriverTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-contentImage' '/home/toto/Images/my-icon.png'";
+        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'";
     }
 }

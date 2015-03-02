@@ -50,7 +50,7 @@ class TerminalNotifierDriver extends UnixBasedDriver
 
         // Require Mac OS X 10.9+
         if ($notification->getIcon()) {
-            $processBuilder->add('-contentImage');
+            $processBuilder->add('-appIcon');
             $processBuilder->add($notification->getIcon());
         }
     }
