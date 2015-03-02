@@ -13,7 +13,6 @@ namespace JoliNotif\tests\Driver;
 
 use JoliNotif\Driver\Driver;
 use JoliNotif\Driver\GrowlNotifyDriver;
-use JoliNotif\Notification;
 
 class GrowlNotifyDriverTest extends DriverTestCase
 {
@@ -42,68 +41,34 @@ class GrowlNotifyDriverTest extends DriverTestCase
     }
 
     /**
-     * @param Notification $notification
-     * @param array        $expectedArguments
-     *
-     * @dataProvider provideNotifications
+     * {@inheritdoc}
      */
-    public function testGetProcessArguments(Notification $notification, array $expectedArguments)
+    protected function getExpectedCommandLineForNotification()
     {
-        try {
-            $arguments = $this->invokeMethod($this->getDriver(), 'getProcessArguments', [$notification]);
-            $this->assertInternalType('array', $arguments);
-            $this->assertEquals($expectedArguments, $arguments);
-        } catch (\Exception $e) {
-            $this->fail($e->getMessage());
-        }
+        return "'growlnotify' '--message' 'I'\\''m the notification body'";
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function provideNotifications()
+    protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return [
-            [
-                (new Notification())
-                    ->setBody('The notification body'),
-                [
-                    self::BINARY,
-                    '--message', 'The notification body',
-                ],
-            ],
-            [
-                (new Notification())
-                    ->setBody('The notification body')
-                    ->setTitle('The notification title'),
-                [
-                    self::BINARY,
-                    '--message', 'The notification body',
-                    '--title', 'The notification title',
-                ],
-            ],
-            [
-                (new Notification())
-                    ->setBody('The notification body')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
-                [
-                    self::BINARY,
-                    '--message', 'The notification body',
-                    '--image', '/home/toto/Images/my-icon.png',
-                ],
-            ],
-            [
-                (new Notification())
-                    ->setBody('The notification body')
-                    ->setTitle('The notification title')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
-                [
-                    self::BINARY,
-                    '--message', 'The notification body',
-                    '--title', 'The notification title',
-                    '--image', '/home/toto/Images/my-icon.png',
-                ],
-            ],
-        ];
+        return "'growlnotify' '--message' 'I'\\''m the notification body' '--title' 'I'\\''m the notification title'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithAnIcon()
+    {
+        return "'growlnotify' '--message' 'I'\\''m the notification body' '--image' '/home/toto/Images/my-icon.png'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithAllOptions()
+    {
+        return "'growlnotify' '--message' 'I'\\''m the notification body' '--title' 'I'\\''m the notification title' '--image' '/home/toto/Images/my-icon.png'";
     }
 }

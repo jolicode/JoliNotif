@@ -17,13 +17,12 @@ use Symfony\Component\Process\ProcessBuilder;
 abstract class CliBasedDriver implements Driver
 {
     /**
-     * Get the arguments that will be passed to the process in order to send the notification.
+     * Configure the process to run in order to send the notification.
      *
-     * @param Notification $notification
-     *
-     * @return array
+     * @param ProcessBuilder $processBuilder
+     * @param Notification   $notification
      */
-    abstract protected function getProcessArguments(Notification $notification);
+    abstract protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification);
 
     /**
      * Get the binary to check existence.
@@ -37,9 +36,11 @@ abstract class CliBasedDriver implements Driver
      */
     public function send(Notification $notification)
     {
-        $arguments = $this->getProcessArguments($notification);
+        $builder = new ProcessBuilder();
+        $builder->setPrefix($this->getBinary());
 
-        $builder = new ProcessBuilder($arguments);
+        $this->configureProcess($builder, $notification);
+
         $process = $builder->getProcess();
         $process->run();
 

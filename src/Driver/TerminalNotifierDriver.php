@@ -12,6 +12,7 @@
 namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This driver can be used on Mac OS X 10.8, or higher, using the terminal-notifier binary.
@@ -37,25 +38,20 @@ class TerminalNotifierDriver extends UnixBasedDriver
     /**
      * {@inheritdoc}
      */
-    protected function getProcessArguments(Notification $notification)
+    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
     {
-        $arguments = [
-            $this->getBinary(),
-            '-message',
-            $notification->getBody(),
-        ];
+        $processBuilder->add('-message');
+        $processBuilder->add($notification->getBody());
 
         if ($notification->getTitle()) {
-            $arguments[] = '-title';
-            $arguments[] = $notification->getTitle();
+            $processBuilder->add('-title');
+            $processBuilder->add($notification->getTitle());
         }
 
-        // Require 10.9+
+        // Require Mac OS X 10.9+
         if ($notification->getIcon()) {
-            $arguments[] = '-contentImage';
-            $arguments[] = $notification->getIcon();
+            $processBuilder->add('-contentImage');
+            $processBuilder->add($notification->getIcon());
         }
-
-        return $arguments;
     }
 }

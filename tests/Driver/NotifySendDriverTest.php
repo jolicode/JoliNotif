@@ -13,7 +13,6 @@ namespace JoliNotif\tests\Driver;
 
 use JoliNotif\Driver\Driver;
 use JoliNotif\Driver\NotifySendDriver;
-use JoliNotif\Notification;
 
 class NotifySendDriverTest extends DriverTestCase
 {
@@ -42,68 +41,34 @@ class NotifySendDriverTest extends DriverTestCase
     }
 
     /**
-     * @param Notification $notification
-     * @param array        $expectedArguments
-     *
-     * @dataProvider provideNotifications
+     * {@inheritdoc}
      */
-    public function testGetProcessArguments(Notification $notification, array $expectedArguments)
+    protected function getExpectedCommandLineForNotification()
     {
-        try {
-            $arguments = $this->invokeMethod($this->getDriver(), 'getProcessArguments', [$notification]);
-            $this->assertInternalType('array', $arguments);
-            $this->assertEquals($expectedArguments, $arguments);
-        } catch (\Exception $e) {
-            $this->fail($e->getMessage());
-        }
+        return "'notify-send' 'I'\\''m the notification body'";
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function provideNotifications()
+    protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return [
-            [
-                (new Notification())
-                    ->setBody('The notification body'),
-                [
-                    self::BINARY,
-                    'The notification body',
-                ],
-            ],
-            [
-                (new Notification())
-                    ->setBody('The notification body')
-                    ->setTitle('The notification title'),
-                [
-                    self::BINARY,
-                    'The notification title',
-                    'The notification body',
-                ],
-            ],
-            [
-                (new Notification())
-                    ->setBody('The notification body')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
-                [
-                    self::BINARY,
-                    '--icon', '/home/toto/Images/my-icon.png',
-                    'The notification body',
-                ],
-            ],
-            [
-                (new Notification())
-                    ->setBody('The notification body')
-                    ->setTitle('The notification title')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
-                [
-                    self::BINARY,
-                    '--icon', '/home/toto/Images/my-icon.png',
-                    'The notification title',
-                    'The notification body',
-                ],
-            ],
-        ];
+        return "'notify-send' 'I'\\''m the notification title' 'I'\\''m the notification body'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithAnIcon()
+    {
+        return "'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\\''m the notification body'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithAllOptions()
+    {
+        return "'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\\''m the notification title' 'I'\\''m the notification body'";
     }
 }

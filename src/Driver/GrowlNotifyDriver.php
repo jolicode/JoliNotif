@@ -12,6 +12,7 @@
 namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This driver can be used on Mac OS X when growlnotify command is available.
@@ -37,24 +38,19 @@ class GrowlNotifyDriver extends UnixBasedDriver
     /**
      * {@inheritdoc}
      */
-    protected function getProcessArguments(Notification $notification)
+    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
     {
-        $arguments = [
-            $this->getBinary(),
-            '--message',
-            $notification->getBody(),
-        ];
+        $processBuilder->add('--message');
+        $processBuilder->add($notification->getBody());
 
         if ($notification->getTitle()) {
-            $arguments[] = '--title';
-            $arguments[] = $notification->getTitle();
+            $processBuilder->add('--title');
+            $processBuilder->add($notification->getTitle());
         }
 
         if ($notification->getIcon()) {
-            $arguments[] = '--image';
-            $arguments[] = $notification->getIcon();
+            $processBuilder->add('--image');
+            $processBuilder->add($notification->getIcon());
         }
-
-        return $arguments;
     }
 }

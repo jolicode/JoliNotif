@@ -12,53 +12,81 @@
 namespace JoliNotif\tests\Driver;
 
 use JoliNotif\Notification;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The class using this trait should extend DriverTestCase.
+ * The class using this trait should define a BINARY constant and extend DriverTestCase.
  */
 trait CliBasedDriverTestTrait
 {
     /**
      * @param Notification $notification
+     * @param string       $expectedCommandLine
      *
      * @dataProvider provideValidNotifications
      */
-    public function testSendAcceptAnyValidNotification(Notification $notification)
+    public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, $expectedCommandLine)
     {
         try {
-            $arguments = $this->invokeMethod($this->getDriver(), 'getProcessArguments', [$notification]);
-            $this->assertInternalType('array', $arguments);
-            $this->assertGreaterThan(1, count($arguments));
+            $processBuilder = new ProcessBuilder();
+            $processBuilder->setPrefix(self::BINARY);
+            $this->invokeMethod($this->getDriver(), 'configureProcess', [$processBuilder, $notification]);
+
+            $this->assertEquals($expectedCommandLine, $processBuilder->getProcess()->getCommandLine());
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
     }
 
     /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotification();
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotificationWithATitle();
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotificationWithAnIcon();
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotificationWithAllOptions();
+
+    /**
      * @return array
      */
-    public static function provideValidNotifications()
+    public function provideValidNotifications()
     {
         return [
             [
                 (new Notification())
-                    ->setBody('The notification body'),
+                    ->setBody('I\'m the notification body'),
+                $this->getExpectedCommandLineForNotification(),
             ],
             [
                 (new Notification())
-                    ->setBody('The notification body')
-                    ->setTitle('The notification title'),
+                    ->setBody('I\'m the notification body')
+                    ->setTitle('I\'m the notification title'),
+                $this->getExpectedCommandLineForNotificationWithATitle(),
             ],
             [
                 (new Notification())
-                    ->setBody('The notification body')
-                    ->setIcon('example/notification-icon.png'),
+                    ->setBody('I\'m the notification body')
+                    ->setIcon('/home/toto/Images/my-icon.png'),
+                $this->getExpectedCommandLineForNotificationWithAnIcon(),
             ],
             [
                 (new Notification())
-                    ->setBody('The notification body')
-                    ->setTitle('The notification title')
-                    ->setIcon('example/notification-icon.png'),
+                    ->setBody('I\'m the notification body')
+                    ->setTitle('I\'m the notification title')
+                    ->setIcon('/home/toto/Images/my-icon.png'),
+                $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],
         ];
     }

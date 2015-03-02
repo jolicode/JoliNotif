@@ -12,6 +12,7 @@
 namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
+use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This driver can be used on most Linux distributions, using the command notify-send.
@@ -38,23 +39,17 @@ class NotifySendDriver extends UnixBasedDriver
     /**
      * {@inheritdoc}
      */
-    protected function getProcessArguments(Notification $notification)
+    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
     {
-        $arguments = [
-            $this->getBinary(),
-        ];
-
         if ($notification->getIcon()) {
-            $arguments[] = '--icon';
-            $arguments[] = $notification->getIcon();
+            $processBuilder->add('--icon');
+            $processBuilder->add($notification->getIcon());
         }
 
         if ($notification->getTitle()) {
-            $arguments[] = $notification->getTitle();
+            $processBuilder->add($notification->getTitle());
         }
 
-        $arguments[] = $notification->getBody();
-
-        return $arguments;
+        $processBuilder->add($notification->getBody());
     }
 }
