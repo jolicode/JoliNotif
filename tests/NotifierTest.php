@@ -161,4 +161,57 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->assertTrue($notifier->send($notification));
     }
+
+    public function testItExtractsIconFromPhar()
+    {
+        $key              = uniqid();
+        $iconContent      = $key;
+        $rootPackage      = dirname(dirname(__FILE__));
+        $iconRelativePath = 'Resources/notification/icon-'.$key.'.png';
+        $pharPath         = sys_get_temp_dir().'/testjolinotif-'.$key.'.phar';
+        $tmpIconPath      = sys_get_temp_dir().'/jolinotif/'.$iconRelativePath;
+
+        $stub = <<<'PHAR_STUB'
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+$notification = new \JoliNotif\Notification();
+$notification->setBody('My notification');
+$notification->setIcon(__DIR__.YOUR_ICON);
+
+$notifier = new \JoliNotif\Notifier([
+    new \JoliNotif\tests\fixtures\ConfigurableDriver(true),
+]);
+$notifier->send($notification);
+
+__HALT_COMPILER();
+?>
+PHAR_STUB;
+
+        $phar = new \Phar($pharPath);
+        $phar->buildFromDirectory($rootPackage, '#(src|tests/fixtures|vendor/composer)#');
+        $phar->addFromString($iconRelativePath, $iconContent);
+        $phar->addFile('vendor/autoload.php');
+        $phar->setStub(
+            str_replace(
+                [
+                    '__DIR__',
+                    'YOUR_ICON'
+                ],
+                [
+                    '\'phar://'.$pharPath.'\'',
+                    '\'/'.$iconRelativePath.'\'',
+                ],
+                $stub
+            )
+        );
+
+        $this->assertTrue(is_file($pharPath));
+
+        exec('php '.$pharPath);
+
+        $this->assertTrue(is_file($tmpIconPath));
+        $this->assertEquals($iconContent, file_get_contents($tmpIconPath));
+    }
 }

@@ -43,8 +43,19 @@ $notification->setIcon(__DIR__.'/notification-icon.png');
 $notifier->send($notification);
 ```
 
+## Notification options
+
+Currently, only three options are supported:
+- title
+- body
+- icon
+
 > **Important**: The only required property on Notification is the body.
 > The notifier will throw an InvalidNotificationException if it is empty.
+
+If you use JoliNotif from a phar and provide your notification icon, the
+notifier will take care to extract this image in your system temp directory
+to make it accessible for native commands.
 
 > **Note**: New properties could be added later on Notification. Drivers are
 > designed to only handle the supported properties and discard not supported
