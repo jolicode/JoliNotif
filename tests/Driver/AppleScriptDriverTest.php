@@ -38,7 +38,7 @@ class AppleScriptDriverTest extends DriverTestCase
     {
         $driver = $this->getDriver();
 
-        $this->assertSame(Driver::PRIORITY_HIGH, $driver->getPriority());
+        $this->assertSame(Driver::PRIORITY_LOW, $driver->getPriority());
     }
 
     /**

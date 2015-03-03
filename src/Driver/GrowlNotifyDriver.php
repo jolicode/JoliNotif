@@ -32,7 +32,7 @@ class GrowlNotifyDriver extends UnixBasedDriver
      */
     public function getPriority()
     {
-        return static::PRIORITY_LOW;
+        return static::PRIORITY_HIGH;
     }
 
     /**

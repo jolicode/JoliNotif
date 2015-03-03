@@ -32,7 +32,7 @@ class AppleScriptDriver extends UnixBasedDriver
      */
     public function getPriority()
     {
-        return static::PRIORITY_HIGH;
+        return static::PRIORITY_LOW;
     }
 
     /**
