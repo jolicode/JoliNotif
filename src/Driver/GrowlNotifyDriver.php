@@ -17,7 +17,7 @@ use Symfony\Component\Process\ProcessBuilder;
 /**
  * This driver can be used on Mac OS X when growlnotify command is available.
  */
-class GrowlNotifyDriver extends UnixBasedDriver
+class GrowlNotifyDriver extends CliBasedDriver
 {
     /**
      * {@inheritdoc}

@@ -19,7 +19,6 @@ class NotifySendDriverTest extends DriverTestCase
     const BINARY = 'notify-send';
 
     use CliBasedDriverTestTrait;
-    use UnixBasedDriverTestTrait;
 
     protected function getDriver()
     {

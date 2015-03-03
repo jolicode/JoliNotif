@@ -19,7 +19,6 @@ class GrowlNotifyDriverTest extends DriverTestCase
     const BINARY = 'growlnotify';
 
     use CliBasedDriverTestTrait;
-    use UnixBasedDriverTestTrait;
 
     protected function getDriver()
     {

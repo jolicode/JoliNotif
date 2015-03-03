@@ -20,7 +20,6 @@ class AppleScriptDriverTest extends DriverTestCase
     const BINARY = 'osascript';
 
     use CliBasedDriverTestTrait;
-    use UnixBasedDriverTestTrait;
 
     protected function getDriver()
     {

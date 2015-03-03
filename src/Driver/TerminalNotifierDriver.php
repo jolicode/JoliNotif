@@ -17,7 +17,7 @@ use Symfony\Component\Process\ProcessBuilder;
 /**
  * This driver can be used on Mac OS X 10.8, or higher, using the terminal-notifier binary.
  */
-class TerminalNotifierDriver extends UnixBasedDriver
+class TerminalNotifierDriver extends CliBasedDriver
 {
     /**
      * {@inheritdoc}

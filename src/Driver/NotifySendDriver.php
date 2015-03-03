@@ -18,7 +18,7 @@ use Symfony\Component\Process\ProcessBuilder;
  * This driver can be used on most Linux distributions, using the command notify-send.
  * This command is packaged in libnotify-bin.
  */
-class NotifySendDriver extends UnixBasedDriver
+class NotifySendDriver extends CliBasedDriver
 {
     /**
      * {@inheritdoc}

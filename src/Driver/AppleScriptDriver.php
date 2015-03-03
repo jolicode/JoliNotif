@@ -17,7 +17,7 @@ use Symfony\Component\Process\ProcessBuilder;
 /**
  * This driver can be used on Mac OS X 10.9+.
  */
-class AppleScriptDriver extends UnixBasedDriver
+class AppleScriptDriver extends CliBasedDriver
 {
     /**
      * {@inheritdoc}

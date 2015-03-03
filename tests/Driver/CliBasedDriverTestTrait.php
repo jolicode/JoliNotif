@@ -19,6 +19,17 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 trait CliBasedDriverTestTrait
 {
+    public function testIsSupported()
+    {
+        if ('/' === DIRECTORY_SEPARATOR) {
+            $commandLine = 'command -v '.static::BINARY.' >/dev/null 2>&1';
+            passthru($commandLine, $return);
+            $supported = 0 === $return;
+
+            $this->assertEquals($supported, $this->getDriver()->isSupported());
+        }
+    }
+
     /**
      * @param Notification $notification
      * @param string       $expectedCommandLine

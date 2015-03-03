@@ -34,6 +34,40 @@ abstract class CliBasedDriver implements Driver
     /**
      * {@inheritdoc}
      */
+    public function isSupported()
+    {
+        return $this->isBinaryAvailable();
+    }
+
+    /**
+     * Check whether a binary is available.
+     *
+     * @return bool
+     */
+    protected function isBinaryAvailable()
+    {
+        if ('/' === DIRECTORY_SEPARATOR) {
+            // Do not use the which programm to check if a binary exists.
+            // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+            $builder = new ProcessBuilder([
+                'command',
+                '-v',
+                $this->getBinary(),
+                '>/dev/null',
+                '2>&1',
+            ]);
+            $process = $builder->getProcess();
+            $process->run();
+
+            return $process->isSuccessful();
+        }
+
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function send(Notification $notification)
     {
         $builder = new ProcessBuilder();

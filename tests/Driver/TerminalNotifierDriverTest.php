@@ -19,7 +19,6 @@ class TerminalNotifierDriverTest extends DriverTestCase
     const BINARY = 'terminal-notifier';
 
     use CliBasedDriverTestTrait;
-    use UnixBasedDriverTestTrait;
 
     protected function getDriver()
     {
