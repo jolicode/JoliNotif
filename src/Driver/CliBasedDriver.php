@@ -12,6 +12,7 @@
 namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
+use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 abstract class CliBasedDriver implements Driver
@@ -46,7 +47,7 @@ abstract class CliBasedDriver implements Driver
      */
     protected function isBinaryAvailable()
     {
-        if ('/' === DIRECTORY_SEPARATOR) {
+        if (OsHelper::isUnix()) {
             // Do not use the which programm to check if a binary exists.
             // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
             $builder = new ProcessBuilder([

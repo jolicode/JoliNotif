@@ -13,6 +13,7 @@ namespace JoliNotif\tests\Driver;
 
 use JoliNotif\Driver\Driver;
 use JoliNotif\Driver\TerminalNotifierDriver;
+use JoliNotif\Util\OsHelper;
 
 class TerminalNotifierDriverTest extends DriverTestCase
 {
@@ -60,7 +61,11 @@ class TerminalNotifierDriverTest extends DriverTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-appIcon' '/home/toto/Images/my-icon.png'";
+        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-appIcon' '/home/toto/Images/my-icon.png'";
+        }
+
+        return "'terminal-notifier' '-message' 'I'\\''m the notification body'";
     }
 
     /**
@@ -68,6 +73,10 @@ class TerminalNotifierDriverTest extends DriverTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'";
+        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'";
+        }
+
+        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title'";
     }
 }

@@ -13,7 +13,7 @@ namespace JoliNotif\tests\Driver;
 
 use JoliNotif\Driver\AppleScriptDriver;
 use JoliNotif\Driver\Driver;
-use JoliNotif\Notification;
+use JoliNotif\Util\OsHelper;
 
 class AppleScriptDriverTest extends DriverTestCase
 {
@@ -24,6 +24,17 @@ class AppleScriptDriverTest extends DriverTestCase
     protected function getDriver()
     {
         return new AppleScriptDriver();
+    }
+
+    public function testIsSupported()
+    {
+        $driver  = $this->getDriver();
+
+        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            $this->assertTrue($driver->isSupported());
+        } else {
+            $this->assertFalse($driver->isSupported());
+        }
     }
 
     public function testGetBinary()

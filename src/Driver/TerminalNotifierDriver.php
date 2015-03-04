@@ -12,6 +12,7 @@
 namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
+use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
@@ -48,8 +49,7 @@ class TerminalNotifierDriver extends CliBasedDriver
             $processBuilder->add($notification->getTitle());
         }
 
-        // Require Mac OS X 10.9+
-        if ($notification->getIcon()) {
+        if ($notification->getIcon() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             $processBuilder->add('-appIcon');
             $processBuilder->add($notification->getIcon());
         }

@@ -12,6 +12,7 @@
 namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
+use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
@@ -19,6 +20,17 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class AppleScriptDriver extends CliBasedDriver
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function isSupported()
+    {
+        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            return parent::isSupported();
+        }
+        return false;
+    }
+
     /**
      * {@inheritdoc}
      */
