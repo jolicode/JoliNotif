@@ -9,3 +9,4 @@
 * added icon extract when provided from a phar archive
 * added AppleScriptDriver (can be used on Mac OS X 10.9 and higher)
 * added OsHelper
+* added PharExtractor

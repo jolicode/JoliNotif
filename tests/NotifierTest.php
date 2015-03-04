@@ -164,54 +164,52 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
 
     public function testItExtractsIconFromPhar()
     {
-        $key              = uniqid();
-        $iconContent      = $key;
-        $rootPackage      = dirname(dirname(__FILE__));
-        $iconRelativePath = 'Resources/notification/icon-'.$key.'.png';
-        $pharPath         = sys_get_temp_dir().'/testjolinotif-'.$key.'.phar';
-        $tmpIconPath      = sys_get_temp_dir().'/jolinotif/'.$iconRelativePath;
+        $key               = uniqid();
+        $iconContent       = $key;
+        $rootPackage       = dirname(dirname(__FILE__));
+        $iconRelativePath  = 'Resources/notification/icon-'.$key.'.png';
+        $testDir           = sys_get_temp_dir().'/test-jolinotif';
+        $pharPath          = $testDir.'/notifier-extract-icon-'.$key.'.phar';
+        $extractedIconPath = sys_get_temp_dir().'/jolinotif/'.$iconRelativePath;
 
-        $stub = <<<'PHAR_STUB'
+        if (!is_dir($testDir)) {
+            mkdir($testDir);
+        }
+
+        $bootstrap = <<<'PHAR_BOOTSTRAP'
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
+$iconPath = THE_ICON;
+
 $notification = new \JoliNotif\Notification();
 $notification->setBody('My notification');
-$notification->setIcon(__DIR__.YOUR_ICON);
+$notification->setIcon(__DIR__.$iconPath);
 
 $notifier = new \JoliNotif\Notifier([
     new \JoliNotif\tests\fixtures\ConfigurableDriver(true),
 ]);
 $notifier->send($notification);
 
-__HALT_COMPILER();
-?>
-PHAR_STUB;
+PHAR_BOOTSTRAP;
 
         $phar = new \Phar($pharPath);
         $phar->buildFromDirectory($rootPackage, '#(src|tests/fixtures|vendor/composer)#');
+        $phar->addFromString('bootstrap.php', str_replace(
+            'THE_ICON',
+            '\'/'.$iconRelativePath.'\'',
+            $bootstrap
+        ));
         $phar->addFromString($iconRelativePath, $iconContent);
         $phar->addFile('vendor/autoload.php');
-        $phar->setStub(
-            str_replace(
-                [
-                    '__DIR__',
-                    'YOUR_ICON',
-                ],
-                [
-                    '\'phar://'.$pharPath.'\'',
-                    '\'/'.$iconRelativePath.'\'',
-                ],
-                $stub
-            )
-        );
+        $phar->setStub($phar->createDefaultStub('bootstrap.php'));
 
         $this->assertTrue(is_file($pharPath));
 
         exec('php '.$pharPath);
 
-        $this->assertTrue(is_file($tmpIconPath));
-        $this->assertEquals($iconContent, file_get_contents($tmpIconPath));
+        $this->assertTrue(is_file($extractedIconPath));
+        $this->assertEquals($iconContent, file_get_contents($extractedIconPath));
     }
 }

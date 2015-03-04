@@ -14,6 +14,7 @@ namespace JoliNotif;
 use JoliNotif\Driver\Driver;
 use JoliNotif\Exception\InvalidNotificationException;
 use JoliNotif\Exception\SystemNotSupportedException;
+use JoliNotif\Util\PharExtractor;
 
 class Notifier
 {
@@ -59,9 +60,9 @@ class Notifier
         }
 
         // This makes the icon accessible for native commands when it's embedded inside a phar
-        if (($icon = $notification->getIcon()) && 0 === strpos($icon, 'phar://')) {
+        if (($icon = $notification->getIcon()) && PharExtractor::isLocatedInsideAPhar($icon)) {
             $notification->setIcon(
-                $this->extractIconFromPhar($icon)
+                PharExtractor::extractFile($icon)
             );
         }
 
@@ -94,24 +95,5 @@ class Notifier
         }
 
         return $bestDriver;
-    }
-
-    /**
-     * Extract the icon from the phar archive to make it accessible for native commands.
-     *
-     * @param string $icon
-     *
-     * @return string
-     */
-    private function extractIconFromPhar($icon)
-    {
-        $pharPath         = \Phar::running(false);
-        $iconRelativePath = substr($icon, strpos($icon, $pharPath) + strlen($pharPath) + 1);
-        $tmpDir           = sys_get_temp_dir().'/jolinotif';
-
-        $phar = new \Phar($pharPath);
-        $phar->extractTo($tmpDir, $iconRelativePath, true);
-
-        return $tmpDir.'/'.$iconRelativePath;
     }
 }
