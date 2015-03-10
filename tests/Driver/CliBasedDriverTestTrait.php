@@ -11,6 +11,7 @@
 
 namespace JoliNotif\tests\Driver;
 
+use JoliNotif\BinaryProvider;
 use JoliNotif\Notification;
 use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
@@ -24,11 +25,14 @@ trait CliBasedDriverTestTrait
     {
         if (OsHelper::isUnix()) {
             $commandLine = 'command -v '.static::BINARY.' >/dev/null 2>&1';
-            passthru($commandLine, $return);
-            $supported = 0 === $return;
-
-            $this->assertEquals($supported, $this->getDriver()->isSupported());
+        } else {
+            $commandLine = 'where '.static::BINARY;
         }
+
+        passthru($commandLine, $return);
+        $supported = 0 === $return;
+
+        $this->assertEquals($supported, $this->getDriver()->isSupported());
     }
 
     /**

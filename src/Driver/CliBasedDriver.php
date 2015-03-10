@@ -48,7 +48,7 @@ abstract class CliBasedDriver implements Driver
     protected function isBinaryAvailable()
     {
         if (OsHelper::isUnix()) {
-            // Do not use the which programm to check if a binary exists.
+            // Do not use the 'which' programm to check if a binary exists.
             // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
             $builder = new ProcessBuilder([
                 'command',
@@ -57,13 +57,18 @@ abstract class CliBasedDriver implements Driver
                 '>/dev/null',
                 '2>&1',
             ]);
-            $process = $builder->getProcess();
-            $process->run();
-
-            return $process->isSuccessful();
+        } else {
+            // 'where' is available on Windows since Server 2003
+            $builder = new ProcessBuilder([
+                'where',
+                $this->getBinary(),
+            ]);
         }
 
-        return false;
+        $process = $builder->getProcess();
+        $process->run();
+
+        return $process->isSuccessful();
     }
 
     /**
