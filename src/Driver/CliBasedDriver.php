@@ -13,10 +13,21 @@ namespace JoliNotif\Driver;
 
 use JoliNotif\Notification;
 use JoliNotif\Util\OsHelper;
+use JoliNotif\Util\PharExtractor;
 use Symfony\Component\Process\ProcessBuilder;
 
 abstract class CliBasedDriver implements Driver
 {
+    const SUPPORT_NONE            = -1;
+    const SUPPORT_UNKNOWN         = 0;
+    const SUPPORT_NATIVE          = 1;
+    const SUPPORT_BINARY_PROVIDED = 2;
+
+    /**
+     * @var int One of the SUPPORT_XXX constants
+     */
+    private $support = self::SUPPORT_UNKNOWN;
+
     /**
      * Configure the process to run in order to send the notification.
      *
@@ -37,7 +48,27 @@ abstract class CliBasedDriver implements Driver
      */
     public function isSupported()
     {
-        return $this->isBinaryAvailable();
+        if (self::SUPPORT_UNKNOWN !== $this->support) {
+            return self::SUPPORT_NONE !== $this->support;
+        }
+
+        if ($this->isBinaryAvailable()) {
+            $this->support = self::SUPPORT_NATIVE;
+
+            return true;
+        }
+
+        if ($this instanceof BinaryProvider && $this->canBeUsed()) {
+            //if (!PharExtractor::isLocatedInsideAPhar($this->getPath())) {
+                $this->support = self::SUPPORT_BINARY_PROVIDED;
+
+                return true;
+            //}
+        }
+
+        $this->support = self::SUPPORT_NONE;
+
+        return false;
     }
 
     /**
@@ -77,7 +108,23 @@ abstract class CliBasedDriver implements Driver
     public function send(Notification $notification)
     {
         $builder = new ProcessBuilder();
-        $builder->setPrefix($this->getBinary());
+
+        if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
+            $dir           = rtrim($this->getRootDir(), '/').'/';
+            $embededBinary = $dir.$this->getEmbededBinary();
+
+            if (PharExtractor::isLocatedInsideAPhar($embededBinary)) {
+                $embededBinary = PharExtractor::extractFile($embededBinary);
+
+                foreach ($this->getExtraFiles() as $file) {
+                    PharExtractor::extractFile($dir.$file);
+                }
+            }
+
+            $builder->setPrefix($embededBinary);
+        } else {
+            $builder->setPrefix($this->getBinary());
+        }
 
         $this->configureProcess($builder, $notification);
 

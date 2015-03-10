@@ -10,3 +10,4 @@
 * added AppleScriptDriver (can be used on Mac OS X 10.9 and higher)
 * added OsHelper
 * added PharExtractor
+* added BinaryProvider

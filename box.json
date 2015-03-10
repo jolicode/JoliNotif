@@ -1,6 +1,7 @@
 {
     "chmod": "0755",
     "directories": [
+        "bin",
         "example",
         "src"
     ],
