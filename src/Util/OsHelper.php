@@ -16,9 +16,14 @@ use Symfony\Component\Process\Process;
 class OsHelper
 {
     /**
-     * @var bool
+     * @var string
      */
-    private static $isMacOS;
+    private static $kernelName;
+
+    /**
+     * @var string
+     */
+    private static $kernelVersion;
 
     /**
      * @var string
@@ -36,13 +41,33 @@ class OsHelper
     /**
      * @return bool
      */
-    public static function isMacOS()
+    public static function isWindows()
     {
-        if (null === self::$isMacOS) {
-            self::$isMacOS = false !== strpos(php_uname('s'), 'Darwin');
+        return '\\' === DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isWindowsSeven()
+    {
+        if (null === self::$kernelVersion) {
+            self::$kernelVersion = php_uname('r');
         }
 
-        return self::$isMacOS;
+        return '6.1' === self::$kernelVersion;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isMacOS()
+    {
+        if (null === self::$kernelName) {
+            self::$kernelName = php_uname('s');
+        }
+
+        return false !== strpos(self::$kernelName, 'Darwin');
     }
 
     /**

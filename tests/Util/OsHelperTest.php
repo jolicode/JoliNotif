@@ -26,6 +26,28 @@ class OsHelperTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testIsWindows()
+    {
+        if ('\\' === DIRECTORY_SEPARATOR) {
+            $this->assertTrue(OsHelper::isWindows());
+        }
+
+        if ('/' === DIRECTORY_SEPARATOR) {
+            $this->assertFalse(OsHelper::isWindows());
+        }
+    }
+
+    public function testIsWindowsSeven()
+    {
+        if (!OsHelper::isWindows()) {
+            $this->markTestSkipped('Can only be run on Windows');
+        }
+
+        $isSeven = '6.1' === php_uname('r');
+
+        $this->assertSame($isSeven, OsHelper::isWindowsSeven());
+    }
+
     public function testIsMacOS()
     {
         $uname = php_uname();

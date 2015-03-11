@@ -11,3 +11,4 @@
 * added OsHelper
 * added PharExtractor
 * added BinaryProvider
+* added NotifuDriver (can be used on Windows Seven)

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+use JoliNotif\Driver\NotifuDriver;
 use JoliNotif\Driver\AppleScriptDriver;
 use JoliNotif\Driver\GrowlNotifyDriver;
 use JoliNotif\Driver\NotifySendDriver;
@@ -22,6 +23,7 @@ $notifier = new Notifier([
     new TerminalNotifierDriver(),
     new GrowlNotifyDriver(),
     new NotifySendDriver(),
+    new NotifuDriver(),
 ]);
 
 $notification = new Notification();
