@@ -61,6 +61,18 @@ class OsHelper
     /**
      * @return bool
      */
+    public static function isWindowsEightOrHigher()
+    {
+        if (null === self::$kernelVersion) {
+            self::$kernelVersion = php_uname('r');
+        }
+
+        return version_compare(self::$kernelVersion, '6.2', '>=');
+    }
+
+    /**
+     * @return bool
+     */
     public static function isMacOS()
     {
         if (null === self::$kernelName) {

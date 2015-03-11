@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 use JoliNotif\Driver\NotifuDriver;
+use JoliNotif\Driver\ToasterDriver;
 use JoliNotif\Driver\AppleScriptDriver;
 use JoliNotif\Driver\GrowlNotifyDriver;
 use JoliNotif\Driver\NotifySendDriver;
@@ -23,6 +24,7 @@ $notifier = new Notifier([
     new TerminalNotifierDriver(),
     new GrowlNotifyDriver(),
     new NotifySendDriver(),
+    new ToasterDriver(),
     new NotifuDriver(),
 ]);
 
