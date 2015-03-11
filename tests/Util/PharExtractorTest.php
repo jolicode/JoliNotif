@@ -26,25 +26,96 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
     public function testExtractFile()
     {
         $key               = uniqid();
-        $fileContent       = $key;
-        $rootPackage       = dirname(dirname(dirname(__FILE__)));
-        $fileRelativePath  = 'path/to/file-'.$key.'.txt';
-        $testDir           = sys_get_temp_dir().'/test-jolinotif';
-        $pharPath          = $testDir.'/phar-extractor-'.$key.'.phar';
-        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$fileRelativePath;
+        $pharPath          = $this->getTestDir().'/phar-extractor-'.$key.'.phar';
+        $relativeFilePath  = 'path/to/file-'.$key.'.txt';
+        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
+
+        $this->generatePhar($pharPath, $relativeFilePath, $key, false);
+        $this->assertTrue(is_file($pharPath));
+        exec('php '.$pharPath);
+        \Phar::unlinkArchive($pharPath);
+
+        $this->assertTrue(is_file($extractedFilePath));
+        $this->assertEquals($key, file_get_contents($extractedFilePath));
+        unlink($extractedFilePath);
+    }
+
+    public function testExtractFileDontOverwriteExistingFileIfNotSpecified()
+    {
+        $key               = uniqid();
+        $pharPath          = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
+        $relativeFilePath  = 'path/to/file-'.$key.'.txt';
+        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
+
+        $this->generatePhar($pharPath, $relativeFilePath, $key, false);
+        $this->assertTrue(is_file($pharPath));
+        exec('php '.$pharPath);
+        \Phar::unlinkArchive($pharPath);
+
+        $this->generatePhar($pharPath, $relativeFilePath, 'new content', false);
+        $this->assertTrue(is_file($pharPath));
+        exec('php '.$pharPath);
+        \Phar::unlinkArchive($pharPath);
+
+        $this->assertTrue(is_file($extractedFilePath));
+        $this->assertEquals($key, file_get_contents($extractedFilePath));
+        unlink($extractedFilePath);
+    }
+
+    public function testExtractFileOverwriteExistingFileIfSpecified()
+    {
+        $key               = uniqid();
+        $pharPath          = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';
+        $relativeFilePath  = 'path/to/file-'.$key.'.txt';
+        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
+
+        $this->generatePhar($pharPath, $relativeFilePath, $key, false);
+        $this->assertTrue(is_file($pharPath));
+        exec('php '.$pharPath);
+        \Phar::unlinkArchive($pharPath);
+
+        $this->generatePhar($pharPath, $relativeFilePath, 'new content', true);
+        $this->assertTrue(is_file($pharPath));
+        exec('php '.$pharPath);
+        \Phar::unlinkArchive($pharPath);
+
+        $this->assertTrue(is_file($extractedFilePath));
+        $this->assertEquals('new content', file_get_contents($extractedFilePath));
+        unlink($extractedFilePath);
+    }
+
+    /**
+     * @return string
+     */
+    private function getTestDir()
+    {
+        $testDir = sys_get_temp_dir().'/test-jolinotif';
 
         if (!is_dir($testDir)) {
             mkdir($testDir);
         }
 
-        $bootstrap = <<<'PHAR_BOOTSTRAP'
+        return $testDir;
+    }
+
+    /**
+     * @param string $pharPath
+     * @param string $fileRelativePath
+     * @param string $fileContent
+     * @param bool   $overwrite
+     */
+    private function generatePhar($pharPath, $fileRelativePath, $fileContent, $overwrite)
+    {
+        $rootPackage = dirname(dirname(dirname(__FILE__)));
+        $bootstrap   = <<<'PHAR_BOOTSTRAP'
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
 $filePath = THE_FILE;
+$overwrite = OVERWRITE;
 
-\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath);
+\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
 
 ?>
 PHAR_BOOTSTRAP;
@@ -52,19 +123,19 @@ PHAR_BOOTSTRAP;
         $phar = new \Phar($pharPath);
         $phar->buildFromDirectory($rootPackage, '#(src|vendor/composer)#');
         $phar->addFromString('bootstrap.php', str_replace(
-            'THE_FILE',
-            '\'/'.$fileRelativePath.'\'',
+            [
+                'THE_FILE',
+                'OVERWRITE',
+            ],
+            [
+                '\'/'.$fileRelativePath.'\'',
+                $overwrite ? 'true' : 'false',
+
+            ],
             $bootstrap
         ));
         $phar->addFromString($fileRelativePath, $fileContent);
         $phar->addFile('vendor/autoload.php');
         $phar->setStub($phar->createDefaultStub('bootstrap.php'));
-
-        $this->assertTrue(is_file($pharPath));
-
-        exec('php '.$pharPath);
-
-        $this->assertTrue(is_file($extractedFilePath));
-        $this->assertEquals($fileContent, file_get_contents($extractedFilePath));
     }
 }

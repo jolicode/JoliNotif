@@ -29,10 +29,11 @@ class PharExtractor
      * Extract the file from the phar archive to make it accessible for native commands.
      *
      * @param string $filePath the absolute file path to extract
+     * @param bool   $overwrite
      *
      * @return string
      */
-    public static function extractFile($filePath)
+    public static function extractFile($filePath, $overwrite = false)
     {
         $pharPath = \Phar::running(false);
 
@@ -40,12 +41,15 @@ class PharExtractor
             return '';
         }
 
-        $fileRelativePath = substr($filePath, strpos($filePath, $pharPath) + strlen($pharPath) + 1);
-        $tmpDir           = sys_get_temp_dir().'/jolinotif';
+        $relativeFilePath  = substr($filePath, strpos($filePath, $pharPath) + strlen($pharPath) + 1);
+        $tmpDir            = sys_get_temp_dir().'/jolinotif';
+        $extractedFilePath = $tmpDir.'/'.$relativeFilePath;
 
-        $phar = new \Phar($pharPath);
-        $phar->extractTo($tmpDir, $fileRelativePath, true);
+        if (!file_exists($extractedFilePath) || $overwrite) {
+            $phar = new \Phar($pharPath);
+            $phar->extractTo($tmpDir, $relativeFilePath, $overwrite);
+        }
 
-        return $tmpDir.'/'.$fileRelativePath;
+        return $extractedFilePath;
     }
 }
