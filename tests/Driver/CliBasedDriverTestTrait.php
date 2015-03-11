@@ -11,7 +11,6 @@
 
 namespace JoliNotif\tests\Driver;
 
-use JoliNotif\BinaryProvider;
 use JoliNotif\Notification;
 use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;

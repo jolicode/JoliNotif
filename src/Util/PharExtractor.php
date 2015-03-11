@@ -14,7 +14,7 @@ namespace JoliNotif\Util;
 class PharExtractor
 {
     /**
-     * Return whether the file path is located inside a phar
+     * Return whether the file path is located inside a phar.
      *
      * @param string $filePath
      *
@@ -28,7 +28,7 @@ class PharExtractor
     /**
      * Extract the file from the phar archive to make it accessible for native commands.
      *
-     * @param string $filePath the absolute file path to extract
+     * @param string $filePath  the absolute file path to extract
      * @param bool   $overwrite
      *
      * @return string

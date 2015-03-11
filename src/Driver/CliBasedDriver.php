@@ -59,11 +59,9 @@ abstract class CliBasedDriver implements Driver
         }
 
         if ($this instanceof BinaryProvider && $this->canBeUsed()) {
-            //if (!PharExtractor::isLocatedInsideAPhar($this->getPath())) {
-                $this->support = self::SUPPORT_BINARY_PROVIDED;
+            $this->support = self::SUPPORT_BINARY_PROVIDED;
 
-                return true;
-            //}
+            return true;
         }
 
         $this->support = self::SUPPORT_NONE;

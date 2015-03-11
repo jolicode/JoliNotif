@@ -28,6 +28,7 @@ class AppleScriptDriver extends CliBasedDriver
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             return parent::isSupported();
         }
+
         return false;
     }
 
