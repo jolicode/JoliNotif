@@ -18,6 +18,10 @@ use JoliNotif\Util\PharExtractor;
 
 class Notifier
 {
+    const STATUS_SENT         = 1;
+    const STATUS_ERROR_DRIVER = 2;
+    const STATUS_NO_DRIVER    = 3;
+
     /**
      * @var Driver[]
      */
@@ -51,10 +55,14 @@ class Notifier
     /**
      * @param Notification $notification
      *
-     * @return bool
+     * @return int
      */
     public function send(Notification $notification)
     {
+        if (!$this->driverInUse) {
+            return self::STATUS_NO_DRIVER;
+        }
+
         if (!$notification->getBody()) {
             throw new InvalidNotificationException($notification, 'Notification body can not be empty');
         }
@@ -66,7 +74,7 @@ class Notifier
             );
         }
 
-        return $this->driverInUse->send($notification);
+        return $this->driverInUse->send($notification) ? self::STATUS_SENT : self::STATUS_ERROR_DRIVER;
     }
 
     /**
@@ -88,10 +96,6 @@ class Notifier
             }
 
             $bestDriver = $driver;
-        }
-
-        if (null === $bestDriver) {
-            throw new SystemNotSupportedException('No drivers support your system');
         }
 
         return $bestDriver;

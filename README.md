@@ -19,8 +19,7 @@ Use [Composer](http://getcomposer.org/) to install JoliNotif in your projects:
 
 The main class is `Notifier`. It should be instantiated with an array of
 `Driver`. The `Notifier` constructor will choose the best driver to use,
-according to which commands are available on your system. If no driver are
-supported, a `SystemNotSupportedException` will be thrown.
+according to which commands are available on your system.
 
 In order to ease the use of JoliNotif, a `NotifierFactory` take care to create
 a `Notifier` with the right drivers according to your system.
@@ -41,6 +40,12 @@ $notification->setIcon(__DIR__.'/notification-icon.png');
 // Send it
 $notifier->send($notification);
 ```
+
+`Notifier#send()` will return one of these values:
+- `Notifier::STATUS_SENT` if everything gone well
+- `Notifier::STATUS_ERROR_DRIVER` if an error happened in the driver
+- `Notifier::STATUS_NO_DRIVER` if not any driver could be used
+
 
 ## Notification options
 

@@ -17,26 +17,6 @@ use JoliNotif\tests\fixtures\ConfigurableDriver;
 
 class NotifierTest extends \PHPUnit_Framework_TestCase
 {
-    public function testNoDriverOrNoSupportedDriverThrowsException()
-    {
-        try {
-            new Notifier([]);
-            $this->fail('Expected a SystemNotSupportedException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('JoliNotif\Exception\SystemNotSupportedException', $e);
-        }
-
-        try {
-            new Notifier([
-                new ConfigurableDriver(false),
-                new ConfigurableDriver(false),
-            ]);
-            $this->fail('Expected a SystemNotSupportedException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('JoliNotif\Exception\SystemNotSupportedException', $e);
-        }
-    }
-
     public function testTheBestSupportedDriverIsUsed()
     {
         // test case
@@ -94,6 +74,25 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($driver3, $notifier->getDriverInUse());
     }
 
+    public function testSendWithNoDriverOrNoSupportedDriver()
+    {
+        $notification = new Notification();
+        $notification->setBody('Notification body');
+
+        $notifier = new Notifier([]);
+        $status = $notifier->send($notification);
+
+        $this->assertSame(Notifier::STATUS_NO_DRIVER, $status);
+
+        $notifier = new Notifier([
+            new ConfigurableDriver(false),
+            new ConfigurableDriver(false),
+        ]);
+        $status = $notifier->send($notification);
+
+        $this->assertSame(Notifier::STATUS_NO_DRIVER, $status);
+    }
+
     public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
     {
         $notifier = new Notifier([new ConfigurableDriver(true)]);
@@ -120,7 +119,7 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testSendUsesTheBestDriverAndReturnsItsReturn()
+    public function testSendUsesTheBestDriverAndReturnsCorrectStatus()
     {
         $notification = new Notification();
         $notification->setBody('My notification');
@@ -131,7 +130,7 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
         $notifier = new Notifier([
             $driver,
         ]);
-        $this->assertFalse($notifier->send($notification));
+        $this->assertSame(Notifier::STATUS_ERROR_DRIVER, $notifier->send($notification));
 
         // test case
         $driver1 = new ConfigurableDriver(false, 0, false);
@@ -145,7 +144,7 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
             $driver3,
             $driver4,
         ]);
-        $this->assertTrue($notifier->send($notification));
+        $this->assertSame(Notifier::STATUS_SENT, $notifier->send($notification));
 
         // test case
         $driver1 = new ConfigurableDriver(false, 0, false);
@@ -159,7 +158,7 @@ class NotifierTest extends \PHPUnit_Framework_TestCase
             $driver3,
             $driver4,
         ]);
-        $this->assertTrue($notifier->send($notification));
+        $this->assertSame(Notifier::STATUS_SENT, $notifier->send($notification));
     }
 
     public function testItExtractsIconFromPhar()
