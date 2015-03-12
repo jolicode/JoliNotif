@@ -22,16 +22,15 @@ The main class is `Notifier`. It should be instantiated with an array of
 according to which commands are available on your system. If no driver are
 supported, a `SystemNotSupportedException` will be thrown.
 
+In order to ease the use of JoliNotif, a `NotifierFactory` take care to create
+a `Notifier` with the right drivers according to your system.
+
 Look at below (or [example/index.php](example/index.php)) to see an example on
 how to use JoliNotif.
 
 ```php
 // Build a Notifier
-$notifier = new Notifier([
-    new TerminalNotifierDriver(),
-    new GrowlNotifyDriver(),
-    new NotifySendDriver(),
-]);
+$notifier = NotifierFactory::make();
 
 // Create your notification
 $notification = new Notification();

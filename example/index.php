@@ -8,25 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-use JoliNotif\Driver\NotifuDriver;
-use JoliNotif\Driver\ToasterDriver;
-use JoliNotif\Driver\AppleScriptDriver;
-use JoliNotif\Driver\GrowlNotifyDriver;
-use JoliNotif\Driver\NotifySendDriver;
-use JoliNotif\Driver\TerminalNotifierDriver;
+
 use JoliNotif\Notification;
-use JoliNotif\Notifier;
+use JoliNotif\NotifierFactory;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$notifier = new Notifier([
-    new AppleScriptDriver(),
-    new TerminalNotifierDriver(),
-    new GrowlNotifyDriver(),
-    new NotifySendDriver(),
-    new ToasterDriver(),
-    new NotifuDriver(),
-]);
+$notifier = NotifierFactory::make();
 
 $notification = new Notification();
 $notification->setTitle('I\'m a notification title');

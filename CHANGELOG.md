@@ -13,3 +13,4 @@
 * added BinaryProvider
 * added NotifuDriver (can be used on Windows Seven)
 * added ToasterDriver (can be used on Windows Eight and higher)
+* added NotifierFactory
