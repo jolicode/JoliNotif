@@ -14,7 +14,7 @@ use JoliNotif\NotifierFactory;
 
 require __DIR__.'/../vendor/autoload.php';
 
-$notifier = NotifierFactory::make();
+$notifier = NotifierFactory::create();
 
 $notification = new Notification();
 $notification->setTitle('I\'m a notification title');

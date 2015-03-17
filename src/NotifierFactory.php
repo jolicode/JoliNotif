@@ -23,14 +23,18 @@ use JoliNotif\Util\OsHelper;
 class NotifierFactory
 {
     /**
+     * @param Driver[] $drivers
+     *
      * @return Notifier
      */
-    public static function make()
+    public static function create(array $drivers = [])
     {
-        if (OsHelper::isUnix()) {
-            $drivers = self::makeUnixDrivers();
-        } else {
-            $drivers = self::makeWindowsDrivers();
+        if (empty($drivers)) {
+            if (OsHelper::isUnix()) {
+                $drivers = self::getUnixDrivers();
+            } else {
+                $drivers = self::getWindowsDrivers();
+            }
         }
 
         return new Notifier($drivers);
@@ -39,7 +43,7 @@ class NotifierFactory
     /**
      * @return Driver[]
      */
-    private static function makeUnixDrivers()
+    private static function getUnixDrivers()
     {
         return [
             new GrowlNotifyDriver(),
@@ -52,7 +56,7 @@ class NotifierFactory
     /**
      * @return Driver[]
      */
-    private static function makeWindowsDrivers()
+    private static function getWindowsDrivers()
     {
         return [
             new ToasterDriver(),

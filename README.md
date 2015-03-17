@@ -29,7 +29,7 @@ how to use JoliNotif.
 
 ```php
 // Build a Notifier
-$notifier = NotifierFactory::make();
+$notifier = NotifierFactory::create();
 
 // Create your notification
 $notification = new Notification();

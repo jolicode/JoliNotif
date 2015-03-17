@@ -14,6 +14,7 @@ namespace JoliNotif\tests;
 use JoliNotif\Driver\Driver;
 use JoliNotif\Notifier;
 use JoliNotif\NotifierFactory;
+use JoliNotif\tests\fixtures\ConfigurableDriver;
 use JoliNotif\Util\OsHelper;
 
 class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
@@ -42,9 +43,9 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testMake()
+    public function testCreateUseDefaultDrivers()
     {
-        $notifier = NotifierFactory::make();
+        $notifier = NotifierFactory::create();
 
         $this->assertInstanceOf('JoliNotif\\Notifier', $notifier);
 
@@ -63,6 +64,25 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
                 'JoliNotif\\Driver\\NotifuDriver',
             ];
         }
+
+        $this->assertDriversClasses($expectedDriversClass, $drivers);
+    }
+
+    public function testCreateUseGivenDrivers()
+    {
+        $notifier = NotifierFactory::create([
+            new ConfigurableDriver(true),
+            new ConfigurableDriver(true),
+        ]);
+
+        $this->assertInstanceOf('JoliNotif\\Notifier', $notifier);
+
+        $drivers = $this->getNotifierDrivers($notifier);
+
+        $expectedDriversClass = [
+            'JoliNotif\\tests\\fixtures\\ConfigurableDriver',
+            'JoliNotif\\tests\\fixtures\\ConfigurableDriver',
+        ];
 
         $this->assertDriversClasses($expectedDriversClass, $drivers);
     }
