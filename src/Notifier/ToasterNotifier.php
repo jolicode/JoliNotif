@@ -15,6 +15,10 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
+/**
+ * This notifier can be used on Windows Eight and higher and provides its own
+ * binaries if not natively available.
+ */
 class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
 {
     /**

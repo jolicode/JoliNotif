@@ -15,6 +15,10 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
+/**
+ * This notifier can be used on Windows Seven and provides its own binaries if
+ * not natively available.
+ */
 class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
 {
     /**
