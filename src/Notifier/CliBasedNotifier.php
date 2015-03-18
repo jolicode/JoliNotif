@@ -114,18 +114,18 @@ abstract class CliBasedNotifier implements Notifier
         $builder = new ProcessBuilder();
 
         if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
-            $dir           = rtrim($this->getRootDir(), '/').'/';
-            $embededBinary = $dir.$this->getEmbededBinary();
+            $dir            = rtrim($this->getRootDir(), '/').'/';
+            $embeddedBinary = $dir.$this->getEmbeddedBinary();
 
-            if (PharExtractor::isLocatedInsideAPhar($embededBinary)) {
-                $embededBinary = PharExtractor::extractFile($embededBinary);
+            if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {
+                $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
 
                 foreach ($this->getExtraFiles() as $file) {
                     PharExtractor::extractFile($dir.$file);
                 }
             }
 
-            $builder->setPrefix($embededBinary);
+            $builder->setPrefix($embeddedBinary);
         } else {
             $builder->setPrefix($this->getBinary());
         }

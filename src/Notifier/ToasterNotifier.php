@@ -71,7 +71,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getEmbededBinary()
+    public function getEmbeddedBinary()
     {
         return 'toast.exe';
     }

@@ -71,7 +71,7 @@ class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getEmbededBinary()
+    public function getEmbeddedBinary()
     {
         return 'notifu.exe';
     }

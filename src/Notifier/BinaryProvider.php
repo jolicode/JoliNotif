@@ -32,13 +32,13 @@ interface BinaryProvider
     public function getRootDir();
 
     /**
-     * Return the path of the embeded binary.
+     * Return the path of the embedded binary.
      *
      * The path should be relative to the directory pointed by getRootDir().
      *
      * @return array
      */
-    public function getEmbededBinary();
+    public function getEmbeddedBinary();
 
     /**
      * Return an array of files that should be extracted when JoliNotif is
