@@ -29,9 +29,11 @@ $notifier = NotifierFactory::create();
 
 // Create your notification
 $notification = new Notification();
-$notification->setTitle('I\'m a notification title');
-$notification->setBody('And this is the body');
-$notification->setIcon(__DIR__.'/notification-icon.png');
+$notification
+    ->setTitle('I\'m a notification title')
+    ->setBody('And this is the body')
+    ->setIcon(__DIR__.'/notification-icon.png')
+;
 
 // Send it
 $notifier->send($notification);
