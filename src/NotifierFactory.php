@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif;
+namespace Joli\JoliNotif;
 
-use JoliNotif\Notifier\AppleScriptNotifier;
-use JoliNotif\Notifier\GrowlNotifyNotifier;
-use JoliNotif\Notifier\NotifuNotifier;
-use JoliNotif\Notifier\NotifySendNotifier;
-use JoliNotif\Notifier\TerminalNotifierNotifier;
-use JoliNotif\Notifier\ToasterNotifier;
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Notifier\AppleScriptNotifier;
+use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
+use Joli\JoliNotif\Notifier\NotifuNotifier;
+use Joli\JoliNotif\Notifier\NotifySendNotifier;
+use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
+use Joli\JoliNotif\Notifier\ToasterNotifier;
+use Joli\JoliNotif\Util\OsHelper;
 
 class NotifierFactory
 {

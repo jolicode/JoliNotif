@@ -9,12 +9,12 @@
 
     "autoload": {
         "psr-4": {
-            "JoliNotif\\": "src/"
+            "Joli\\JoliNotif\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JoliNotif\\tests\\": "tests/"
+            "Joli\\JoliNotif\\tests\\": "tests/"
         }
     },
     "require": {

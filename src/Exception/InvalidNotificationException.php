@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Exception;
+namespace Joli\JoliNotif\Exception;
 
-use JoliNotif\Notification;
+use Joli\JoliNotif\Notification;
 
 class InvalidNotificationException extends \LogicException implements Exception
 {

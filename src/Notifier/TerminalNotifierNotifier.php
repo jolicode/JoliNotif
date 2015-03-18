@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Notifier;
+namespace Joli\JoliNotif\Notifier;
 
-use JoliNotif\Notification;
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Notifier;
+namespace Joli\JoliNotif\tests\Notifier;
 
-use JoliNotif\Notifier;
-use JoliNotif\Notifier\NotifySendNotifier;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Notifier\NotifySendNotifier;
 
 class NotifySendNotifierTest extends NotifierTestCase
 {

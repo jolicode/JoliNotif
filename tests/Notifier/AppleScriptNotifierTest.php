@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Notifier;
+namespace Joli\JoliNotif\tests\Notifier;
 
-use JoliNotif\Notifier\AppleScriptNotifier;
-use JoliNotif\Notifier;
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Notifier\AppleScriptNotifier;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Util\OsHelper;
 
 class AppleScriptNotifierTest extends NotifierTestCase
 {

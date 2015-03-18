@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Exception;
+namespace Joli\JoliNotif\Exception;
 
 interface Exception
 {

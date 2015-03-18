@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Notifier;
+namespace Joli\JoliNotif\tests\Notifier;
 
-use JoliNotif\Notification;
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
@@ -116,7 +116,7 @@ trait CliBasedNotifierTestTrait
             $notifier->send($notification);
             $this->fail('Expected a InvalidNotificationException');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('JoliNotif\Exception\InvalidNotificationException', $e);
+            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
         }
 
         // test case
@@ -127,7 +127,7 @@ trait CliBasedNotifierTestTrait
             $notifier->send($notification);
             $this->fail('Expected a InvalidNotificationException');
         } catch (\Exception $e) {
-            $this->assertInstanceOf('JoliNotif\Exception\InvalidNotificationException', $e);
+            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
         }
     }
 }

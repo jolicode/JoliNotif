@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif;
+namespace Joli\JoliNotif;
 
-use JoliNotif\Util\PharExtractor;
+use Joli\JoliNotif\Util\PharExtractor;
 
 class Notification
 {

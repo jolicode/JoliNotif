@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+namespace Joli\JoliNotif\tests;
+
 class NotificationTest extends \PHPUnit_Framework_TestCase
 {
     public function testItExtractsIconFromPhar()
@@ -29,7 +31,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 require __DIR__.'/vendor/autoload.php';
 
 $iconPath = THE_ICON;
-$notification = new \JoliNotif\Notification();
+$notification = new \Joli\JoliNotif\Notification();
 $notification->setBody('My notification');
 $notification->setIcon(__DIR__.$iconPath);
 PHAR_BOOTSTRAP;

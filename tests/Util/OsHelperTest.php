@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Util;
+namespace Joli\JoliNotif\tests\Util;
 
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Util\OsHelper;
 
 class OsHelperTest extends \PHPUnit_Framework_TestCase
 {

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Notifier;
+namespace Joli\JoliNotif\tests\Notifier;
 
-use JoliNotif\Notifier;
-use JoliNotif\Notifier\GrowlNotifyNotifier;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 
 class GrowlNotifyNotifierTest extends NotifierTestCase
 {

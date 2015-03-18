@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif;
+namespace Joli\JoliNotif;
 
 interface Notifier
 {

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Notifier;
+namespace Joli\JoliNotif\Notifier;
 
 /**
  * Interface implemented by notifiers when they provide their own binaries in

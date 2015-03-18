@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Util;
+namespace Joli\JoliNotif\Util;
 
 class PharExtractor
 {

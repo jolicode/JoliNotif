@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Notifier;
+namespace Joli\JoliNotif\tests\Notifier;
 
-use JoliNotif\Notifier;
-use JoliNotif\Notifier\TerminalNotifierNotifier;
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
+use Joli\JoliNotif\Util\OsHelper;
 
 class TerminalNotifierNotifierTest extends NotifierTestCase
 {

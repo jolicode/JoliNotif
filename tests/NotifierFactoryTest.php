@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests;
+namespace Joli\JoliNotif\tests;
 
-use JoliNotif\Notifier;
-use JoliNotif\NotifierFactory;
-use JoliNotif\tests\fixtures\ConfigurableNotifier;
-use JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\NotifierFactory;
+use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
+use Joli\JoliNotif\Util\OsHelper;
 
 class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,10 +34,10 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
 
         if (OsHelper::isUnix()) {
             $expectedNotifierClasses = [
-                'JoliNotif\\Notifier\\GrowlNotifyNotifier',
-                'JoliNotif\\Notifier\\TerminalNotifierNotifier',
-                'JoliNotif\\Notifier\\AppleScriptNotifier',
-                'JoliNotif\\Notifier\\NotifySendNotifier',
+                'Joli\\JoliNotif\\Notifier\\GrowlNotifyNotifier',
+                'Joli\\JoliNotif\\Notifier\\TerminalNotifierNotifier',
+                'Joli\\JoliNotif\\Notifier\\AppleScriptNotifier',
+                'Joli\\JoliNotif\\Notifier\\NotifySendNotifier',
             ];
         } else {
             $expectedNotifierClasses = [
@@ -57,19 +57,19 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This test needs that at least one notifier is supported');
         }
 
-        $this->assertInstanceOf('JoliNotif\\Notifier', $notifier);
+        $this->assertInstanceOf('Joli\\JoliNotif\\Notifier', $notifier);
 
         if (OsHelper::isUnix()) {
             $expectedNotifierClasses = [
-                'JoliNotif\\Notifier\\GrowlNotifyNotifier',
-                'JoliNotif\\Notifier\\TerminalNotifierNotifier',
-                'JoliNotif\\Notifier\\AppleScriptNotifier',
-                'JoliNotif\\Notifier\\NotifySendNotifier',
+                'Joli\\JoliNotif\\Notifier\\GrowlNotifyNotifier',
+                'Joli\\JoliNotif\\Notifier\\TerminalNotifierNotifier',
+                'Joli\\JoliNotif\\Notifier\\AppleScriptNotifier',
+                'Joli\\JoliNotif\\Notifier\\NotifySendNotifier',
             ];
         } else {
             $expectedNotifierClasses = [
-                'JoliNotif\\Notifier\\ToasterNotifier',
-                'JoliNotif\\Notifier\\NotifuNotifier',
+                'Joli\\JoliNotif\\Notifier\\ToasterNotifier',
+                'Joli\\JoliNotif\\Notifier\\NotifuNotifier',
             ];
         }
 
@@ -82,7 +82,7 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
             new ConfigurableNotifier(true),
         ]);
 
-        $this->assertInstanceOf('JoliNotif\\tests\\fixtures\\ConfigurableNotifier', $notifier);
+        $this->assertInstanceOf('Joli\\JoliNotif\\tests\\fixtures\\ConfigurableNotifier', $notifier);
     }
 
     public function testCreateWithNoSupportedNotifiersReturnsNull()

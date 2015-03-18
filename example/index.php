@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use JoliNotif\Notification;
-use JoliNotif\NotifierFactory;
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\NotifierFactory;
 
 require __DIR__.'/../vendor/autoload.php';
 

@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\fixtures;
+namespace Joli\JoliNotif\tests\fixtures;
 
-use JoliNotif\Notifier;
-use JoliNotif\Notification;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Notification;
 
 class ConfigurableNotifier implements Notifier
 {

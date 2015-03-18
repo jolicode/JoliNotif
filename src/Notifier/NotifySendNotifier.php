@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Notifier;
+namespace Joli\JoliNotif\Notifier;
 
-use JoliNotif\Notification;
+use Joli\JoliNotif\Notification;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**

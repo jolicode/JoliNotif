@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Notifier;
+namespace Joli\JoliNotif\Notifier;
 
-use JoliNotif\Exception\InvalidNotificationException;
-use JoliNotif\Notification;
-use JoliNotif\Notifier;
-use JoliNotif\Util\OsHelper;
-use JoliNotif\Util\PharExtractor;
+use Joli\JoliNotif\Exception\InvalidNotificationException;
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Util\OsHelper;
+use Joli\JoliNotif\Util\PharExtractor;
 use Symfony\Component\Process\ProcessBuilder;
 
 abstract class CliBasedNotifier implements Notifier

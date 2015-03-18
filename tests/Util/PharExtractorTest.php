@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Util;
+namespace Joli\JoliNotif\tests\Util;
 
-use JoliNotif\Util\PharExtractor;
+use Joli\JoliNotif\Util\PharExtractor;
 
 class PharExtractorTest extends \PHPUnit_Framework_TestCase
 {
@@ -115,7 +115,7 @@ require __DIR__.'/vendor/autoload.php';
 $filePath = THE_FILE;
 $overwrite = OVERWRITE;
 
-\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
+\Joli\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
 
 ?>
 PHAR_BOOTSTRAP;
