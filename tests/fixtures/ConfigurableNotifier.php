@@ -11,10 +11,10 @@
 
 namespace JoliNotif\tests\fixtures;
 
-use JoliNotif\Driver\Driver;
+use JoliNotif\Notifier;
 use JoliNotif\Notification;
 
-class ConfigurableDriver implements Driver
+class ConfigurableNotifier implements Notifier
 {
     /**
      * @var bool
@@ -36,7 +36,7 @@ class ConfigurableDriver implements Driver
      * @param $priority
      * @param $sendReturn
      */
-    public function __construct($supported, $priority = Driver::PRIORITY_MEDIUM, $sendReturn = true)
+    public function __construct($supported, $priority = Notifier::PRIORITY_MEDIUM, $sendReturn = true)
     {
         $this->supported = $supported;
         $this->priority = $priority;

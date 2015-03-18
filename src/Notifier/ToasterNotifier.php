@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Driver;
+namespace JoliNotif\Notifier;
 
 use JoliNotif\Notification;
 use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
-class ToasterDriver extends CliBasedDriver implements BinaryProvider
+class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
 {
     /**
      * {@inheritdoc}

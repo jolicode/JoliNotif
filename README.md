@@ -17,18 +17,14 @@ Use [Composer](http://getcomposer.org/) to install JoliNotif in your projects:
 
 ## Usage
 
-The main class is `Notifier`. It should be instantiated with an array of
-`Driver`. The `Notifier` constructor will choose the best driver to use,
-according to which commands are available on your system.
-
-In order to ease the use of JoliNotif, a `NotifierFactory` take care to create
-a `Notifier` with the right drivers according to your system.
+The main interface is `Notifier`. A `NotifierFactory` take care to create a
+`Notifier` according to which notifiers are available on your system.
 
 Look at below (or [example/index.php](example/index.php)) to see an example on
 how to use JoliNotif.
 
 ```php
-// Build a Notifier
+// Create a Notifier
 $notifier = NotifierFactory::create();
 
 // Create your notification
@@ -41,11 +37,11 @@ $notification->setIcon(__DIR__.'/notification-icon.png');
 $notifier->send($notification);
 ```
 
-`Notifier#send()` will return one of these values:
-- `Notifier::STATUS_SENT` if everything gone well
-- `Notifier::STATUS_ERROR_DRIVER` if an error happened in the driver
-- `Notifier::STATUS_NO_DRIVER` if not any driver could be used
+`Notifier#send()` will return true if the command was successully executed,
+false otherwise.
 
+> **Note**: The factory returns null if not any notifier is supported on your
+> system.
 
 ## Notification options
 
@@ -61,7 +57,7 @@ If you use JoliNotif from a phar and provide your notification icon, the
 notifier will take care to extract this image in your system temp directory
 to make it accessible for native commands.
 
-> **Note**: New properties could be added later on Notification. Drivers are
+> **Note**: New properties could be added later on Notification. Notifiers are
 > designed to only handle the supported properties and discard not supported
 > ones without throwing any exception.
 

@@ -9,14 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Driver;
+namespace JoliNotif\Notifier;
 
+use JoliNotif\Exception\InvalidNotificationException;
 use JoliNotif\Notification;
+use JoliNotif\Notifier;
 use JoliNotif\Util\OsHelper;
 use JoliNotif\Util\PharExtractor;
 use Symfony\Component\Process\ProcessBuilder;
 
-abstract class CliBasedDriver implements Driver
+abstract class CliBasedNotifier implements Notifier
 {
     const SUPPORT_NONE            = -1;
     const SUPPORT_UNKNOWN         = 0;
@@ -105,6 +107,10 @@ abstract class CliBasedDriver implements Driver
      */
     public function send(Notification $notification)
     {
+        if (!$notification->getBody()) {
+            throw new InvalidNotificationException($notification, 'Notification body can not be empty');
+        }
+
         $builder = new ProcessBuilder();
 
         if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {

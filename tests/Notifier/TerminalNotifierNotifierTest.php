@@ -9,35 +9,35 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Driver;
+namespace JoliNotif\tests\Notifier;
 
-use JoliNotif\Driver\Driver;
-use JoliNotif\Driver\TerminalNotifierDriver;
+use JoliNotif\Notifier;
+use JoliNotif\Notifier\TerminalNotifierNotifier;
 use JoliNotif\Util\OsHelper;
 
-class TerminalNotifierDriverTest extends DriverTestCase
+class TerminalNotifierNotifierTest extends NotifierTestCase
 {
     const BINARY = 'terminal-notifier';
 
-    use CliBasedDriverTestTrait;
+    use CliBasedNotifierTestTrait;
 
-    protected function getDriver()
+    protected function getNotifier()
     {
-        return new TerminalNotifierDriver();
+        return new TerminalNotifierNotifier();
     }
 
     public function testGetBinary()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(self::BINARY, $driver->getBinary());
+        $this->assertSame(self::BINARY, $notifier->getBinary());
     }
 
     public function testGetPriority()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(Driver::PRIORITY_MEDIUM, $driver->getPriority());
+        $this->assertSame(Notifier::PRIORITY_MEDIUM, $notifier->getPriority());
     }
 
     /**

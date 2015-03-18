@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Driver;
+namespace JoliNotif\Notifier;
 
 /**
- * Interface implemented by drivers when they provide their own binaries in
+ * Interface implemented by notifiers when they provide their own binaries in
  * case the executable is not natively supported.
  */
 interface BinaryProvider
@@ -32,7 +32,7 @@ interface BinaryProvider
     public function getRootDir();
 
     /**
-     * Return the path. of the embeded binary.
+     * Return the path of the embeded binary.
      *
      * The path should be relative to the directory pointed by getRootDir().
      *

@@ -9,34 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Driver;
+namespace JoliNotif\tests\Notifier;
 
-use JoliNotif\Driver\Driver;
-use JoliNotif\Driver\NotifuDriver;
+use JoliNotif\Notifier;
+use JoliNotif\Notifier\NotifuNotifier;
 
-class NotifuDriverTest extends DriverTestCase
+class NotifuNotifierTest extends NotifierTestCase
 {
     const BINARY = 'notifu';
 
-    use CliBasedDriverTestTrait;
+    use CliBasedNotifierTestTrait;
 
-    protected function getDriver()
+    protected function getNotifier()
     {
-        return new NotifuDriver();
+        return new NotifuNotifier();
     }
 
     public function testGetBinary()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(self::BINARY, $driver->getBinary());
+        $this->assertSame(self::BINARY, $notifier->getBinary());
     }
 
     public function testGetPriority()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(Driver::PRIORITY_LOW, $driver->getPriority());
+        $this->assertSame(Notifier::PRIORITY_LOW, $notifier->getPriority());
     }
 
     /**

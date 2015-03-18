@@ -11,79 +11,152 @@
 
 namespace JoliNotif\tests;
 
-use JoliNotif\Driver\Driver;
 use JoliNotif\Notifier;
 use JoliNotif\NotifierFactory;
-use JoliNotif\tests\fixtures\ConfigurableDriver;
+use JoliNotif\tests\fixtures\ConfigurableNotifier;
 use JoliNotif\Util\OsHelper;
 
 class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @param Notifier $notifier
-     *
-     * @return Driver[]
-     */
-    private function getNotifierDrivers(Notifier $notifier)
+    private function assertNotifierClasses($expectedNotifierClasses, $notifiers)
     {
-        $reflection = new \ReflectionClass(get_class($notifier));
-        $property = $reflection->getProperty('drivers');
-        $property->setAccessible(true);
+        $expectedCount = count($expectedNotifierClasses);
+        $this->assertSame($expectedCount, count($notifiers));
 
-        return $property->getValue($notifier);
-    }
-
-    private function assertDriversClasses($expectedDriversClass, $drivers)
-    {
-        $expectedCount = count($expectedDriversClass);
-        $this->assertSame($expectedCount, count($drivers));
-
-        for ($i=0; $i<$expectedCount; $i++) {
-            $this->assertInstanceOf($expectedDriversClass[$i], $drivers[$i]);
+        for ($i = 0; $i<$expectedCount; $i++) {
+            $this->assertInstanceOf($expectedNotifierClasses[$i], $notifiers[$i]);
         }
     }
 
-    public function testCreateUseDefaultDrivers()
+    public function testGetDefaultNotifiers()
+    {
+        $notifiers = NotifierFactory::getDefaultNotifiers();
+
+        if (OsHelper::isUnix()) {
+            $expectedNotifierClasses = [
+                'JoliNotif\\Notifier\\GrowlNotifyNotifier',
+                'JoliNotif\\Notifier\\TerminalNotifierNotifier',
+                'JoliNotif\\Notifier\\AppleScriptNotifier',
+                'JoliNotif\\Notifier\\NotifySendNotifier',
+            ];
+        } else {
+            $expectedNotifierClasses = [
+                'JoliNotif\\Notifier\\ToasterNotifier',
+                'JoliNotif\\Notifier\\NotifuNotifier',
+            ];
+        }
+
+        $this->assertNotifierClasses($expectedNotifierClasses, $notifiers);
+    }
+
+    public function testCreateUsesDefaultNotifiers()
     {
         $notifier = NotifierFactory::create();
 
+        if (null === $notifier) {
+            $this->markTestSkipped('This test needs that at least one notifier is supported');
+        }
+
         $this->assertInstanceOf('JoliNotif\\Notifier', $notifier);
 
-        $drivers = $this->getNotifierDrivers($notifier);
-
         if (OsHelper::isUnix()) {
-            $expectedDriversClass = [
-                'JoliNotif\\Driver\\GrowlNotifyDriver',
-                'JoliNotif\\Driver\\TerminalNotifierDriver',
-                'JoliNotif\\Driver\\AppleScriptDriver',
-                'JoliNotif\\Driver\\NotifySendDriver',
+            $expectedNotifierClasses = [
+                'JoliNotif\\Notifier\\GrowlNotifyNotifier',
+                'JoliNotif\\Notifier\\TerminalNotifierNotifier',
+                'JoliNotif\\Notifier\\AppleScriptNotifier',
+                'JoliNotif\\Notifier\\NotifySendNotifier',
             ];
         } else {
-            $expectedDriversClass = [
-                'JoliNotif\\Driver\\ToasterDriver',
-                'JoliNotif\\Driver\\NotifuDriver',
+            $expectedNotifierClasses = [
+                'JoliNotif\\Notifier\\ToasterNotifier',
+                'JoliNotif\\Notifier\\NotifuNotifier',
             ];
         }
 
-        $this->assertDriversClasses($expectedDriversClass, $drivers);
+        $this->assertContains(get_class($notifier), $expectedNotifierClasses);
     }
 
-    public function testCreateUseGivenDrivers()
+    public function testCreateUsesGivenNotifiers()
     {
         $notifier = NotifierFactory::create([
-            new ConfigurableDriver(true),
-            new ConfigurableDriver(true),
+            new ConfigurableNotifier(true),
         ]);
 
-        $this->assertInstanceOf('JoliNotif\\Notifier', $notifier);
+        $this->assertInstanceOf('JoliNotif\\tests\\fixtures\\ConfigurableNotifier', $notifier);
+    }
 
-        $drivers = $this->getNotifierDrivers($notifier);
+    public function testCreateWithNoSupportedNotifiersReturnsNull()
+    {
+        $notifier = NotifierFactory::create([
+            new ConfigurableNotifier(false),
+            new ConfigurableNotifier(false),
+        ]);
 
-        $expectedDriversClass = [
-            'JoliNotif\\tests\\fixtures\\ConfigurableDriver',
-            'JoliNotif\\tests\\fixtures\\ConfigurableDriver',
-        ];
+        $this->assertNull($notifier);
+    }
 
-        $this->assertDriversClasses($expectedDriversClass, $drivers);
+    public function testCreateUsesTheBestSupportedNotifier()
+    {
+        // test case
+
+        $expectedNotifier = new ConfigurableNotifier(true);
+
+        $notifier = NotifierFactory::create([
+            $expectedNotifier,
+        ]);
+
+        $this->assertSame($expectedNotifier, $notifier);
+
+        // test case
+
+        $notifier1 = new ConfigurableNotifier(false);
+        $notifier2 = new ConfigurableNotifier(true);
+        $notifier3 = new ConfigurableNotifier(true);
+        $notifier4 = new ConfigurableNotifier(true);
+
+        $notifier = NotifierFactory::create([
+            $notifier1,
+            $notifier2,
+            $notifier3,
+            $notifier4,
+        ]);
+
+        $this->assertSame($notifier2, $notifier);
+
+        // test case
+
+        $notifier1 = new ConfigurableNotifier(false);
+        $notifier2 = new ConfigurableNotifier(true, 5);
+        $notifier3 = new ConfigurableNotifier(false);
+        $notifier4 = new ConfigurableNotifier(true, 8);
+        $notifier5 = new ConfigurableNotifier(true, 6);
+
+        $notifier = NotifierFactory::create([
+            $notifier1,
+            $notifier2,
+            $notifier3,
+            $notifier4,
+            $notifier5,
+        ]);
+
+        $this->assertSame($notifier4, $notifier);
+
+        // test case
+
+        $notifier1 = new ConfigurableNotifier(false);
+        $notifier2 = new ConfigurableNotifier(true, 5);
+        $notifier3 = new ConfigurableNotifier(true, 8);
+        $notifier4 = new ConfigurableNotifier(false);
+        $notifier5 = new ConfigurableNotifier(true, 8);
+
+        $notifier = NotifierFactory::create([
+            $notifier1,
+            $notifier2,
+            $notifier3,
+            $notifier4,
+            $notifier5,
+        ]);
+
+        $this->assertSame($notifier3, $notifier);
     }
 }

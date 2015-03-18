@@ -9,35 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Driver;
+namespace JoliNotif\Notifier;
 
 use JoliNotif\Notification;
-use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * This driver can be used on Mac OS X 10.9+.
+ * This notifier can be used on Mac OS X when growlnotify command is available.
  */
-class AppleScriptDriver extends CliBasedDriver
+class GrowlNotifyNotifier extends CliBasedNotifier
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function isSupported()
-    {
-        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            return parent::isSupported();
-        }
-
-        return false;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function getBinary()
     {
-        return 'osascript';
+        return 'growlnotify';
     }
 
     /**
@@ -45,7 +32,7 @@ class AppleScriptDriver extends CliBasedDriver
      */
     public function getPriority()
     {
-        return static::PRIORITY_LOW;
+        return static::PRIORITY_HIGH;
     }
 
     /**
@@ -53,13 +40,17 @@ class AppleScriptDriver extends CliBasedDriver
      */
     protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
     {
-        $script = 'display notification "'.$notification->getBody().'"';
+        $processBuilder->add('--message');
+        $processBuilder->add($notification->getBody());
 
         if ($notification->getTitle()) {
-            $script .= ' with title "'.$notification->getTitle().'"';
+            $processBuilder->add('--title');
+            $processBuilder->add($notification->getTitle());
         }
 
-        $processBuilder->add('-e');
-        $processBuilder->add($script);
+        if ($notification->getIcon()) {
+            $processBuilder->add('--image');
+            $processBuilder->add($notification->getIcon());
+        }
     }
 }

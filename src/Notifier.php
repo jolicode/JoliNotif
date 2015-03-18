@@ -11,93 +11,32 @@
 
 namespace JoliNotif;
 
-use JoliNotif\Driver\Driver;
-use JoliNotif\Exception\InvalidNotificationException;
-use JoliNotif\Exception\SystemNotSupportedException;
-use JoliNotif\Util\PharExtractor;
-
-class Notifier
+interface Notifier
 {
-    const STATUS_SENT         = 1;
-    const STATUS_ERROR_DRIVER = 2;
-    const STATUS_NO_DRIVER    = 3;
+    const PRIORITY_LOW    = 0;
+    const PRIORITY_MEDIUM = 50;
+    const PRIORITY_HIGH   = 100;
 
     /**
-     * @var Driver[]
-     */
-    private $drivers = [];
-
-    /**
-     * @var Driver
-     */
-    private $driverInUse;
-
-    /**
-     * @param Driver[] $drivers
+     * This method is called to check whether the notifier can be used on the current system or not.
      *
-     * @throw SystemNotSupportedException if no drivers are supported
+     * @return bool
      */
-    public function __construct(array $drivers)
-    {
-        $this->drivers = $drivers;
-
-        $this->driverInUse = $this->chooseBestDriver();
-    }
+    public function isSupported();
 
     /**
-     * @return Driver
-     */
-    public function getDriverInUse()
-    {
-        return $this->driverInUse;
-    }
-
-    /**
-     * @param Notification $notification
+     * The supported notifier with the higher priority will be preferred.
      *
      * @return int
      */
-    public function send(Notification $notification)
-    {
-        if (!$this->driverInUse) {
-            return self::STATUS_NO_DRIVER;
-        }
-
-        if (!$notification->getBody()) {
-            throw new InvalidNotificationException($notification, 'Notification body can not be empty');
-        }
-
-        // This makes the icon accessible for native commands when it's embedded inside a phar
-        if (($icon = $notification->getIcon()) && PharExtractor::isLocatedInsideAPhar($icon)) {
-            $notification->setIcon(
-                PharExtractor::extractFile($icon)
-            );
-        }
-
-        return $this->driverInUse->send($notification) ? self::STATUS_SENT : self::STATUS_ERROR_DRIVER;
-    }
+    public function getPriority();
 
     /**
-     * @return Driver
+     * Send the given notification.
      *
-     * @throw SystemNotSupportedException if no drivers are supported
+     * @param Notification $notification
+     *
+     * @return bool
      */
-    private function chooseBestDriver()
-    {
-        $bestDriver = null;
-
-        foreach ($this->drivers as $driver) {
-            if (!$driver->isSupported()) {
-                continue;
-            }
-
-            if (null !== $bestDriver && $bestDriver->getPriority() >= $driver->getPriority()) {
-                continue;
-            }
-
-            $bestDriver = $driver;
-        }
-
-        return $bestDriver;
-    }
+    public function send(Notification $notification);
 }

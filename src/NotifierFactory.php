@@ -11,56 +11,94 @@
 
 namespace JoliNotif;
 
-use JoliNotif\Driver\AppleScriptDriver;
-use JoliNotif\Driver\Driver;
-use JoliNotif\Driver\GrowlNotifyDriver;
-use JoliNotif\Driver\NotifuDriver;
-use JoliNotif\Driver\NotifySendDriver;
-use JoliNotif\Driver\TerminalNotifierDriver;
-use JoliNotif\Driver\ToasterDriver;
+use JoliNotif\Notifier\AppleScriptNotifier;
+use JoliNotif\Notifier\GrowlNotifyNotifier;
+use JoliNotif\Notifier\NotifuNotifier;
+use JoliNotif\Notifier\NotifySendNotifier;
+use JoliNotif\Notifier\TerminalNotifierNotifier;
+use JoliNotif\Notifier\ToasterNotifier;
 use JoliNotif\Util\OsHelper;
 
 class NotifierFactory
 {
     /**
-     * @param Driver[] $drivers
+     * @param Notifier[] $notifiers
      *
      * @return Notifier
      */
-    public static function create(array $drivers = [])
+    public static function create(array $notifiers = [])
     {
-        if (empty($drivers)) {
-            if (OsHelper::isUnix()) {
-                $drivers = self::getUnixDrivers();
-            } else {
-                $drivers = self::getWindowsDrivers();
-            }
+        if (empty($notifiers)) {
+            $notifiers = static::getDefaultNotifiers();
         }
 
-        return new Notifier($drivers);
+        $bestNotifier = self::chooseBestNotifier($notifiers);
+
+        return $bestNotifier;
     }
 
     /**
-     * @return Driver[]
+     * @return Notifier[]
      */
-    private static function getUnixDrivers()
+    public static function getDefaultNotifiers()
+    {
+        // Don't retrieve notifiers which are certainly not supported on this
+        // system. This helps to lower the number of process to run.
+        if (OsHelper::isUnix()) {
+            $notifiers = self::getUnixNotifiers();
+        } else {
+            $notifiers = self::getWindowsNotifiers();
+        }
+
+        return $notifiers;
+    }
+
+    /**
+     * @return Notifier[]
+     */
+    private static function getUnixNotifiers()
     {
         return [
-            new GrowlNotifyDriver(),
-            new TerminalNotifierDriver(),
-            new AppleScriptDriver(),
-            new NotifySendDriver(),
+            new GrowlNotifyNotifier(),
+            new TerminalNotifierNotifier(),
+            new AppleScriptNotifier(),
+            new NotifySendNotifier(),
         ];
     }
 
     /**
-     * @return Driver[]
+     * @return Notifier[]
      */
-    private static function getWindowsDrivers()
+    private static function getWindowsNotifiers()
     {
         return [
-            new ToasterDriver(),
-            new NotifuDriver(),
+            new ToasterNotifier(),
+            new NotifuNotifier(),
         ];
+    }
+
+    /**
+     * @param Notifier[] $notifiers
+     *
+     * @return Notifier|null
+     */
+    private static function chooseBestNotifier($notifiers)
+    {
+        /** @var Notifier|null $bestNotifier */
+        $bestNotifier = null;
+
+        foreach ($notifiers as $notifier) {
+            if (!$notifier->isSupported()) {
+                continue;
+            }
+
+            if (null !== $bestNotifier && $bestNotifier->getPriority() >= $notifier->getPriority()) {
+                continue;
+            }
+
+            $bestNotifier = $notifier;
+        }
+
+        return $bestNotifier;
     }
 }

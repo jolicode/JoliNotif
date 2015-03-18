@@ -9,46 +9,46 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Driver;
+namespace JoliNotif\tests\Notifier;
 
-use JoliNotif\Driver\AppleScriptDriver;
-use JoliNotif\Driver\Driver;
+use JoliNotif\Notifier\AppleScriptNotifier;
+use JoliNotif\Notifier;
 use JoliNotif\Util\OsHelper;
 
-class AppleScriptDriverTest extends DriverTestCase
+class AppleScriptNotifierTest extends NotifierTestCase
 {
     const BINARY = 'osascript';
 
-    use CliBasedDriverTestTrait;
+    use CliBasedNotifierTestTrait;
 
-    protected function getDriver()
+    protected function getNotifier()
     {
-        return new AppleScriptDriver();
+        return new AppleScriptNotifier();
     }
 
     public function testIsSupported()
     {
-        $driver  = $this->getDriver();
+        $notifier = $this->getNotifier();
 
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $this->assertTrue($driver->isSupported());
+            $this->assertTrue($notifier->isSupported());
         } else {
-            $this->assertFalse($driver->isSupported());
+            $this->assertFalse($notifier->isSupported());
         }
     }
 
     public function testGetBinary()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(self::BINARY, $driver->getBinary());
+        $this->assertSame(self::BINARY, $notifier->getBinary());
     }
 
     public function testGetPriority()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(Driver::PRIORITY_LOW, $driver->getPriority());
+        $this->assertSame(Notifier::PRIORITY_LOW, $notifier->getPriority());
     }
 
     /**

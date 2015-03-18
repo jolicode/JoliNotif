@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Driver;
+namespace JoliNotif\tests\Notifier;
 
-use JoliNotif\Driver\Driver;
+use JoliNotif\Notifier;
 
-abstract class DriverTestCase extends \PHPUnit_Framework_TestCase
+abstract class NotifierTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return Driver
+     * @return Notifier
      */
-    abstract protected function getDriver();
+    abstract protected function getNotifier();
 
     /**
      * Call protected/private method of a class.

@@ -11,6 +11,8 @@
 
 namespace JoliNotif;
 
+use JoliNotif\Util\PharExtractor;
+
 class Notification
 {
     /**
@@ -83,6 +85,11 @@ class Notification
      */
     public function setIcon($icon)
     {
+        // This makes the icon accessible for native commands when it's embedded inside a phar
+        if (PharExtractor::isLocatedInsideAPhar($icon)) {
+            $icon = PharExtractor::extractFile($icon);
+        }
+
         $this->icon = $icon;
 
         return $this;

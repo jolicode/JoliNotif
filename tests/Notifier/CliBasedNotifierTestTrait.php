@@ -9,16 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Driver;
+namespace JoliNotif\tests\Notifier;
 
 use JoliNotif\Notification;
 use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The class using this trait should define a BINARY constant and extend DriverTestCase.
+ * The classes using this trait should define a BINARY constant and extend
+ * NotifierTestCase.
  */
-trait CliBasedDriverTestTrait
+trait CliBasedNotifierTestTrait
 {
     public function testIsSupported()
     {
@@ -31,7 +32,7 @@ trait CliBasedDriverTestTrait
         passthru($commandLine, $return);
         $supported = 0 === $return;
 
-        $this->assertEquals($supported, $this->getDriver()->isSupported());
+        $this->assertEquals($supported, $this->getNotifier()->isSupported());
     }
 
     /**
@@ -45,7 +46,7 @@ trait CliBasedDriverTestTrait
         try {
             $processBuilder = new ProcessBuilder();
             $processBuilder->setPrefix(self::BINARY);
-            $this->invokeMethod($this->getDriver(), 'configureProcess', [$processBuilder, $notification]);
+            $this->invokeMethod($this->getNotifier(), 'configureProcess', [$processBuilder, $notification]);
 
             $this->assertEquals($expectedCommandLine, $processBuilder->getProcess()->getCommandLine());
         } catch (\Exception $e) {
@@ -104,5 +105,29 @@ trait CliBasedDriverTestTrait
                 $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],
         ];
+    }
+    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
+    {
+        $notifier = $this->getNotifier();
+
+        // test case
+        $notification = new Notification();
+        try {
+            $notifier->send($notification);
+            $this->fail('Expected a InvalidNotificationException');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('JoliNotif\Exception\InvalidNotificationException', $e);
+        }
+
+        // test case
+        $notification = new Notification();
+        $notification->setBody('');
+
+        try {
+            $notifier->send($notification);
+            $this->fail('Expected a InvalidNotificationException');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('JoliNotif\Exception\InvalidNotificationException', $e);
+        }
     }
 }

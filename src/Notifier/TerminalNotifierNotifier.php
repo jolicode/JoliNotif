@@ -9,23 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\Driver;
+namespace JoliNotif\Notifier;
 
 use JoliNotif\Notification;
+use JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * This driver can be used on most Linux distributions, using the command notify-send.
- * This command is packaged in libnotify-bin.
+ * This notifier can be used on Mac OS X 10.8, or higher, using the
+ * terminal-notifier binary.
  */
-class NotifySendDriver extends CliBasedDriver
+class TerminalNotifierNotifier extends CliBasedNotifier
 {
     /**
      * {@inheritdoc}
      */
     public function getBinary()
     {
-        return 'notify-send';
+        return 'terminal-notifier';
     }
 
     /**
@@ -41,15 +42,17 @@ class NotifySendDriver extends CliBasedDriver
      */
     protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
     {
-        if ($notification->getIcon()) {
-            $processBuilder->add('--icon');
-            $processBuilder->add($notification->getIcon());
-        }
+        $processBuilder->add('-message');
+        $processBuilder->add($notification->getBody());
 
         if ($notification->getTitle()) {
+            $processBuilder->add('-title');
             $processBuilder->add($notification->getTitle());
         }
 
-        $processBuilder->add($notification->getBody());
+        if ($notification->getIcon() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            $processBuilder->add('-appIcon');
+            $processBuilder->add($notification->getIcon());
+        }
     }
 }

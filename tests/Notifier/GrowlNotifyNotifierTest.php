@@ -9,34 +9,34 @@
  * file that was distributed with this source code.
  */
 
-namespace JoliNotif\tests\Driver;
+namespace JoliNotif\tests\Notifier;
 
-use JoliNotif\Driver\Driver;
-use JoliNotif\Driver\GrowlNotifyDriver;
+use JoliNotif\Notifier;
+use JoliNotif\Notifier\GrowlNotifyNotifier;
 
-class GrowlNotifyDriverTest extends DriverTestCase
+class GrowlNotifyNotifierTest extends NotifierTestCase
 {
     const BINARY = 'growlnotify';
 
-    use CliBasedDriverTestTrait;
+    use CliBasedNotifierTestTrait;
 
-    protected function getDriver()
+    protected function getNotifier()
     {
-        return new GrowlNotifyDriver();
+        return new GrowlNotifyNotifier();
     }
 
     public function testGetBinary()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(self::BINARY, $driver->getBinary());
+        $this->assertSame(self::BINARY, $notifier->getBinary());
     }
 
     public function testGetPriority()
     {
-        $driver = $this->getDriver();
+        $notifier = $this->getNotifier();
 
-        $this->assertSame(Driver::PRIORITY_HIGH, $driver->getPriority());
+        $this->assertSame(Notifier::PRIORITY_HIGH, $notifier->getPriority());
     }
 
     /**
