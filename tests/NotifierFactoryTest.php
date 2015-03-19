@@ -95,10 +95,8 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($notifier);
     }
 
-    public function testCreateUsesTheBestSupportedNotifier()
+    public function testCreateUsesTheOnlySupportedNotifier()
     {
-        // test case
-
         $expectedNotifier = new ConfigurableNotifier(true);
 
         $notifier = NotifierFactory::create([
@@ -106,9 +104,10 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertSame($expectedNotifier, $notifier);
+    }
 
-        // test case
-
+    public function testCreateUsesTheFirstSupporteddNotifierWhenNoPrioritiesAreGiven()
+    {
         $notifier1 = new ConfigurableNotifier(false);
         $notifier2 = new ConfigurableNotifier(true);
         $notifier3 = new ConfigurableNotifier(true);
@@ -122,13 +121,14 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertSame($notifier2, $notifier);
+    }
 
-        // test case
-
+    public function testCreateUsesTheBestSupportedNotifier()
+    {
         $notifier1 = new ConfigurableNotifier(false);
         $notifier2 = new ConfigurableNotifier(true, 5);
-        $notifier3 = new ConfigurableNotifier(false);
-        $notifier4 = new ConfigurableNotifier(true, 8);
+        $notifier3 = new ConfigurableNotifier(true, 8);
+        $notifier4 = new ConfigurableNotifier(false);
         $notifier5 = new ConfigurableNotifier(true, 6);
 
         $notifier = NotifierFactory::create([
@@ -139,10 +139,11 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
             $notifier5,
         ]);
 
-        $this->assertSame($notifier4, $notifier);
+        $this->assertSame($notifier3, $notifier);
+    }
 
-        // test case
-
+    public function testCreateUsesTheFirstOfTheBestSupportedNotifiers()
+    {
         $notifier1 = new ConfigurableNotifier(false);
         $notifier2 = new ConfigurableNotifier(true, 5);
         $notifier3 = new ConfigurableNotifier(true, 8);

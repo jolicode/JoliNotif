@@ -16,7 +16,7 @@ use Joli\JoliNotif\Util\OsHelper;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * The classes using this trait should define a BINARY constant and extend
+ * Classes using this trait should define a BINARY constant and extend
  * NotifierTestCase.
  */
 trait CliBasedNotifierTestTrait
@@ -46,6 +46,7 @@ trait CliBasedNotifierTestTrait
         try {
             $processBuilder = new ProcessBuilder();
             $processBuilder->setPrefix(self::BINARY);
+
             $this->invokeMethod($this->getNotifier(), 'configureProcess', [$processBuilder, $notification]);
 
             $this->assertEquals($expectedCommandLine, $processBuilder->getProcess()->getCommandLine());
@@ -106,20 +107,25 @@ trait CliBasedNotifierTestTrait
             ],
         ];
     }
-    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
+
+    public function testSendThrowsExceptionWhenNotificationDoesntHaveBody()
     {
         $notifier = $this->getNotifier();
 
-        // test case
         $notification = new Notification();
+
         try {
             $notifier->send($notification);
             $this->fail('Expected a InvalidNotificationException');
         } catch (\Exception $e) {
             $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
         }
+    }
 
-        // test case
+    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
+    {
+        $notifier = $this->getNotifier();
+
         $notification = new Notification();
         $notification->setBody('');
 

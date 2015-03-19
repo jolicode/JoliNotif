@@ -40,7 +40,7 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
         unlink($extractedFilePath);
     }
 
-    public function testExtractFileDontOverwriteExistingFileIfNotSpecified()
+    public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified()
     {
         $key               = uniqid();
         $pharPath          = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
@@ -62,7 +62,7 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
         unlink($extractedFilePath);
     }
 
-    public function testExtractFileOverwriteExistingFileIfSpecified()
+    public function testExtractFileOverwritesExistingFileIfSpecified()
     {
         $key               = uniqid();
         $pharPath          = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';

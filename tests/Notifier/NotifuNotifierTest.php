@@ -19,6 +19,7 @@ class NotifuNotifierTest extends NotifierTestCase
     const BINARY = 'notifu';
 
     use CliBasedNotifierTestTrait;
+    use BinaryProviderTestTrait;
 
     protected function getNotifier()
     {
