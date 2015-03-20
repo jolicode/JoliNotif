@@ -1,12 +1,15 @@
 {
     "name": "jolicode/jolinotif",
-    "license": "MIT",
-    "type": "library",
-
     "description": "Send desktop notifications on Windows, Linux, MacOS.",
     "keywords": ["notification", "windows", "linux", "mac", "growl"],
-    "minimum-stability": "stable",
-
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Loïck Piera",
+            "email": "pyrech@gmail.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Joli\\JoliNotif\\": "src/"
@@ -24,5 +27,10 @@
     "require-dev": {
         "phpunit/phpunit": "~4.5",
         "fabpot/php-cs-fixer": "~1.5"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
