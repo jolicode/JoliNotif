@@ -4,17 +4,15 @@
 
 PHP >= 5.4
 
-JoliNotif allows you to send notifications to your desktop directly from your
-php script. This project takes care to use the right command available, without
-having you to worry if you're running on Linux, Windows or MacOS.
+JoliNotif is a PHP library to send notifications to your desktop directly from
+your script. It takes care to use the right command available, without having
+you to worry if you're running on Linux, Windows or MacOS.
 
-For example, if you have a long running php task - like executing a large test
+For example, if you have a long running PHP task - like executing a large test
 suite, launching a deployment script - you can use JoliNotif to inform yours
 users that a task just finished.
 
-This project was originally inspired by [mikaelbr/node-notifier](https://github.com/mikaelbr/node-notifier).
-
-## Getting started
+## Installation
 
 Use [Composer](http://getcomposer.org/) to install JoliNotif in your project:
 
@@ -34,6 +32,9 @@ Look at below (or [example/index.php](example/index.php)) to see an example on
 how to use JoliNotif.
 
 ```php
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\NotifierFactory;
+
 // Create a Notifier
 $notifier = NotifierFactory::create();
 
@@ -72,7 +73,7 @@ Currently, only three options are supported:
 
 ## Notifier supported
 
-Currently, these notifiers exist:
+Currently, these notifiers are supported:
 * notify-send: should be available on most linux distributions
 * growl-notify: can be available on Mac OS X
 * terminal-notifier: can be available on Mac OS X 10.8 and higher
@@ -81,7 +82,6 @@ Currently, these notifiers exist:
 be used on Windows 8 and higher
 * Notifu: binary is embedded in [bin/notifu](bin/notifu) so it can always be
 used on Windows 7
-
 
 ## Further documentation
 
@@ -93,6 +93,14 @@ You can see the current and past versions using one of the following:
 
 You can find more documentation at the following links:
 
-* [copyright and MIT license](LICENSE)
 * [versioning and branching models](VERSIONING.md)
 * [contribution instructions](CONTRIBUTING.md)
+
+## Credits
+
+* [All contributors](https://github.com/jolicode/JoliNotif/graphs/contributors)
+* This project was originally inspired by [mikaelbr/node-notifier](https://github.com/mikaelbr/node-notifier)
+
+## License
+
+View the [LICENSE](LICENSE) file attached to this project.
