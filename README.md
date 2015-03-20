@@ -1,7 +1,7 @@
 # JoliNotif
 
 JoliNotif allows you to send notifications to your desktop directly from your
-php script. This project take care to use the right command available, without
+php script. This project takes care to use the right command available, without
 having you to worry if you're running on Linux, Windows or MacOS.
 
 For example, if you have a long running php task - like executing a large test
