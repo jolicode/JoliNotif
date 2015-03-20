@@ -1,5 +1,9 @@
 # JoliNotif
 
+[![Build Status](https://travis-ci.org/jolicode/JoliNotif.svg?branch=master)](https://travis-ci.org/jolicode/JoliNotif)
+
+PHP >= 5.4
+
 JoliNotif allows you to send notifications to your desktop directly from your
 php script. This project takes care to use the right command available, without
 having you to worry if you're running on Linux, Windows or MacOS.
