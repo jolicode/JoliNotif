@@ -5,7 +5,7 @@
 PHP >= 5.4
 
 JoliNotif is a PHP library to send notifications to your desktop directly from
-your script. It takes care to use the right command available, without having
+your script. It takes care of using the right command available, without having
 you to worry if you're running on Linux, Windows or MacOS.
 
 For example, if you have a long running PHP task - like executing a large test
@@ -22,7 +22,7 @@ composer require "jolicode/jolinotif"
 
 ## Usage
 
-The main interface is `Notifier`. A `NotifierFactory` takes care to create a
+The main interface is `Notifier`. A `NotifierFactory` takes care of creating a
 `Notifier` according to which notifiers are available on your system.
 
 > **Note**: The factory returns null if not any notifier is supported on your
