@@ -18,7 +18,8 @@ interface Notifier
     const PRIORITY_HIGH   = 100;
 
     /**
-     * This method is called to check whether the notifier can be used on the current system or not.
+     * This method is called to check whether the notifier can be used on the
+     * current system or not.
      *
      * @return bool
      */
@@ -35,6 +36,8 @@ interface Notifier
      * Send the given notification.
      *
      * @param Notification $notification
+     *
+     * @throws Exception\InvalidNotificationException if the notification is invalid
      *
      * @return bool
      */
