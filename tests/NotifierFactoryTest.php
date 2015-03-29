@@ -11,7 +11,7 @@
 
 namespace Joli\JoliNotif\tests;
 
-use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\NotifierFactory;
 use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
 use Joli\JoliNotif\Util\OsHelper;
@@ -53,7 +53,7 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $notifier = NotifierFactory::create();
 
-        if (null === $notifier) {
+        if ($notifier instanceof NullNotifier) {
             $this->markTestSkipped('This test needs that at least one notifier is supported');
         }
 
@@ -85,14 +85,14 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Joli\\JoliNotif\\tests\\fixtures\\ConfigurableNotifier', $notifier);
     }
 
-    public function testCreateWithNoSupportedNotifiersReturnsNull()
+    public function testCreateWithNoSupportedNotifiersReturnsANullNotifier()
     {
         $notifier = NotifierFactory::create([
             new ConfigurableNotifier(false),
             new ConfigurableNotifier(false),
         ]);
 
-        $this->assertNull($notifier);
+        $this->assertInstanceOf('Joli\\JoliNotif\\Notifier\\NullNotifier', $notifier);
     }
 
     public function testCreateUsesTheOnlySupportedNotifier()
