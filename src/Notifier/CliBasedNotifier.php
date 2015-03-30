@@ -79,7 +79,7 @@ abstract class CliBasedNotifier implements Notifier
     protected function isBinaryAvailable()
     {
         if (OsHelper::isUnix()) {
-            // Do not use the 'which' programm to check if a binary exists.
+            // Do not use the 'which' program to check if a binary exists.
             // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
             $builder = new ProcessBuilder([
                 'command',
