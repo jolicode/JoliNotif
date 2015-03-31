@@ -1,6 +1,7 @@
 # JoliNotif
 
 [![Build Status](https://travis-ci.org/jolicode/JoliNotif.svg?branch=master)](https://travis-ci.org/jolicode/JoliNotif)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b/mini.png)](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b)
 
 PHP >= 5.4
 
