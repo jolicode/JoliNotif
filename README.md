@@ -9,6 +9,8 @@ JoliNotif is a PHP library to send notifications to your desktop directly from
 your script. It takes care of using the right command available, without having
 you to worry if you're running on Linux, Windows or MacOS.
 
+![Demo](doc/images/demo.gif)
+
 For example, if you have a long running PHP task - like executing a large test
 suite, launching a deployment script - you can use JoliNotif to inform yours
 users that a task just finished.
@@ -23,14 +25,8 @@ composer require "jolicode/jolinotif"
 
 ## Usage
 
-The main interface is `Notifier`. A `NotifierFactory` takes care of creating a
-`Notifier` according to which notifiers are available on your system.
-
-> **Note**: The factory returns null if not any notifier is supported on your
-> system.
-
-Look at below (or [example/index.php](example/index.php)) to see an example on
-how to use JoliNotif.
+Use the `NotifierFactory` to create a `Notifier` according to which notifiers
+are available on your system, then use it to send your notification:
 
 ```php
 use Joli\JoliNotif\Notification;
@@ -40,51 +36,24 @@ use Joli\JoliNotif\NotifierFactory;
 $notifier = NotifierFactory::create();
 
 // Create your notification
-$notification = new Notification();
-$notification
-    ->setTitle('I\'m a notification title')
-    ->setBody('And this is the body')
-    ->setIcon(__DIR__.'/notification-icon.png')
+$notification =
+    (new Notification())
+    ->setTitle('Notification title')
+    ->setBody('This is the body of your notification')
+    ->setIcon(DIR.'/path/to/your/icon.png')
 ;
 
 // Send it
 $notifier->send($notification);
 ```
 
-`Notifier#send()` will return true if the command was successfully executed,
-false otherwise.
-
-## Notification options
-
-Currently, only three options are supported:
-* body
-* title
-* icon
-
-> **Important**: The only required property on Notification is the body.
-> The notifier will throw an InvalidNotificationException if it is empty.
-
-> **Note**: If you use JoliNotif from a phar and provide a notification icon,
-> the notification will take care to extract this image in your system temp
-> directory to make it accessible from native commands.
-
-> **Note**: New properties could be added later on Notification. Notifiers are
-> designed to handle the properties they support and discard not supported ones
-> without throwing any exception.
-
-## Notifier supported
-
-Currently, these notifiers are supported:
-* notify-send: should be available on most linux distributions
-* growl-notify: can be available on Mac OS X
-* terminal-notifier: can be available on Mac OS X 10.8 and higher
-* AppleScript: can display notification since Mac OS X 10.9
-* Toaster: binaries are embedded in [bin/toaster](bin/toaster) so it can always
-be used on Windows 8 and higher
-* Notifu: binary is embedded in [bin/notifu](bin/notifu) so it can always be
-used on Windows 7
-
 ## Further documentation
+
+Discover more by reading the docs:
+
+* [Basic usage](doc/01-basic-usage.md)
+* [Notification](doc/02-notification.md)
+* [Notifier](doc/03-notifier.md)
 
 You can see the current and past versions using one of the following:
 
@@ -92,7 +61,7 @@ You can see the current and past versions using one of the following:
 * the [releases page on Github](https://github.com/jolicode/JoliNotif/releases)
 * the file listing the [changes between versions](CHANGELOG.md)
 
-You can find more documentation at the following links:
+And finally some meta documentation:
 
 * [versioning and branching models](VERSIONING.md)
 * [contribution instructions](CONTRIBUTING.md)
@@ -104,4 +73,5 @@ You can find more documentation at the following links:
 
 ## License
 
-View the [LICENSE](LICENSE) file attached to this project.
+JoliNotif is licensed under the MIT License - see the [LICENSE](LICENSE) file
+for details.

@@ -47,33 +47,44 @@ changes, improvements or alternatives may be given).
 
 Run the tests using the following script:
 
-    vendor/bin/phpunit
+```shell
+vendor/bin/phpunit
+```
 
 ## Standard code
 
 Use [PHP CS fixer](http://cs.sensiolabs.org/) to make your code compliant with
 JoliNotif's coding standards:
 
-    vendor/bin/php-cs-fixer fix .
+```shell
+vendor/bin/php-cs-fixer fix .
+```
 
 ## Keeping your fork up-to-date
 
 To keep your fork up-to-date, you should track the upstream (original) one
 using the following command:
 
-    git remote add upstream https://github.com/jolicode/JoliNotif.git
+
+```shell
+git remote add upstream https://github.com/jolicode/JoliNotif.git
+```
 
 Then get the upstream changes:
 
-    git checkout master
-    git pull --rebase origin master
-    git pull --rebase upstream master
-    git checkout <your-branch>
-    git rebase master
+```shell
+git checkout master
+git pull --rebase origin master
+git pull --rebase upstream master
+git checkout <your-branch>
+git rebase master
+```
 
 Finally, publish your changes:
 
-    git push -f origin <your-branch>
+```shell
+git push -f origin <your-branch>
+```
 
 Your pull request will be automatically updated.
 
