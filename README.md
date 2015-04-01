@@ -7,12 +7,12 @@ PHP >= 5.4
 
 JoliNotif is a PHP library to send notifications to your desktop directly from
 your script. It takes care of using the right command available, without having
-you to worry if you're running on Linux, Windows or MacOS.
+to worry if you're running on Linux, Windows or MacOS.
 
 ![Demo](doc/images/demo.gif)
 
 For example, if you have a long running PHP task - like executing a large test
-suite, launching a deployment script - you can use JoliNotif to inform yours
+suite, launching a deployment script - you can use JoliNotif to inform your
 users that a task just finished.
 
 ## Installation
