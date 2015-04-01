@@ -16,8 +16,8 @@ The factory use the notifier's priority to determine the best notifier to use.
 For example some notifier has a low priority because they don't support some
 notification options. The best notifier will then be returned.
 
-> **Note**: The factory currently returns null if not any notifier is supported
-> on your system.
+> **Note**: The factory currently returns null if no notifier is supported on
+> your system.
 
 ## Create your notification
 
