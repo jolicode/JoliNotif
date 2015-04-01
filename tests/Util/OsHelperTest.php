@@ -59,9 +59,9 @@ class OsHelperTest extends \PHPUnit_Framework_TestCase
             '6.3', // 8.1
             '6.4', // 10
         ];
-        $isEeightOrHigher = in_array(php_uname('r'), $eightOrHigher, true);
+        $isEightOrHigher = in_array(php_uname('r'), $eightOrHigher, true);
 
-        $this->assertSame($isEeightOrHigher, OsHelper::isWindowsEightOrHigher());
+        $this->assertSame($isEightOrHigher, OsHelper::isWindowsEightOrHigher());
     }
 
     public function testIsMacOS()

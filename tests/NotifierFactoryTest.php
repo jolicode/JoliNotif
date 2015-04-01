@@ -106,7 +106,7 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedNotifier, $notifier);
     }
 
-    public function testCreateUsesTheFirstSupporteddNotifierWhenNoPrioritiesAreGiven()
+    public function testCreateUsesTheFirstSupportedNotifierWhenNoPrioritiesAreGiven()
     {
         $notifier1 = new ConfigurableNotifier(false);
         $notifier2 = new ConfigurableNotifier(true);

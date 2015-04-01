@@ -18,7 +18,7 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
     public function testIsLocatedInsideAPhar()
     {
         $this->assertFalse(PharExtractor::isLocatedInsideAPhar('/var/www/my_file'));
-        $this->assertFalse(PharExtractor::isLocatedInsideAPhar('http://exammple.com/index.php'));
+        $this->assertFalse(PharExtractor::isLocatedInsideAPhar('http://example.com/index.php'));
         $this->assertFalse(PharExtractor::isLocatedInsideAPhar('/var/www/phar://test.phar/my_file'));
         $this->assertTrue(PharExtractor::isLocatedInsideAPhar('phar:///var/www/test.phar/my_file'));
     }
