@@ -11,31 +11,13 @@
 
 namespace Joli\JoliNotif\Exception;
 
-use Joli\JoliNotif\Notification;
-
-class InvalidNotificationException extends \LogicException implements Exception
+class NoSupportedNotifierException extends \RuntimeException implements Exception
 {
-    /**
-     * @var Notification
-     */
-    private $notification;
-
     public function __construct(
-        Notification $notification,
-        $message = '',
+        $message = 'No supported notifier',
         $code = 0,
         Exception $previous = null
     ) {
-        $this->notification = $notification;
-
         parent::__construct($message, $code, $previous);
-    }
-
-    /**
-     * @return Notification
-     */
-    public function getNotification()
-    {
-        return $this->notification;
     }
 }
