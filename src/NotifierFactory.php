@@ -24,7 +24,7 @@ class NotifierFactory
     /**
      * @param Notifier[] $notifiers
      *
-     * @return Notifier
+     * @return Notifier|null
      */
     public static function create(array $notifiers = [])
     {

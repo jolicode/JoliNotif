@@ -17,7 +17,8 @@ For example some notifier has a low priority because they don't support some
 notification options. The best notifier will then be returned.
 
 > **Note**: The factory currently returns null if no notifier is supported on
-> your system.
+> your system. Don't forget to add a check to avoid 'call to a member
+function of a non-object' error.
 
 ## Create your notification
 
