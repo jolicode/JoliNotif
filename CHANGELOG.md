@@ -1,5 +1,10 @@
 # Changes between versions
 
+## 1.0.2 (2015-04-13)
+
+* Fixed NotifierFactory phpdoc
+* Added precision about factory returning null
+
 ## 1.0.1 (2015-04-01)
 
 * Fixed Symfony version to 2.3
