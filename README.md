@@ -32,19 +32,21 @@ are available on your system, then use it to send your notification:
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
 
-// Create a Notifier
+// Create a Notifier (or null if no notifier supported)
 $notifier = NotifierFactory::create();
 
-// Create your notification
-$notification =
-    (new Notification())
-    ->setTitle('Notification title')
-    ->setBody('This is the body of your notification')
-    ->setIcon(DIR.'/path/to/your/icon.png')
-;
+if ($notifier) {
+    // Create your notification
+    $notification =
+        (new Notification())
+        ->setTitle('Notification title')
+        ->setBody('This is the body of your notification')
+        ->setIcon(DIR.'/path/to/your/icon.png')
+    ;
 
-// Send it
-$notifier->send($notification);
+    // Send it
+    $notifier->send($notification);
+}
 ```
 
 ## Further documentation

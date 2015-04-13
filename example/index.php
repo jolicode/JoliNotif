@@ -16,11 +16,13 @@ require __DIR__.'/../vendor/autoload.php';
 
 $notifier = NotifierFactory::create();
 
-$notification =
-    (new Notification())
-    ->setTitle('Notification example')
-    ->setBody('This is a notification example. Pretty cool isn\'t it?')
-    ->setIcon(__DIR__.'/icon-success.png')
-;
+if ($notifier) {
+    $notification =
+        (new Notification())
+        ->setTitle('Notification example')
+        ->setBody('This is a notification example. Pretty cool isn\'t it?')
+        ->setIcon(__DIR__ . '/icon-success.png')
+    ;
 
-$notifier->send($notification);
+    $notifier->send($notification);
+}
