@@ -27,7 +27,7 @@ An icon can also be displayed inside the notification. You will need to set an
 **absolute path**.
 
 ```php
-$notification->setIcon(DIR.'/Resources/icons/success.png');
+$notification->setIcon(__DIR__.'/Resources/icons/success.png');
 ```
 
 > **Note**: If you use JoliNotif from a phar and add a notification icon, we

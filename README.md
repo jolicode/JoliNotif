@@ -41,7 +41,7 @@ if ($notifier) {
         (new Notification())
         ->setTitle('Notification title')
         ->setBody('This is the body of your notification')
-        ->setIcon(DIR.'/path/to/your/icon.png')
+        ->setIcon(__DIR__.'/path/to/your/icon.png')
     ;
 
     // Send it
