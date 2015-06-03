@@ -1,5 +1,10 @@
 # Changes between versions
 
+## Not yet released
+
+* Fixed documentation typo
+* Eased example debugging
+
 ## 1.0.2 (2015-04-13)
 
 * Fixed NotifierFactory phpdoc
