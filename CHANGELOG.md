@@ -1,9 +1,9 @@
 # Changes between versions
 
-## Not yet released
+## 1.0.3 (2015-06-03)
 
 * Fixed documentation typo
-* Eased example debugging
+* Added easy example debugging
 
 ## 1.0.2 (2015-04-13)
 
