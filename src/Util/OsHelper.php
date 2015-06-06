@@ -90,7 +90,7 @@ class OsHelper
         if (null === self::$macOSVersion) {
             $process = new Process('sw_vers -productVersion');
             $process->run();
-            self::$macOSVersion = (string) $process->getOutput();
+            self::$macOSVersion = (string) trim($process->getOutput());
         }
 
         return self::$macOSVersion;
