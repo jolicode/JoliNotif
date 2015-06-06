@@ -82,7 +82,7 @@ class OsHelperTest extends \PHPUnit_Framework_TestCase
 
         $macOsVersion = OsHelper::getMacOSVersion();
 
-        $this->assertStringMatchesFormat('%d.%d.%d', $macOsVersion);
+        $this->assertRegExp('#\d{1,2}\.\d{1,2}(\.\d{1,2})?#', $macOsVersion);
         $this->assertSame($expectedMacOsVersion, $macOsVersion);
     }
 }
