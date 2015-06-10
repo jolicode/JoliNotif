@@ -16,7 +16,6 @@ php:
 matrix:
     allow_failures:
         - php: hhvm
-        - php: 7.0
 
 before_script:
     - composer install --no-interaction
