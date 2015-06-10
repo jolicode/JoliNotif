@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fixed Mac OSX version detection
+
 ## 1.0.3 (2015-06-03)
 
 * Fixed documentation typo
