@@ -56,6 +56,7 @@ Discover more by reading the docs:
 * [Basic usage](doc/01-basic-usage.md)
 * [Notification](doc/02-notification.md)
 * [Notifier](doc/03-notifier.md)
+* [Advanced usage](doc/04-advanced-usage.md)
 
 You can see the current and past versions using one of the following:
 

@@ -95,6 +95,8 @@ can only display icon with the .ico format.
 
 ## Next readings
 
+* [Advanced usage](04-advanced-usage.md)
+
 Previous pages:
 
 * [Notification](02-notification.md)
