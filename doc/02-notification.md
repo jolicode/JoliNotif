@@ -40,6 +40,7 @@ notification since the notifier will discard it if not supported.
 ## Next readings
 
 * [Notifier](03-notifier.md)
+* [Advanced usage](04-advanced-usage.md)
 
 Previous pages:
 
