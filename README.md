@@ -1,5 +1,8 @@
 # JoliNotif
 
+[![Latest Stable Version](https://poser.pugx.org/jolicode/jolinotif/v/stable)](https://packagist.org/packages/jolicode/jolinotif)
+[![Total Downloads](https://poser.pugx.org/jolicode/jolinotif/downloads)](https://packagist.org/packages/jolicode/jolinotif)
+[![Latest Unstable Version](https://poser.pugx.org/jolicode/jolinotif/v/unstable)](https://packagist.org/packages/jolicode/jolinotif)
 [![Build Status](https://travis-ci.org/jolicode/JoliNotif.svg?branch=master)](https://travis-ci.org/jolicode/JoliNotif)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b/mini.png)](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b)
 
