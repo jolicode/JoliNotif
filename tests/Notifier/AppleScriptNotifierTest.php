@@ -70,6 +70,14 @@ class AppleScriptNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return "'osascript' '-e' 'display notification \"I'\\''m the notification body\"'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         return "'osascript' '-e' 'display notification \"I'\\''m the notification body\"'";

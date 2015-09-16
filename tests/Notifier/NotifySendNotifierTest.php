@@ -58,6 +58,14 @@ class NotifySendNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return "'notify-send' 'I'\\''m the notification body'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         return "'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\\''m the notification body'";

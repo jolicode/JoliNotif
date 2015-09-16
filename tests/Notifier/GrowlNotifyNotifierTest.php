@@ -58,6 +58,14 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return "'growlnotify' '--message' 'I'\\''m the notification body'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         return "'growlnotify' '--message' 'I'\\''m the notification body' '--image' '/home/toto/Images/my-icon.png'";

@@ -59,6 +59,14 @@ class ToasterNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return "'toast' '-m' 'I'\\''m the notification body'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         return "'toast' '-m' 'I'\\''m the notification body' '-p' '/home/toto/Images/my-icon.png'";

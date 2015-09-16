@@ -68,6 +68,11 @@ trait CliBasedNotifierTestTrait
     /**
      * @return string
      */
+    abstract protected function getExpectedCommandLineForNotificationWithAnUrl();
+
+    /**
+     * @return string
+     */
     abstract protected function getExpectedCommandLineForNotificationWithAnIcon();
 
     /**
@@ -95,6 +100,12 @@ trait CliBasedNotifierTestTrait
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
+                    ->setUrl('https://github.com/jolicode/JoliNotif'),
+                $this->getExpectedCommandLineForNotificationWithAnUrl(),
+            ],
+            [
+                (new Notification())
+                    ->setBody('I\'m the notification body')
                     ->setIcon('/home/toto/Images/my-icon.png'),
                 $this->getExpectedCommandLineForNotificationWithAnIcon(),
             ],
@@ -102,7 +113,8 @@ trait CliBasedNotifierTestTrait
                 (new Notification())
                     ->setBody('I\'m the notification body')
                     ->setTitle('I\'m the notification title')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
+                    ->setIcon('/home/toto/Images/my-icon.png')
+                    ->setUrl('https://github.com/jolicode/JoliNotif'),
                 $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],
         ];

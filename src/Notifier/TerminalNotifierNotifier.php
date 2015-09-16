@@ -54,5 +54,10 @@ class TerminalNotifierNotifier extends CliBasedNotifier
             $processBuilder->add('-appIcon');
             $processBuilder->add($notification->getIcon());
         }
+
+        if ($notification->getUrl()) {
+            $processBuilder->add('-open');
+            $processBuilder->add($notification->getUrl());
+        }
     }
 }

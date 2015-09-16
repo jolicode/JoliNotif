@@ -59,6 +59,14 @@ class NotifuNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return "'notifu' '/m' 'I'\\''m the notification body'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         return "'notifu' '/m' 'I'\\''m the notification body' '/i' '/home/toto/Images/my-icon.png'";
