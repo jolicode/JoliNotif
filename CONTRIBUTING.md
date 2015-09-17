@@ -48,7 +48,7 @@ changes, improvements or alternatives may be given).
 Run the tests using the following script:
 
 ```shell
-vendor/bin/phpunit
+bin/phpunit
 ```
 
 ## Standard code
@@ -57,7 +57,7 @@ Use [PHP CS fixer](http://cs.sensiolabs.org/) to make your code compliant with
 JoliNotif's coding standards:
 
 ```shell
-vendor/bin/php-cs-fixer fix .
+bin/php-cs-fixer fix .
 ```
 
 ## Keeping your fork up-to-date
