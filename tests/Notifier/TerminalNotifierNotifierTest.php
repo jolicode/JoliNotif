@@ -59,6 +59,14 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-open' 'https://github.com/jolicode/JoliNotif'";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
@@ -74,9 +82,9 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'";
+            return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png' '-open' 'https://github.com/jolicode/JoliNotif'";
         }
 
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title'";
+        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-open' 'https://github.com/jolicode/JoliNotif'";
     }
 }

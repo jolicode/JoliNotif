@@ -22,6 +22,7 @@ if ($notifier) {
         ->setTitle('Notification example')
         ->setBody('This is a notification example. Pretty cool isn\'t it?')
         ->setIcon(__DIR__ . '/icon-success.png')
+        ->setUrl('open Google')
     ;
 
     $result = $notifier->send($notification);
@@ -30,4 +31,3 @@ if ($notifier) {
 } else {
     echo 'No supported notifier', PHP_EOL;
 }
-
