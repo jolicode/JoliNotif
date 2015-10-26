@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Exception\InvalidNotificationException;
@@ -20,9 +19,9 @@ use Symfony\Component\Process\ProcessBuilder;
 
 abstract class CliBasedNotifier implements Notifier
 {
-    const SUPPORT_NONE            = -1;
-    const SUPPORT_UNKNOWN         = 0;
-    const SUPPORT_NATIVE          = 1;
+    const SUPPORT_NONE = -1;
+    const SUPPORT_UNKNOWN = 0;
+    const SUPPORT_NATIVE = 1;
     const SUPPORT_BINARY_PROVIDED = 2;
 
     /**
@@ -114,7 +113,7 @@ abstract class CliBasedNotifier implements Notifier
         $builder = new ProcessBuilder();
 
         if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
-            $dir            = rtrim($this->getRootDir(), '/').'/';
+            $dir = rtrim($this->getRootDir(), '/').'/';
             $embeddedBinary = $dir.$this->getEmbeddedBinary();
 
             if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {

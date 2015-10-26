@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Notifier;
@@ -23,7 +22,7 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
         $expectedCount = count($expectedNotifierClasses);
         $this->assertSame($expectedCount, count($notifiers));
 
-        for ($i = 0; $i<$expectedCount; $i++) {
+        for ($i = 0; $i < $expectedCount; ++$i) {
             $this->assertInstanceOf($expectedNotifierClasses[$i], $notifiers[$i]);
         }
     }

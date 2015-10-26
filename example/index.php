@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
 
@@ -21,7 +20,7 @@ if ($notifier) {
         (new Notification())
         ->setTitle('Notification example')
         ->setBody('This is a notification example. Pretty cool isn\'t it?')
-        ->setIcon(__DIR__ . '/icon-success.png')
+        ->setIcon(__DIR__.'/icon-success.png')
     ;
 
     $result = $notifier->send($notification);
@@ -30,4 +29,3 @@ if ($notifier) {
 } else {
     echo 'No supported notifier', PHP_EOL;
 }
-
