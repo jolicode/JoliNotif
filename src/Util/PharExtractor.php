@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Joli\JoliNotif\Util;
 
 class PharExtractor
@@ -41,8 +40,8 @@ class PharExtractor
             return '';
         }
 
-        $relativeFilePath  = substr($filePath, strpos($filePath, $pharPath) + strlen($pharPath) + 1);
-        $tmpDir            = sys_get_temp_dir().'/jolinotif';
+        $relativeFilePath = substr($filePath, strpos($filePath, $pharPath) + strlen($pharPath) + 1);
+        $tmpDir = sys_get_temp_dir().'/jolinotif';
         $extractedFilePath = $tmpDir.'/'.$relativeFilePath;
 
         if (!file_exists($extractedFilePath) || $overwrite) {

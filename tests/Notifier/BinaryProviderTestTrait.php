@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Joli\JoliNotif\tests\Notifier;
 
 /**
@@ -27,7 +26,7 @@ trait BinaryProviderTestTrait
     {
         $notifier = $this->getNotifier();
 
-        $this->assertTrue(file_exists($notifier->getRootDir() . DIRECTORY_SEPARATOR . $notifier->getEmbeddedBinary()));
+        $this->assertTrue(file_exists($notifier->getRootDir().DIRECTORY_SEPARATOR.$notifier->getEmbeddedBinary()));
     }
 
     public function testExtraFilesExist()
@@ -35,7 +34,7 @@ trait BinaryProviderTestTrait
         $notifier = $this->getNotifier();
 
         foreach ($notifier->getExtraFiles() as $file) {
-            $this->assertTrue(file_exists($notifier->getRootDir() . DIRECTORY_SEPARATOR . $file));
+            $this->assertTrue(file_exists($notifier->getRootDir().DIRECTORY_SEPARATOR.$file));
         }
     }
 }
