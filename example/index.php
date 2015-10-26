@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -21,7 +21,7 @@ if ($notifier) {
         (new Notification())
         ->setTitle('Notification example')
         ->setBody('This is a notification example. Pretty cool isn\'t it?')
-        ->setIcon(__DIR__ . '/icon-success.png')
+        ->setIcon(__DIR__.'/icon-success.png')
     ;
 
     $result = $notifier->send($notification);
@@ -30,4 +30,3 @@ if ($notifier) {
 } else {
     echo 'No supported notifier', PHP_EOL;
 }
-

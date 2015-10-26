@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -32,7 +32,7 @@ trait CliBasedNotifierTestTrait
         passthru($commandLine, $return);
         $supported = 0 === $return;
 
-        $this->assertEquals($supported, $this->getNotifier()->isSupported());
+        $this->assertSame($supported, $this->getNotifier()->isSupported());
     }
 
     /**
@@ -49,7 +49,7 @@ trait CliBasedNotifierTestTrait
 
             $this->invokeMethod($this->getNotifier(), 'configureProcess', [$processBuilder, $notification]);
 
-            $this->assertEquals($expectedCommandLine, $processBuilder->getProcess()->getCommandLine());
+            $this->assertSame($expectedCommandLine, $processBuilder->getProcess()->getCommandLine());
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }

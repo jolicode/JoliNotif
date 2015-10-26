@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -11,8 +11,8 @@
 
 namespace Joli\JoliNotif\tests\fixtures;
 
-use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Notifier;
 
 class ConfigurableNotifier implements Notifier
 {
@@ -38,8 +38,8 @@ class ConfigurableNotifier implements Notifier
      */
     public function __construct($supported, $priority = Notifier::PRIORITY_MEDIUM, $sendReturn = true)
     {
-        $this->supported = $supported;
-        $this->priority = $priority;
+        $this->supported  = $supported;
+        $this->priority   = $priority;
         $this->sendReturn = $sendReturn;
     }
 

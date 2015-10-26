@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -27,7 +27,7 @@ trait BinaryProviderTestTrait
     {
         $notifier = $this->getNotifier();
 
-        $this->assertTrue(file_exists($notifier->getRootDir() . DIRECTORY_SEPARATOR . $notifier->getEmbeddedBinary()));
+        $this->assertTrue(file_exists($notifier->getRootDir().DIRECTORY_SEPARATOR.$notifier->getEmbeddedBinary()));
     }
 
     public function testExtraFilesExist()
@@ -35,7 +35,7 @@ trait BinaryProviderTestTrait
         $notifier = $this->getNotifier();
 
         foreach ($notifier->getExtraFiles() as $file) {
-            $this->assertTrue(file_exists($notifier->getRootDir() . DIRECTORY_SEPARATOR . $file));
+            $this->assertTrue(file_exists($notifier->getRootDir().DIRECTORY_SEPARATOR.$file));
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -36,7 +36,7 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
         \Phar::unlinkArchive($pharPath);
 
         $this->assertTrue(is_file($extractedFilePath));
-        $this->assertEquals($key, file_get_contents($extractedFilePath));
+        $this->assertSame($key, file_get_contents($extractedFilePath));
         unlink($extractedFilePath);
     }
 
@@ -58,7 +58,7 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
         \Phar::unlinkArchive($pharPath);
 
         $this->assertTrue(is_file($extractedFilePath));
-        $this->assertEquals($key, file_get_contents($extractedFilePath));
+        $this->assertSame($key, file_get_contents($extractedFilePath));
         unlink($extractedFilePath);
     }
 
@@ -80,7 +80,7 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
         \Phar::unlinkArchive($pharPath);
 
         $this->assertTrue(is_file($extractedFilePath));
-        $this->assertEquals('new content', file_get_contents($extractedFilePath));
+        $this->assertSame('new content', file_get_contents($extractedFilePath));
         unlink($extractedFilePath);
     }
 

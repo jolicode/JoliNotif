@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -29,10 +29,10 @@ abstract class NotifierTestCase extends \PHPUnit_Framework_TestCase
      *
      * @return mixed Method return.
      */
-    protected function invokeMethod($object, $methodName, array $parameters = array())
+    protected function invokeMethod($object, $methodName, array $parameters = [])
     {
         $reflection = new \ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
+        $method     = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);

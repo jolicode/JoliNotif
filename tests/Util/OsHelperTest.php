@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -66,7 +66,7 @@ class OsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testIsMacOS()
     {
-        $uname = php_uname();
+        $uname    = php_uname();
         $isDarwin = 'Darwin' === substr($uname, 0, 6);
 
         $this->assertSame($isDarwin, OsHelper::isMacOS());

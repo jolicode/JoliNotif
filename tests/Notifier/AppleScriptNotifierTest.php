@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -11,8 +11,8 @@
 
 namespace Joli\JoliNotif\tests\Notifier;
 
-use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Notifier;
+use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Util\OsHelper;
 
 class AppleScriptNotifierTest extends NotifierTestCase

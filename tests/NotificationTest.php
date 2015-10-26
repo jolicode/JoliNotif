@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -54,6 +54,6 @@ PHAR_BOOTSTRAP;
         exec('php '.$pharPath);
 
         $this->assertTrue(is_file($extractedIconPath));
-        $this->assertEquals($iconContent, file_get_contents($extractedIconPath));
+        $this->assertSame($iconContent, file_get_contents($extractedIconPath));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the JoliNotif project.
  *
  * (c) Loïck Piera <pyrech@gmail.com>
@@ -20,7 +20,7 @@ class InvalidNotificationException extends \LogicException implements Exception
      */
     private $notification;
 
-    public function __construct(Notification $notification, $message = "", $code = 0, Exception $previous = null)
+    public function __construct(Notification $notification, $message = '', $code = 0, Exception $previous = null)
     {
         $this->notification = $notification;
 
