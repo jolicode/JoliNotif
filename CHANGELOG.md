@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Allow Symfony 3
+
 ## 1.0.4 (2015-06-20)
 
 * Fixed Mac OSX version detection
