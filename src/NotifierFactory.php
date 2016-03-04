@@ -32,9 +32,7 @@ class NotifierFactory
             $notifiers = static::getDefaultNotifiers();
         }
 
-        $bestNotifier = self::chooseBestNotifier($notifiers);
-
-        return $bestNotifier;
+        return self::chooseBestNotifier($notifiers);
     }
 
     /**
@@ -45,12 +43,10 @@ class NotifierFactory
         // Don't retrieve notifiers which are certainly not supported on this
         // system. This helps to lower the number of process to run.
         if (OsHelper::isUnix()) {
-            $notifiers = self::getUnixNotifiers();
-        } else {
-            $notifiers = self::getWindowsNotifiers();
+            return self::getUnixNotifiers();
         }
 
-        return $notifiers;
+        return self::getWindowsNotifiers();
     }
 
     /**
