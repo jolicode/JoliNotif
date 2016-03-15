@@ -53,10 +53,10 @@ class AppleScriptNotifier extends CliBasedNotifier
      */
     protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
     {
-        $script = 'display notification "'.$notification->getBody().'"';
+        $script = 'display notification "'.str_replace('"', '\\"', $notification->getBody()).'"';
 
         if ($notification->getTitle()) {
-            $script .= ' with title "'.$notification->getTitle().'"';
+            $script .= ' with title "'.str_replace('"', '\\"', $notification->getTitle()).'"';
         }
 
         $processBuilder->add('-e');
