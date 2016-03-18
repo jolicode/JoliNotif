@@ -39,14 +39,13 @@ $notification->setIcon(__DIR__.$iconPath);
 PHAR_BOOTSTRAP;
 
         $phar = new \Phar($pharPath);
-        $phar->buildFromDirectory($rootPackage, '#(src|tests/fixtures|vendor/composer)#');
+        $phar->buildFromDirectory($rootPackage, '#(src|tests/fixtures|vendor)#');
         $phar->addFromString('bootstrap.php', str_replace(
             'THE_ICON',
             '\'/'.$iconRelativePath.'\'',
             $bootstrap
         ));
         $phar->addFromString($iconRelativePath, $iconContent);
-        $phar->addFile('vendor/autoload.php');
         $phar->setStub($phar->createDefaultStub('bootstrap.php'));
 
         $this->assertTrue(is_file($pharPath));
