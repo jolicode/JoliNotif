@@ -45,7 +45,9 @@ class ToasterNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return "'toast' '-m' 'I'\\''m the notification body'";
+        return <<<CLI
+'toast' '-m' 'I'\\''m the notification body'
+CLI;
     }
 
     /**
@@ -53,7 +55,9 @@ class ToasterNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return "'toast' '-m' 'I'\\''m the notification body' '-t' 'I'\\''m the notification title'";
+        return <<<CLI
+'toast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
+CLI;
     }
 
     /**
@@ -61,7 +65,9 @@ class ToasterNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'toast' '-m' 'I'\\''m the notification body' '-p' '/home/toto/Images/my-icon.png'";
+        return <<<CLI
+'toast' '-m' 'I'\''m the notification body' '-p' '/home/toto/Images/my-icon.png'
+CLI;
     }
 
     /**
@@ -69,6 +75,8 @@ class ToasterNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'toast' '-m' 'I'\\''m the notification body' '-t' 'I'\\''m the notification title' '-p' '/home/toto/Images/my-icon.png'";
+        return <<<CLI
+'toast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title' '-p' '/home/toto/Images/my-icon.png'
+CLI;
     }
 }

@@ -45,7 +45,9 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body'";
+        return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -53,7 +55,9 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title'";
+        return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title'
+CLI;
     }
 
     /**
@@ -62,10 +66,14 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-appIcon' '/home/toto/Images/my-icon.png'";
+            return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body' '-appIcon' '/home/toto/Images/my-icon.png'
+CLI;
         }
 
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body'";
+        return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -74,9 +82,13 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'";
+            return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'
+CLI;
         }
 
-        return "'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title'";
+        return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title'
+CLI;
     }
 }
