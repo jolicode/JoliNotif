@@ -6,19 +6,32 @@ cache:
     directories:
         - $HOME/.composer/cache
 
-php:
-    - 5.4
-    - 5.5
-    - 5.6
-    - 7.0
-    - hhvm
-
 matrix:
-    allow_failures:
+    include:
         - php: hhvm
+        - php: 5.4
+          env: check_cs=true
+        - php: 5.5
+        - php: 5.6
+          env: deps=low
+        - php: 5.6
+          env: deps=high
+        - php: 7.0
+  allow_failures:
+    - php: hhvm
+
+env:
+    global:
+        - deps=high
+        - check_cs=false
+
+install:
+    - if [ "$deps" = "low" ]; then composer --prefer-dist --prefer-lowest update; fi;
+    - if [ "$deps" != "low" ]; then composer --prefer-dist update; fi;
 
 before_script:
     - composer install --no-interaction
 
 script:
     - ./bin/phpunit
+    - if [ "$check_cs" = "true" ]; then bin/php-cs-fixer fix --config-file=.php_cs --dry-run --diff; fi;

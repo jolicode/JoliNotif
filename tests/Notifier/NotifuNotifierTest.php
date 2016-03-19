@@ -45,7 +45,9 @@ class NotifuNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return "'notifu' '/m' 'I'\\''m the notification body'";
+        return <<<CLI
+'notifu' '/m' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -53,7 +55,9 @@ class NotifuNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return "'notifu' '/m' 'I'\\''m the notification body' '/p' 'I'\\''m the notification title'";
+        return <<<CLI
+'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\\''m the notification title'
+CLI;
     }
 
     /**
@@ -61,7 +65,9 @@ class NotifuNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'notifu' '/m' 'I'\\''m the notification body' '/i' '/home/toto/Images/my-icon.png'";
+        return <<<CLI
+'notifu' '/m' 'I'\''m the notification body' '/i' '/home/toto/Images/my-icon.png'
+CLI;
     }
 
     /**
@@ -69,6 +75,8 @@ class NotifuNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'notifu' '/m' 'I'\\''m the notification body' '/p' 'I'\\''m the notification title' '/i' '/home/toto/Images/my-icon.png'";
+        return <<<CLI
+'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\''m the notification title' '/i' '/home/toto/Images/my-icon.png'
+CLI;
     }
 }

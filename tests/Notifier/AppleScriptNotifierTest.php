@@ -56,7 +56,9 @@ class AppleScriptNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return "'osascript' '-e' 'display notification \"I'\\''m the notification body\"'";
+        return <<<CLI
+'osascript' '-e' 'display notification "I'\''m the notification body"'
+CLI;
     }
 
     /**
@@ -64,7 +66,9 @@ class AppleScriptNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return "'osascript' '-e' 'display notification \"I'\\''m the notification body\" with title \"I'\\''m the notification title\"'";
+        return <<<CLI
+'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
+CLI;
     }
 
     /**
@@ -72,7 +76,9 @@ class AppleScriptNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'osascript' '-e' 'display notification \"I'\\''m the notification body\"'";
+        return <<<CLI
+'osascript' '-e' 'display notification "I'\''m the notification body"'
+CLI;
     }
 
     /**
@@ -80,6 +86,8 @@ class AppleScriptNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'osascript' '-e' 'display notification \"I'\\''m the notification body\" with title \"I'\\''m the notification title\"'";
+        return <<<CLI
+'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
+CLI;
     }
 }

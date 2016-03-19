@@ -44,7 +44,9 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return "'growlnotify' '--message' 'I'\\''m the notification body'";
+        return <<<CLI
+'growlnotify' '--message' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -52,7 +54,9 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return "'growlnotify' '--message' 'I'\\''m the notification body' '--title' 'I'\\''m the notification title'";
+        return <<<CLI
+'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title'
+CLI;
     }
 
     /**
@@ -60,7 +64,9 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'growlnotify' '--message' 'I'\\''m the notification body' '--image' '/home/toto/Images/my-icon.png'";
+        return <<<CLI
+'growlnotify' '--message' 'I'\''m the notification body' '--image' '/home/toto/Images/my-icon.png'
+CLI;
     }
 
     /**
@@ -68,6 +74,8 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'growlnotify' '--message' 'I'\\''m the notification body' '--title' 'I'\\''m the notification title' '--image' '/home/toto/Images/my-icon.png'";
+        return <<<CLI
+'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title' '--image' '/home/toto/Images/my-icon.png'
+CLI;
     }
 }

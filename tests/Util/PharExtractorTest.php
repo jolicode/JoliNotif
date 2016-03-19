@@ -121,7 +121,7 @@ $overwrite = OVERWRITE;
 PHAR_BOOTSTRAP;
 
         $phar = new \Phar($pharPath);
-        $phar->buildFromDirectory($rootPackage, '#(src|vendor/composer)#');
+        $phar->buildFromDirectory($rootPackage, '#(src|vendor)#');
         $phar->addFromString('bootstrap.php', str_replace(
             [
                 'THE_FILE',
@@ -135,7 +135,6 @@ PHAR_BOOTSTRAP;
             $bootstrap
         ));
         $phar->addFromString($fileRelativePath, $fileContent);
-        $phar->addFile('vendor/autoload.php');
         $phar->setStub($phar->createDefaultStub('bootstrap.php'));
     }
 }

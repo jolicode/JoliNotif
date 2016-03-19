@@ -44,7 +44,9 @@ class NotifySendNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return "'notify-send' 'I'\\''m the notification body'";
+        return <<<CLI
+'notify-send' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -52,7 +54,9 @@ class NotifySendNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithATitle()
     {
-        return "'notify-send' 'I'\\''m the notification title' 'I'\\''m the notification body'";
+        return <<<CLI
+'notify-send' 'I'\''m the notification title' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -60,7 +64,9 @@ class NotifySendNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
-        return "'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\\''m the notification body'";
+        return <<<CLI
+'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\''m the notification body'
+CLI;
     }
 
     /**
@@ -68,6 +74,8 @@ class NotifySendNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
-        return "'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\\''m the notification title' 'I'\\''m the notification body'";
+        return <<<CLI
+'notify-send' '--icon' '/home/toto/Images/my-icon.png' 'I'\''m the notification title' 'I'\''m the notification body'
+CLI;
     }
 }
