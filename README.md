@@ -32,6 +32,8 @@ Use the `NotifierFactory` to create a `Notifier` according to which notifiers
 are available on your system, then use it to send your notification:
 
 ```php
+include __DIR__.'/vendor/autoload.php';
+
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
 
