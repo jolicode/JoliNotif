@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 1.0.5 (2016-03-22)
 
 * Allow Symfony 3
 * Fix quote escaping in AppleScriptNotifier
