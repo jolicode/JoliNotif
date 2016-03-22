@@ -3,6 +3,7 @@
 ## Not yet released
 
 * Allow Symfony 3
+* Fix quote escaping in AppleScriptNotifier
 
 ## 1.0.4 (2015-06-20)
 
