@@ -20,6 +20,11 @@ notification options. The best notifier will then be returned.
 > your system. Don't forget to add a check to avoid 'call to a member
 function of a non-object' error.
 
+If you really need to ensure a Notifier is available, you can use the
+`createOrThrowException` method. It will return the best notifier available or
+throw a `Joli\JoliNotif\Exception\NoSupportedNotifierException` if no one is
+available on the current system.
+
 ## Create your notification
 
 Create a notification is as simple as instantiating a `Notification` and
