@@ -160,4 +160,13 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($notifier3, $notifier);
     }
+
+    /** @expectedException \Joli\JoliNotif\Exception\NoSupportedNotifierException */
+    public function testCreateOrThrowExceptionWithNoSupportedNotifiersThrowsException()
+    {
+        NotifierFactory::createOrThrowException([
+            new ConfigurableNotifier(false),
+            new ConfigurableNotifier(false),
+        ]);
+    }
 }
