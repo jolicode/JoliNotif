@@ -1,5 +1,10 @@
 # Changes between versions
 
+## Not yet released
+
+* Add NotifierFactory::createOrThrowException() method
+* Add NullNotifier to get ride of null value
+
 ## 1.0.5 (2016-03-22)
 
 * Allow Symfony 3
