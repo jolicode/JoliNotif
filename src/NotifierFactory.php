@@ -16,6 +16,7 @@ use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 use Joli\JoliNotif\Notifier\NotifySendNotifier;
+use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
 use Joli\JoliNotif\Notifier\ToasterNotifier;
 use Joli\JoliNotif\Util\OsHelper;
@@ -25,7 +26,7 @@ class NotifierFactory
     /**
      * @param Notifier[] $notifiers
      *
-     * @return Notifier|null
+     * @return Notifier
      */
     public static function create(array $notifiers = [])
     {
@@ -33,7 +34,13 @@ class NotifierFactory
             $notifiers = static::getDefaultNotifiers();
         }
 
-        return self::chooseBestNotifier($notifiers);
+        $bestNotifier = self::chooseBestNotifier($notifiers);
+
+        if (null === $bestNotifier) {
+            $bestNotifier = new NullNotifier();
+        }
+
+        return $bestNotifier;
     }
 
     /**
@@ -43,9 +50,13 @@ class NotifierFactory
      */
     public static function createOrThrowException(array $notifiers = [])
     {
-        $bestNotifier = self::create($notifiers);
+        if (empty($notifiers)) {
+            $notifiers = static::getDefaultNotifiers();
+        }
 
-        if (!$bestNotifier) {
+        $bestNotifier = self::chooseBestNotifier($notifiers);
+
+        if (null === $bestNotifier) {
             throw new NoSupportedNotifierException();
         }
 
