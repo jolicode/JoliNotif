@@ -16,9 +16,8 @@ The factory use the notifier's priority to determine the best notifier to use.
 For example some notifier has a low priority because they don't support some
 notification options. The best notifier will then be returned.
 
-> **Note**: The factory currently returns null if no notifier is supported on
-> your system. Don't forget to add a check to avoid 'call to a member
-function of a non-object' error.
+> **Note**: The factory now returns a NullNotifier instead of null when no
+> notifier is available. You then no longer have to check for null value.
 
 If you really need to ensure a Notifier is available, you can use the
 `createOrThrowException` method. It will return the best notifier available or
