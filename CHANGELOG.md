@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 1.1.0
 
 * Added NotifierFactory::createOrThrowException() method
 * Added NullNotifier to get ride of null value
