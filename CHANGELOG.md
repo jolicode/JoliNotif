@@ -2,14 +2,14 @@
 
 ## Not yet released
 
-* Add NotifierFactory::createOrThrowException() method
-* Add NullNotifier to get ride of null value
+* Added NotifierFactory::createOrThrowException() method
+* Added NullNotifier to get ride of null value
 * Updated php-cs-fixer to v2.0 and fixed CS
 
 ## 1.0.5 (2016-03-22)
 
-* Allow Symfony 3
-* Fix quote escaping in AppleScriptNotifier
+* Allowed Symfony 3
+* Fixed quote escaping in AppleScriptNotifier
 
 ## 1.0.4 (2015-06-20)
 
