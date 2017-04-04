@@ -10,13 +10,14 @@
  */
 
 use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\NotifierFactory;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $notifier = NotifierFactory::create();
 
-if ($notifier) {
+if (!($notifier instanceof NullNotifier)) {
     $notification =
         (new Notification())
         ->setTitle('Notification example')
