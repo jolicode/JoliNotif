@@ -56,26 +56,6 @@ trait CliBasedNotifierTestTrait
     }
 
     /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotification();
-
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotificationWithATitle();
-
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotificationWithAnIcon();
-
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotificationWithAllOptions();
-
-    /**
      * @return array
      */
     public function provideValidNotifications()
@@ -136,4 +116,24 @@ trait CliBasedNotifierTestTrait
             $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
         }
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotification();
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotificationWithATitle();
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotificationWithAnIcon();
+
+    /**
+     * @return string
+     */
+    abstract protected function getExpectedCommandLineForNotificationWithAllOptions();
 }

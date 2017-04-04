@@ -4,6 +4,7 @@
 
 * Add NotifierFactory::createOrThrowException() method
 * Add NullNotifier to get ride of null value
+* Updated php-cs-fixer to v2.0 and fixed CS
 
 ## 1.0.5 (2016-03-22)
 

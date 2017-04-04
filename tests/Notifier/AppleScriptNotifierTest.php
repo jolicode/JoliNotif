@@ -17,14 +17,8 @@ use Joli\JoliNotif\Util\OsHelper;
 
 class AppleScriptNotifierTest extends NotifierTestCase
 {
-    const BINARY = 'osascript';
-
     use CliBasedNotifierTestTrait;
-
-    protected function getNotifier()
-    {
-        return new AppleScriptNotifier();
-    }
+    const BINARY = 'osascript';
 
     public function testIsSupported()
     {
@@ -49,6 +43,11 @@ class AppleScriptNotifierTest extends NotifierTestCase
         $notifier = $this->getNotifier();
 
         $this->assertSame(Notifier::PRIORITY_LOW, $notifier->getPriority());
+    }
+
+    protected function getNotifier()
+    {
+        return new AppleScriptNotifier();
     }
 
     /**

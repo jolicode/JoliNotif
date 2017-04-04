@@ -16,15 +16,9 @@ use Joli\JoliNotif\Notifier\ToasterNotifier;
 
 class ToasterNotifierTest extends NotifierTestCase
 {
-    const BINARY = 'toast';
-
     use CliBasedNotifierTestTrait;
     use BinaryProviderTestTrait;
-
-    protected function getNotifier()
-    {
-        return new ToasterNotifier();
-    }
+    const BINARY = 'toast';
 
     public function testGetBinary()
     {
@@ -40,13 +34,18 @@ class ToasterNotifierTest extends NotifierTestCase
         $this->assertSame(Notifier::PRIORITY_MEDIUM, $notifier->getPriority());
     }
 
+    protected function getNotifier()
+    {
+        return new ToasterNotifier();
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function getExpectedCommandLineForNotification()
     {
-        return <<<CLI
-'toast' '-m' 'I'\\''m the notification body'
+        return <<<'CLI'
+'toast' '-m' 'I'\''m the notification body'
 CLI;
     }
 

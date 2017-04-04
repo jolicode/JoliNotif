@@ -25,9 +25,9 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
 
     public function testExtractFile()
     {
-        $key               = uniqid();
-        $pharPath          = $this->getTestDir().'/phar-extractor-'.$key.'.phar';
-        $relativeFilePath  = 'path/to/file-'.$key.'.txt';
+        $key = uniqid();
+        $pharPath = $this->getTestDir().'/phar-extractor-'.$key.'.phar';
+        $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
@@ -42,9 +42,9 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
 
     public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified()
     {
-        $key               = uniqid();
-        $pharPath          = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
-        $relativeFilePath  = 'path/to/file-'.$key.'.txt';
+        $key = uniqid();
+        $pharPath = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
+        $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
@@ -64,9 +64,9 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
 
     public function testExtractFileOverwritesExistingFileIfSpecified()
     {
-        $key               = uniqid();
-        $pharPath          = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';
-        $relativeFilePath  = 'path/to/file-'.$key.'.txt';
+        $key = uniqid();
+        $pharPath = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';
+        $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
@@ -106,8 +106,8 @@ class PharExtractorTest extends \PHPUnit_Framework_TestCase
      */
     private function generatePhar($pharPath, $fileRelativePath, $fileContent, $overwrite)
     {
-        $rootPackage = dirname(dirname(dirname(__FILE__)));
-        $bootstrap   = <<<'PHAR_BOOTSTRAP'
+        $rootPackage = dirname(dirname(__DIR__));
+        $bootstrap = <<<'PHAR_BOOTSTRAP'
 <?php
 
 require __DIR__.'/vendor/autoload.php';
@@ -130,7 +130,6 @@ PHAR_BOOTSTRAP;
             [
                 '\'/'.$fileRelativePath.'\'',
                 $overwrite ? 'true' : 'false',
-
             ],
             $bootstrap
         ));

@@ -40,25 +40,6 @@ class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
-    {
-        $processBuilder->add('/m');
-        $processBuilder->add($notification->getBody());
-
-        if ($notification->getTitle()) {
-            $processBuilder->add('/p');
-            $processBuilder->add($notification->getTitle());
-        }
-
-        if ($notification->getIcon()) {
-            $processBuilder->add('/i');
-            $processBuilder->add($notification->getIcon());
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed()
     {
         return OsHelper::isWindows() && OsHelper::isWindowsSeven();
@@ -69,7 +50,7 @@ class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir()
     {
-        return dirname(dirname(dirname(__FILE__))).'/bin/notifu';
+        return dirname(dirname(__DIR__)).'/bin/notifu';
     }
 
     /**
@@ -86,5 +67,24 @@ class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
     public function getExtraFiles()
     {
         return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    {
+        $processBuilder->add('/m');
+        $processBuilder->add($notification->getBody());
+
+        if ($notification->getTitle()) {
+            $processBuilder->add('/p');
+            $processBuilder->add($notification->getTitle());
+        }
+
+        if ($notification->getIcon()) {
+            $processBuilder->add('/i');
+            $processBuilder->add($notification->getIcon());
+        }
     }
 }

@@ -16,14 +16,8 @@ use Joli\JoliNotif\Notifier\NotifySendNotifier;
 
 class NotifySendNotifierTest extends NotifierTestCase
 {
-    const BINARY = 'notify-send';
-
     use CliBasedNotifierTestTrait;
-
-    protected function getNotifier()
-    {
-        return new NotifySendNotifier();
-    }
+    const BINARY = 'notify-send';
 
     public function testGetBinary()
     {
@@ -37,6 +31,11 @@ class NotifySendNotifierTest extends NotifierTestCase
         $notifier = $this->getNotifier();
 
         $this->assertSame(Notifier::PRIORITY_MEDIUM, $notifier->getPriority());
+    }
+
+    protected function getNotifier()
+    {
+        return new NotifySendNotifier();
     }
 
     /**

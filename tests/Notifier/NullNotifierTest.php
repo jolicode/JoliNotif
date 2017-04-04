@@ -17,11 +17,6 @@ use Joli\JoliNotif\Notifier\NullNotifier;
 
 class NullNotifierTest extends NotifierTestCase
 {
-    protected function getNotifier()
-    {
-        return new NullNotifier();
-    }
-
     public function testGetPriority()
     {
         $notifier = $this->getNotifier();
@@ -42,5 +37,10 @@ class NullNotifierTest extends NotifierTestCase
         $notification->setBody('The notification body');
 
         $this->assertFalse($notifier->send($notification));
+    }
+
+    protected function getNotifier()
+    {
+        return new NullNotifier();
     }
 }

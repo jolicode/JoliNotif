@@ -10,3 +10,5 @@ build
 
 bin/php-cs-fixer
 bin/phpunit
+
+.php_cs.cache

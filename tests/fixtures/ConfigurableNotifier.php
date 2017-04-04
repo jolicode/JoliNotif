@@ -38,8 +38,8 @@ class ConfigurableNotifier implements Notifier
      */
     public function __construct($supported, $priority = Notifier::PRIORITY_MEDIUM, $sendReturn = true)
     {
-        $this->supported  = $supported;
-        $this->priority   = $priority;
+        $this->supported = $supported;
+        $this->priority = $priority;
         $this->sendReturn = $sendReturn;
     }
 

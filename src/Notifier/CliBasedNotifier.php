@@ -20,30 +20,15 @@ use Symfony\Component\Process\ProcessBuilder;
 
 abstract class CliBasedNotifier implements Notifier
 {
-    const SUPPORT_NONE            = -1;
-    const SUPPORT_UNKNOWN         = 0;
-    const SUPPORT_NATIVE          = 1;
+    const SUPPORT_NONE = -1;
+    const SUPPORT_UNKNOWN = 0;
+    const SUPPORT_NATIVE = 1;
     const SUPPORT_BINARY_PROVIDED = 2;
 
     /**
      * @var int One of the SUPPORT_XXX constants
      */
     private $support = self::SUPPORT_UNKNOWN;
-
-    /**
-     * Configure the process to run in order to send the notification.
-     *
-     * @param ProcessBuilder $processBuilder
-     * @param Notification   $notification
-     */
-    abstract protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification);
-
-    /**
-     * Get the binary to check existence.
-     *
-     * @return string
-     */
-    abstract protected function getBinary();
 
     /**
      * {@inheritdoc}
@@ -72,6 +57,57 @@ abstract class CliBasedNotifier implements Notifier
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function send(Notification $notification)
+    {
+        if (!$notification->getBody()) {
+            throw new InvalidNotificationException($notification, 'Notification body can not be empty');
+        }
+
+        $builder = new ProcessBuilder();
+
+        if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
+            $dir = rtrim($this->getRootDir(), '/').'/';
+            $embeddedBinary = $dir.$this->getEmbeddedBinary();
+
+            if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {
+                $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
+
+                foreach ($this->getExtraFiles() as $file) {
+                    PharExtractor::extractFile($dir.$file);
+                }
+            }
+
+            $builder->setPrefix($embeddedBinary);
+        } else {
+            $builder->setPrefix($this->getBinary());
+        }
+
+        $this->configureProcess($builder, $notification);
+
+        $process = $builder->getProcess();
+        $process->run();
+
+        return $process->isSuccessful();
+    }
+
+    /**
+     * Configure the process to run in order to send the notification.
+     *
+     * @param ProcessBuilder $processBuilder
+     * @param Notification   $notification
+     */
+    abstract protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification);
+
+    /**
+     * Get the binary to check existence.
+     *
+     * @return string
+     */
+    abstract protected function getBinary();
+
+    /**
      * Check whether a binary is available.
      *
      * @return bool
@@ -95,42 +131,6 @@ abstract class CliBasedNotifier implements Notifier
                 $this->getBinary(),
             ]);
         }
-
-        $process = $builder->getProcess();
-        $process->run();
-
-        return $process->isSuccessful();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function send(Notification $notification)
-    {
-        if (!$notification->getBody()) {
-            throw new InvalidNotificationException($notification, 'Notification body can not be empty');
-        }
-
-        $builder = new ProcessBuilder();
-
-        if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
-            $dir            = rtrim($this->getRootDir(), '/').'/';
-            $embeddedBinary = $dir.$this->getEmbeddedBinary();
-
-            if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {
-                $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
-
-                foreach ($this->getExtraFiles() as $file) {
-                    PharExtractor::extractFile($dir.$file);
-                }
-            }
-
-            $builder->setPrefix($embeddedBinary);
-        } else {
-            $builder->setPrefix($this->getBinary());
-        }
-
-        $this->configureProcess($builder, $notification);
 
         $process = $builder->getProcess();
         $process->run();

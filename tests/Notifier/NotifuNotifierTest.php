@@ -16,15 +16,9 @@ use Joli\JoliNotif\Notifier\NotifuNotifier;
 
 class NotifuNotifierTest extends NotifierTestCase
 {
-    const BINARY = 'notifu';
-
     use CliBasedNotifierTestTrait;
     use BinaryProviderTestTrait;
-
-    protected function getNotifier()
-    {
-        return new NotifuNotifier();
-    }
+    const BINARY = 'notifu';
 
     public function testGetBinary()
     {
@@ -38,6 +32,11 @@ class NotifuNotifierTest extends NotifierTestCase
         $notifier = $this->getNotifier();
 
         $this->assertSame(Notifier::PRIORITY_LOW, $notifier->getPriority());
+    }
+
+    protected function getNotifier()
+    {
+        return new NotifuNotifier();
     }
 
     /**

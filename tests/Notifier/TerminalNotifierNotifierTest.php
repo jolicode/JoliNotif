@@ -17,14 +17,8 @@ use Joli\JoliNotif\Util\OsHelper;
 
 class TerminalNotifierNotifierTest extends NotifierTestCase
 {
-    const BINARY = 'terminal-notifier';
-
     use CliBasedNotifierTestTrait;
-
-    protected function getNotifier()
-    {
-        return new TerminalNotifierNotifier();
-    }
+    const BINARY = 'terminal-notifier';
 
     public function testGetBinary()
     {
@@ -38,6 +32,11 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
         $notifier = $this->getNotifier();
 
         $this->assertSame(Notifier::PRIORITY_MEDIUM, $notifier->getPriority());
+    }
+
+    protected function getNotifier()
+    {
+        return new TerminalNotifierNotifier();
     }
 
     /**

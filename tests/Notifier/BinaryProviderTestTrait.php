@@ -27,7 +27,7 @@ trait BinaryProviderTestTrait
     {
         $notifier = $this->getNotifier();
 
-        $this->assertTrue(file_exists($notifier->getRootDir().DIRECTORY_SEPARATOR.$notifier->getEmbeddedBinary()));
+        $this->assertFileExists($notifier->getRootDir().DIRECTORY_SEPARATOR.$notifier->getEmbeddedBinary());
     }
 
     public function testExtraFilesExist()
@@ -35,7 +35,7 @@ trait BinaryProviderTestTrait
         $notifier = $this->getNotifier();
 
         foreach ($notifier->getExtraFiles() as $file) {
-            $this->assertTrue(file_exists($notifier->getRootDir().DIRECTORY_SEPARATOR.$file));
+            $this->assertFileExists($notifier->getRootDir().DIRECTORY_SEPARATOR.$file);
         }
     }
 }

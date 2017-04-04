@@ -18,16 +18,6 @@ use Joli\JoliNotif\Util\OsHelper;
 
 class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    private function assertNotifierClasses($expectedNotifierClasses, $notifiers)
-    {
-        $expectedCount = count($expectedNotifierClasses);
-        $this->assertSame($expectedCount, count($notifiers));
-
-        for ($i = 0; $i < $expectedCount; ++$i) {
-            $this->assertInstanceOf($expectedNotifierClasses[$i], $notifiers[$i]);
-        }
-    }
-
     public function testGetDefaultNotifiers()
     {
         $notifiers = NotifierFactory::getDefaultNotifiers();
@@ -168,5 +158,15 @@ class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
             new ConfigurableNotifier(false),
             new ConfigurableNotifier(false),
         ]);
+    }
+
+    private function assertNotifierClasses($expectedNotifierClasses, $notifiers)
+    {
+        $expectedCount = count($expectedNotifierClasses);
+        $this->assertSame($expectedCount, count($notifiers));
+
+        for ($i = 0; $i < $expectedCount; ++$i) {
+            $this->assertInstanceOf($expectedNotifierClasses[$i], $notifiers[$i]);
+        }
     }
 }

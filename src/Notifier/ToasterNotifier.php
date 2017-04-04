@@ -40,25 +40,6 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
-    {
-        $processBuilder->add('-m');
-        $processBuilder->add($notification->getBody());
-
-        if ($notification->getTitle()) {
-            $processBuilder->add('-t');
-            $processBuilder->add($notification->getTitle());
-        }
-
-        if ($notification->getIcon()) {
-            $processBuilder->add('-p');
-            $processBuilder->add($notification->getIcon());
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed()
     {
         return OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher();
@@ -69,7 +50,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir()
     {
-        return dirname(dirname(dirname(__FILE__))).'/bin/toaster';
+        return dirname(dirname(__DIR__)).'/bin/toaster';
     }
 
     /**
@@ -89,5 +70,24 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
             'Microsoft.WindowsAPICodePack.dll',
             'Microsoft.WindowsAPICodePack.Shell.dll',
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    {
+        $processBuilder->add('-m');
+        $processBuilder->add($notification->getBody());
+
+        if ($notification->getTitle()) {
+            $processBuilder->add('-t');
+            $processBuilder->add($notification->getTitle());
+        }
+
+        if ($notification->getIcon()) {
+            $processBuilder->add('-p');
+            $processBuilder->add($notification->getIcon());
+        }
     }
 }

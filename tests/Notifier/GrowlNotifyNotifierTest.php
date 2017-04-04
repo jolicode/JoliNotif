@@ -16,14 +16,8 @@ use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 
 class GrowlNotifyNotifierTest extends NotifierTestCase
 {
-    const BINARY = 'growlnotify';
-
     use CliBasedNotifierTestTrait;
-
-    protected function getNotifier()
-    {
-        return new GrowlNotifyNotifier();
-    }
+    const BINARY = 'growlnotify';
 
     public function testGetBinary()
     {
@@ -37,6 +31,11 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
         $notifier = $this->getNotifier();
 
         $this->assertSame(Notifier::PRIORITY_HIGH, $notifier->getPriority());
+    }
+
+    protected function getNotifier()
+    {
+        return new GrowlNotifyNotifier();
     }
 
     /**
