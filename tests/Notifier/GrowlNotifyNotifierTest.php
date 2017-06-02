@@ -63,8 +63,10 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
+        $iconDir = $this->getIconDir();
+
         return <<<CLI
-'growlnotify' '--message' 'I'\''m the notification body' '--image' '/home/toto/Images/my-icon.png'
+'growlnotify' '--message' 'I'\''m the notification body' '--image' '${iconDir}/image.gif'
 CLI;
     }
 
@@ -73,8 +75,10 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
+        $iconDir = $this->getIconDir();
+
         return <<<CLI
-'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title' '--image' '/home/toto/Images/my-icon.png'
+'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title' '--image' '${iconDir}/image.gif'
 CLI;
     }
 }

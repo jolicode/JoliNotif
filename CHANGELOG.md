@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fixed Notification icon to always use a canonical absolute path
+
 ## 1.1.0
 
 * Added NotifierFactory::createOrThrowException() method

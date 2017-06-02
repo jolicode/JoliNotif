@@ -60,6 +60,8 @@ trait CliBasedNotifierTestTrait
      */
     public function provideValidNotifications()
     {
+        $iconDir = $this->getIconDir();
+
         return [
             [
                 (new Notification())
@@ -75,14 +77,14 @@ trait CliBasedNotifierTestTrait
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
+                    ->setIcon($iconDir.'/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAnIcon(),
             ],
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
                     ->setTitle('I\'m the notification title')
-                    ->setIcon('/home/toto/Images/my-icon.png'),
+                    ->setIcon($iconDir.'/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],
         ];
@@ -115,6 +117,11 @@ trait CliBasedNotifierTestTrait
         } catch (\Exception $e) {
             $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
         }
+    }
+
+    public function getIconDir()
+    {
+        return realpath(dirname(__DIR__).'/fixtures');
     }
 
     /**

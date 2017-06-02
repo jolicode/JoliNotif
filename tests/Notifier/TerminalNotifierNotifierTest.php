@@ -65,8 +65,10 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            $iconDir = $this->getIconDir();
+
             return <<<CLI
-'terminal-notifier' '-message' 'I'\''m the notification body' '-appIcon' '/home/toto/Images/my-icon.png'
+'terminal-notifier' '-message' 'I'\''m the notification body' '-appIcon' '${iconDir}/image.gif'
 CLI;
         }
 
@@ -81,8 +83,10 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+            $iconDir = $this->getIconDir();
+
             return <<<CLI
-'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-appIcon' '/home/toto/Images/my-icon.png'
+'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-appIcon' '${iconDir}/image.gif'
 CLI;
         }
 
