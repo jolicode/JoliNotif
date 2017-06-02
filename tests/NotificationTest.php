@@ -11,6 +11,8 @@
 
 namespace Joli\JoliNotif\tests;
 
+use Joli\JoliNotif\Notification;
+
 class NotificationTest extends \PHPUnit_Framework_TestCase
 {
     public function testItExtractsIconFromPhar()
@@ -54,5 +56,13 @@ PHAR_BOOTSTRAP;
 
         $this->assertTrue(is_file($extractedIconPath));
         $this->assertSame($iconContent, file_get_contents($extractedIconPath));
+    }
+
+    public function testItResolvesRealPathToIcon()
+    {
+        $notification = new Notification();
+        $notification->setIcon(__DIR__.'/../tests/fixtures/image.gif');
+
+        $this->assertSame(__DIR__.'/fixtures/image.gif', $notification->getIcon());
     }
 }

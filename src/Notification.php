@@ -88,6 +88,9 @@ class Notification
         // This makes the icon accessible for native commands when it's embedded inside a phar
         if (PharExtractor::isLocatedInsideAPhar($icon)) {
             $icon = PharExtractor::extractFile($icon);
+        } else {
+            // Makes the icon path absolute (expanding all symbolic links and resolving references like "/../")
+            $icon = realpath($icon);
         }
 
         $this->icon = $icon;

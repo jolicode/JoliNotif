@@ -64,8 +64,10 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
+        $iconDir = $this->getIconDir();
+
         return <<<CLI
-'notifu' '/m' 'I'\''m the notification body' '/i' '/home/toto/Images/my-icon.png'
+'notifu' '/m' 'I'\''m the notification body' '/i' '${iconDir}/image.gif'
 CLI;
     }
 
@@ -74,8 +76,10 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
+        $iconDir = $this->getIconDir();
+
         return <<<CLI
-'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\''m the notification title' '/i' '/home/toto/Images/my-icon.png'
+'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\''m the notification title' '/i' '${iconDir}/image.gif'
 CLI;
     }
 }
