@@ -1,10 +1,10 @@
 # Changes between versions
 
-## Not yet released
+## 1.1.1 (2017-06-03)
 
 * Fixed Notification icon to always use a canonical absolute path
 
-## 1.1.0
+## 1.1.0 (2017-04-04)
 
 * Added NotifierFactory::createOrThrowException() method
 * Added NullNotifier to get ride of null value
