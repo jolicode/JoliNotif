@@ -118,11 +118,10 @@ abstract class CliBasedNotifier implements Notifier
             // Do not use the 'which' program to check if a binary exists.
             // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
             $builder = new ProcessBuilder([
-                'command',
-                '-v',
+                'sh',
+                '-c',
+                'command -v $0',
                 $this->getBinary(),
-                '>/dev/null',
-                '2>&1',
             ]);
         } else {
             // 'where' is available on Windows since Server 2003
