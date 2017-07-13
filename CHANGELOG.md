@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fixed compatibility with symfony/process 3.3
+
 ## 1.1.1 (2017-06-03)
 
 * Fixed Notification icon to always use a canonical absolute path
