@@ -77,6 +77,20 @@ trait CliBasedNotifierTestTrait
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
+                    ->setTitle('I\'m the notification title')
+                    ->setSubtitle('I\'m the notification subtitle'),
+                $this->getExpectedCommandLineForNotificationWithASubtitle(),
+            ],
+            [
+                (new Notification())
+                    ->setBody('I\'m the notification body')
+                    ->setTitle('I\'m the notification title')
+                    ->setSound('Frog'),
+                $this->getExpectedCommandLineForNotificationWithASound(),
+            ],
+            [
+                (new Notification())
+                    ->setBody('I\'m the notification body')
                     ->setIcon($iconDir.'/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAnIcon(),
             ],
@@ -84,6 +98,8 @@ trait CliBasedNotifierTestTrait
                 (new Notification())
                     ->setBody('I\'m the notification body')
                     ->setTitle('I\'m the notification title')
+                    ->setSubtitle('I\'m the notification subtitle')
+                    ->setSound('Frog')
                     ->setIcon($iconDir.'/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],

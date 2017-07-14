@@ -31,6 +31,16 @@ class Notification
     private $icon;
 
     /**
+     * @var string
+     */
+    private $subtitle;
+
+    /**
+     * @var string
+     */
+    private $sound;
+
+    /**
      * @return string
      */
     public function getTitle()
@@ -94,6 +104,46 @@ class Notification
         }
 
         $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * @param string $subtitle
+     *
+     * @return $this
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSound()
+    {
+        return $this->sound;
+    }
+
+    /**
+     * @param string $sound
+     *
+     * @return $this
+     */
+    public function setSound($sound)
+    {
+        $this->sound = $sound;
 
         return $this;
     }

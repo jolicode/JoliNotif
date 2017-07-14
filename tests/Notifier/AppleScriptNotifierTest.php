@@ -73,6 +73,26 @@ CLI;
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithASubtitle()
+    {
+        return <<<CLI
+'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle"'
+CLI;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithASound()
+    {
+        return <<<CLI
+'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" sound name "Frog"'
+CLI;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         return <<<CLI
@@ -86,7 +106,7 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithAllOptions()
     {
         return <<<CLI
-'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
+'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle" sound name "Frog"'
 CLI;
     }
 }

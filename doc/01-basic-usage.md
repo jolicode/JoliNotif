@@ -36,6 +36,8 @@ $notification =
     (new Notification())
     ->setBody('The notification body')
     ->setTitle('The notification title')
+    ->setSubtitle('This is a subtitle') // Only works on macOS (AppleScriptNotifier)
+    ->setSound('Frog') // Only works on macOS (AppleScriptNotifier)
 ;
 ```
 

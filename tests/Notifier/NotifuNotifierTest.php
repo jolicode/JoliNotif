@@ -62,6 +62,22 @@ CLI;
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithASubtitle()
+    {
+        return $this->getExpectedCommandLineForNotificationWithATitle();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithASound()
+    {
+        return $this->getExpectedCommandLineForNotificationWithATitle();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         $iconDir = $this->getIconDir();
