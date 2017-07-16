@@ -31,14 +31,9 @@ class Notification
     private $icon;
 
     /**
-     * @var string
+     * @var array
      */
-    private $subtitle;
-
-    /**
-     * @var string
-     */
-    private $sound;
+    private $options = [];
 
     /**
      * @return string
@@ -109,41 +104,28 @@ class Notification
     }
 
     /**
+     * @param string $key
+     *
      * @return string
      */
-    public function getSubtitle()
+    public function getOption($key)
     {
-        return $this->subtitle;
+        if (!array_key_exists($key, $this->options)) {
+            return null;
+        }
+
+        return $this->options[$key];
     }
 
     /**
-     * @param string $subtitle
+     * @param string $key
+     * @param string $option
      *
      * @return $this
      */
-    public function setSubtitle($subtitle)
+    public function addOption($key, $option)
     {
-        $this->subtitle = $subtitle;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSound()
-    {
-        return $this->sound;
-    }
-
-    /**
-     * @param string $sound
-     *
-     * @return $this
-     */
-    public function setSound($sound)
-    {
-        $this->sound = $sound;
+        $this->options[$key] = $option;
 
         return $this;
     }

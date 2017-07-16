@@ -46,8 +46,8 @@ $notification =
     ->setTitle('Notification title')
     ->setBody('This is the body of your notification')
     ->setIcon(__DIR__.'/path/to/your/icon.png')
-    ->setSubtitle('This is a subtitle') // Only works on macOS (AppleScriptNotifier)
-    ->setSound('Frog') // Only works on macOS (AppleScriptNotifier)
+    ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptNotifier)
+    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptNotifier)
 ;
 
 // Send it
