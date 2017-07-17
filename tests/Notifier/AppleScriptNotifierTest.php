@@ -76,7 +76,7 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithASubtitle()
     {
         return <<<CLI
-'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle"'
+'osascript' '-e' 'display notification "I'\''m the notification body" subtitle "I'\''m the notification subtitle"'
 CLI;
     }
 
@@ -86,7 +86,7 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithASound()
     {
         return <<<CLI
-'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" sound name "Frog"'
+'osascript' '-e' 'display notification "I'\''m the notification body" sound name "Frog"'
 CLI;
     }
 

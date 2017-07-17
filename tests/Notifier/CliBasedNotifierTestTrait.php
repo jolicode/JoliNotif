@@ -77,14 +77,12 @@ trait CliBasedNotifierTestTrait
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
-                    ->setTitle('I\'m the notification title')
                     ->addOption('subtitle', 'I\'m the notification subtitle'),
                 $this->getExpectedCommandLineForNotificationWithASubtitle(),
             ],
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
-                    ->setTitle('I\'m the notification title')
                     ->addOption('sound', 'Frog'),
                 $this->getExpectedCommandLineForNotificationWithASound(),
             ],
@@ -157,7 +155,7 @@ trait CliBasedNotifierTestTrait
      */
     protected function getExpectedCommandLineForNotificationWithASubtitle()
     {
-        return $this->getExpectedCommandLineForNotificationWithATitle();
+        return $this->getExpectedCommandLineForNotification();
     }
 
     /**
@@ -167,7 +165,7 @@ trait CliBasedNotifierTestTrait
      */
     protected function getExpectedCommandLineForNotificationWithASound()
     {
-        return $this->getExpectedCommandLineForNotificationWithATitle();
+        return $this->getExpectedCommandLineForNotification();
     }
 
     /**
