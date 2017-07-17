@@ -62,6 +62,22 @@ CLI;
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithASubtitle()
+    {
+        return $this->getExpectedCommandLineForNotificationWithATitle();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getExpectedCommandLineForNotificationWithASound()
+    {
+        return $this->getExpectedCommandLineForNotificationWithATitle();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {

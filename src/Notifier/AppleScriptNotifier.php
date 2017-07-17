@@ -59,6 +59,14 @@ class AppleScriptNotifier extends CliBasedNotifier
             $script .= ' with title "'.str_replace('"', '\\"', $notification->getTitle()).'"';
         }
 
+        if ($notification->getOption('subtitle')) {
+            $script .= ' subtitle "'.str_replace('"', '\\"', $notification->getOption('subtitle')).'"';
+        }
+
+        if ($notification->getOption('sound')) {
+            $script .= ' sound name "'.str_replace('"', '\\"', $notification->getOption('sound')).'"';
+        }
+
         $processBuilder->add('-e');
         $processBuilder->add($script);
     }

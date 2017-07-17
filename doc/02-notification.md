@@ -37,6 +37,17 @@ $notification->setIcon(__DIR__.'/Resources/icons/success.png');
 Not all notifiers support icon but again, you can safely add an icon to your
 notification since the notifier will discard it if not supported.
 
+## Options
+
+You can also optionally provide a subtitle or sound name.
+For example, Basso, Frog, Hero, Pop, Submarine, Blow, Funk, Morse, Purr, Tink, Bottle, Glass, Ping or Sosumi.
+Only works with AppleScriptNotifier at the moment.
+
+```php
+$notification->addOption('subtitle', 'This is a subtitle');
+$notification->addOption('sound', 'Frog');
+```
+
 ## Next readings
 
 * [Notifier](03-notifier.md)
