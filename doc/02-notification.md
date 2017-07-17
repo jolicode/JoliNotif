@@ -61,6 +61,13 @@ Morse, Purr, Tink, Bottle, Glass, Ping, Sosumi.
 $notification->addOption('sound', 'Frog');
 ```
 
+### Url
+
+Only works with TerminalNotifierNotifier at the moment.
+
+```php
+$notification->addOption('subtitle', 'This is a subtitle');
+
 ## Next readings
 
 * [Notifier](03-notifier.md)

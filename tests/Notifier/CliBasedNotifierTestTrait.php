@@ -89,6 +89,12 @@ trait CliBasedNotifierTestTrait
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
+                    ->addOption('url', 'https://google.com'),
+                $this->getExpectedCommandLineForNotificationWithAnUrl(),
+            ],
+            [
+                (new Notification())
+                    ->setBody('I\'m the notification body')
                     ->setIcon($iconDir.'/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAnIcon(),
             ],
@@ -98,6 +104,7 @@ trait CliBasedNotifierTestTrait
                     ->setTitle('I\'m the notification title')
                     ->addOption('subtitle', 'I\'m the notification subtitle')
                     ->addOption('sound', 'Frog')
+                    ->addOption('url', 'https://google.com')
                     ->setIcon($iconDir.'/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],
@@ -164,6 +171,16 @@ trait CliBasedNotifierTestTrait
      * @return string
      */
     protected function getExpectedCommandLineForNotificationWithASound()
+    {
+        return $this->getExpectedCommandLineForNotification();
+    }
+
+    /**
+     * Sound is supported only on few notifier.
+     *
+     * @return string
+     */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
     {
         return $this->getExpectedCommandLineForNotification();
     }
