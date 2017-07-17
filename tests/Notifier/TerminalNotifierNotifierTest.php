@@ -62,6 +62,16 @@ CLI;
     /**
      * {@inheritdoc}
      */
+    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    {
+        return <<<CLI
+'terminal-notifier' '-message' 'I'\''m the notification body' '-open' 'https://google.com'
+CLI;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getExpectedCommandLineForNotificationWithAnIcon()
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
@@ -86,12 +96,12 @@ CLI;
             $iconDir = $this->getIconDir();
 
             return <<<CLI
-'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-appIcon' '${iconDir}/image.gif'
+'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-appIcon' '${iconDir}/image.gif' '-open' 'https://google.com'
 CLI;
         }
 
         return <<<CLI
-'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title'
+'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com'
 CLI;
     }
 }

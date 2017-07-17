@@ -3,6 +3,7 @@
 ## Not yet released
 
 * Added support for sound and subtitle option on AppleScript notifier
+* Added support for url option on TerminalNotifier notifier
 
 ## 1.1.2 (2017-07-13)
 
