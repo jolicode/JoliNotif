@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Added support for sound and subtitle option on AppleScript notifier
+
 ## 1.1.2 (2017-07-13)
 
 * Fixed compatibility with symfony/process 3.3

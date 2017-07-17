@@ -151,6 +151,26 @@ trait CliBasedNotifierTestTrait
     abstract protected function getExpectedCommandLineForNotificationWithATitle();
 
     /**
+     * Subtitle is supported only on few notifier.
+     *
+     * @return string
+     */
+    protected function getExpectedCommandLineForNotificationWithASubtitle()
+    {
+        return $this->getExpectedCommandLineForNotificationWithATitle();
+    }
+
+    /**
+     * Sound is supported only on few notifier.
+     *
+     * @return string
+     */
+    protected function getExpectedCommandLineForNotificationWithASound()
+    {
+        return $this->getExpectedCommandLineForNotificationWithATitle();
+    }
+
+    /**
      * @return string
      */
     abstract protected function getExpectedCommandLineForNotificationWithAnIcon();
