@@ -67,6 +67,7 @@ try {
     $cli->arguments->parse();
 } catch (Exception $e) {
     $cli->to('error')->red($e->getMessage());
+    exit(1);
 }
 
 // Create a Notifier.
