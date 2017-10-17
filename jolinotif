@@ -1,0 +1,95 @@
+#!/usr/bin/php -q
+<?php
+
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\NotifierFactory;
+use League\CLImate\CLImate;
+
+require_once('vendor/autoload.php');
+
+const VERSION = '1.0.0';
+
+$cli = new CLImate;
+$cli->description('Send notifications to your desktop directly from your terminal.');
+
+$cli->arguments->add([
+    'title'    => [
+        'prefix'      => 't',
+        'longPrefix'  => 'title',
+        'description' => 'Notification title.',
+        'required'    => true,
+    ],
+    'body'     => [
+        'prefix'      => 'b',
+        'longPrefix'  => 'body',
+        'description' => 'Notification body.',
+        'required'    => true,
+    ],
+    'icon'     => [
+        'prefix'      => 'i',
+        'longPrefix'  => 'icon',
+        'description' => 'Notification title.',
+    ],
+    'subtitle' => [
+        'longPrefix'  => 'subtitle',
+        'description' => 'Notification subtitle. Only works on macOS (AppleScriptNotifier).',
+    ],
+    'sound'    => [
+        'longPrefix'  => 'sound',
+        'description' => 'Notification sound. Only works on macOS (AppleScriptNotifier).',
+    ],
+    'help'     => [
+        'prefix'      => 'h',
+        'longPrefix'  => 'help',
+        'description' => 'Show this help.',
+    ],
+    'version'  => [
+        'prefix'      => 'v',
+        'longPrefix'  => 'version',
+        'description' => 'Show command version.',
+    ],
+]);
+
+// Handle help request.
+if ($cli->arguments->defined('help')) {
+    $cli->usage();
+    exit(0);
+}
+
+// Handle version request.
+if ($cli->arguments->defined('version')) {
+    $cli->green(VERSION);
+    exit(0);
+}
+
+// Handle required params request.
+try {
+    $cli->arguments->parse();
+} catch (Exception $e) {
+    $cli->to('error')->red($e->getMessage());
+}
+
+// Create a Notifier.
+$notifier = NotifierFactory::create();
+
+// Create Notification.
+$notification = (new Notification())
+    ->setTitle($cli->arguments->get('title'))
+    ->setBody($cli->arguments->get('body'));
+
+// Handle icon.
+if ($cli->arguments->defined('icon')) {
+    $notification->setIcon($cli->arguments->get('icon'));
+}
+
+// Handle subtitle and sound.
+if ($cli->arguments->defined('subtitle')) {
+    $notification->addOption('subtitle', $cli->arguments->get('subtitle'));
+}
+
+if ($cli->arguments->defined('sound')) {
+    $notification->addOption('sound', $cli->arguments->get('sound'));
+}
+
+// Send notification.
+$notifier->send($notification);
