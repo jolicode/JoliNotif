@@ -96,6 +96,7 @@ can only display icon with the .ico format.
 ## Next readings
 
 * [Advanced usage](04-advanced-usage.md)
+* [CLI usage](05-cli-usage.md)
 
 Previous pages:
 

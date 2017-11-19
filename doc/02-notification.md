@@ -73,6 +73,7 @@ $notification->addOption('url', 'https://google.com');
 
 * [Notifier](03-notifier.md)
 * [Advanced usage](04-advanced-usage.md)
+* [CLI usage](05-cli-usage.md)
 
 Previous pages:
 
