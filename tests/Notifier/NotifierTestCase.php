@@ -12,8 +12,9 @@
 namespace Joli\JoliNotif\tests\Notifier;
 
 use Joli\JoliNotif\Notifier;
+use PHPUnit\Framework\TestCase;
 
-abstract class NotifierTestCase extends \PHPUnit_Framework_TestCase
+abstract class NotifierTestCase extends TestCase
 {
     /**
      * @return Notifier
