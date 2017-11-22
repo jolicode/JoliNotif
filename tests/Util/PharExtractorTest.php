@@ -12,8 +12,9 @@
 namespace Joli\JoliNotif\tests\Util;
 
 use Joli\JoliNotif\Util\PharExtractor;
+use PHPUnit\Framework\TestCase;
 
-class PharExtractorTest extends \PHPUnit_Framework_TestCase
+class PharExtractorTest extends TestCase
 {
     public function testIsLocatedInsideAPhar()
     {

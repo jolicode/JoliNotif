@@ -12,8 +12,9 @@
 namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Notification;
+use PHPUnit\Framework\TestCase;
 
-class NotificationTest extends \PHPUnit_Framework_TestCase
+class NotificationTest extends TestCase
 {
     public function testItExtractsIconFromPhar()
     {
