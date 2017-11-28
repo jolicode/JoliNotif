@@ -32,11 +32,11 @@ class PharExtractorTest extends TestCase
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
-        $this->assertTrue(is_file($pharPath));
+        $this->assertFileExists($pharPath);
         exec('php '.$pharPath);
         \Phar::unlinkArchive($pharPath);
 
-        $this->assertTrue(is_file($extractedFilePath));
+        $this->assertFileExists($extractedFilePath);
         $this->assertSame($key, file_get_contents($extractedFilePath));
         unlink($extractedFilePath);
     }
@@ -49,16 +49,16 @@ class PharExtractorTest extends TestCase
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
-        $this->assertTrue(is_file($pharPath));
+        $this->assertFileExists($pharPath);
         exec('php '.$pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->generatePhar($pharPath, $relativeFilePath, 'new content', false);
-        $this->assertTrue(is_file($pharPath));
+        $this->assertFileExists($pharPath);
         exec('php '.$pharPath);
         \Phar::unlinkArchive($pharPath);
 
-        $this->assertTrue(is_file($extractedFilePath));
+        $this->assertFileExists($extractedFilePath);
         $this->assertSame($key, file_get_contents($extractedFilePath));
         unlink($extractedFilePath);
     }
@@ -71,16 +71,16 @@ class PharExtractorTest extends TestCase
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
-        $this->assertTrue(is_file($pharPath));
+        $this->assertFileExists($pharPath);
         exec('php '.$pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->generatePhar($pharPath, $relativeFilePath, 'new content', true);
-        $this->assertTrue(is_file($pharPath));
+        $this->assertFileExists($pharPath);
         exec('php '.$pharPath);
         \Phar::unlinkArchive($pharPath);
 
-        $this->assertTrue(is_file($extractedFilePath));
+        $this->assertFileExists($extractedFilePath);
         $this->assertSame('new content', file_get_contents($extractedFilePath));
         unlink($extractedFilePath);
     }
