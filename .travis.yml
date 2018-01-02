@@ -35,3 +35,7 @@ before_script:
 script:
     - ./bin/phpunit
     - if [ "$check_cs" = "true" ]; then bin/php-cs-fixer fix --config=.php_cs --dry-run --diff; fi;
+
+branches:
+    only:
+        - master
