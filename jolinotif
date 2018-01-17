@@ -1,4 +1,4 @@
-#!/usr/bin/php -q
+#!/usr/bin/env php
 <?php
 
 use Joli\JoliNotif\Notification;
@@ -6,32 +6,55 @@ use Joli\JoliNotif\NotifierFactory;
 
 require_once('vendor/autoload.php');
 
-class Cli
+final class Cli
 {
-    const INFO = 0;
-    const ERROR = 1;
+    private $description = 'Send notifications to your desktop directly from your terminal.';
+    private $arguments = [];
+    private $command = [];
 
-    protected $description;
-    protected $rules = [];
-    protected $arguments = [];
+    private $rules = [
+        'title'    => [
+            'name'     => 'title',
+            'info'     => 'Notification title.',
+            'required' => true,
+        ],
+        'body'     => [
+            'name'     => 'body',
+            'info'     => 'Notification body.',
+            'required' => true,
+        ],
+        'icon'     => [
+            'name'     => 'icon',
+            'info'     => 'Notification icon.',
+            'optional' => true,
+        ],
+        'subtitle' => [
+            'name'     => 'subtitle',
+            'info'     => 'Notification subtitle. Only works on macOS (AppleScriptNotifier).',
+            'optional' => true,
+        ],
+        'sound'    => [
+            'name'     => 'sound',
+            'info'     => 'Notification sound. Only works on macOS (AppleScriptNotifier).',
+            'optional' => true,
+        ],
+        'url'      => [
+            'name'     => 'url',
+            'info'     => 'Notification url. Only works on macOS (TerminalNotifierNotifier).',
+            'optional' => true,
+        ],
+        'help'     => [
+            'name' => 'help',
+            'info' => 'Show this help.',
+            'flag' => true,
+        ],
+    ];
 
-    private $command;
-
-    /**
-     * @param string $description
-     * @param array $rules
-     */
-    public function __construct($description, array $rules)
+    public function __construct()
     {
         $this->command = $_SERVER['argv'][0];
-        $this->description = $description;
-        $this->rules = $rules;
     }
 
-    /**
-     * Main CLI arguments parser method.
-     * @throws Exception
-     */
     public function parse()
     {
         $options = '';
@@ -42,40 +65,26 @@ class Cli
             return $rule['name'] . $required . $optional;
         }, $this->rules);
 
-        $this->arguments = getopt($options, $longOptions);
+        $this->arguments = getopt($options, $longOptions) ?: [];
     }
 
-    /**
-     * Return a value of an CLI argument passed.
-     * @param string $name
-     * @return mixed
-     */
-    public function get($name)
+    public function getOption(string $name)
     {
         return $this->arguments[$name] ?: false;
     }
 
-    /**
-     * Checks if an CLI argument was passed.
-     * @param string $name
-     * @return mixed
-     */
-    public function defined($name)
+    public function hasOption(string $name)
     {
         return isset($this->arguments[$name]);
     }
 
-    /**
-     * Checks if all required were presented in arguments.
-     * @return boolean
-     */
-    public function valid()
+    public function validate()
     {
         $valid = true;
 
         foreach ($this->rules as $rule) {
-            if ($rule['required'] && !$this->defined($rule['name'])) {
-                $this->error("Please specify notification {$rule['name']}! --{$rule['name']}");
+            if ($rule['required'] && !$this->hasOption($rule['name'])) {
+                $this->log("Please specify notification {$rule['name']}! --{$rule['name']}");
                 $valid = false;
             }
         }
@@ -83,10 +92,7 @@ class Cli
         return $valid;
     }
 
-    /**
-     * Outputs CLI usage as a help.
-     */
-    public function usage()
+    public function showUsage()
     {
         $required = [];
         $optional = [];
@@ -104,65 +110,29 @@ class Cli
             $usage .= ' ' . $prefix . $this->formatUsage($name, $rule) . $postfix;
         }
 
-        $this->info($this->description);
-        $this->info(PHP_EOL . 'Usage: ' . trim($usage));
+        $this->log($this->description);
+        $this->log(PHP_EOL . 'Usage: ' . trim($usage));
 
-        $this->info(PHP_EOL . 'Required Arguments:');
+        $this->log(PHP_EOL . 'Required Arguments:');
         foreach ($required as $name => $info) {
             $value = $this->formatUsage($name, $info);
-            $this->info("\t{$value}");
-            $this->info("\t\t{$info['info']}");
+            $this->log("\t{$value}");
+            $this->log("\t\t{$info['info']}");
         }
 
-        $this->info(PHP_EOL . 'Optional Arguments:');
+        $this->log(PHP_EOL . 'Optional Arguments:');
         foreach ($optional as $name => $info) {
             $value = $this->formatUsage($name, $info);
-            $this->info("\t{$value}");
-            $this->info("\t\t{$info['info']}");
+            $this->log("\t{$value}");
+            $this->log("\t\t{$info['info']}");
         }
     }
 
-    /**
-     * Log messages to CLI output.
-     *
-     * @param integer $level
-     * @param string $message
-     */
-    private function log($level, $message)
+    public function log(string $message)
     {
-        $color = "\033[0m";
-        if ($level === self::ERROR) {
-            $color = "\033[0;31m";
-        }
-        echo $color . $message . "\033[0m" . PHP_EOL;
+        echo $message . PHP_EOL;
     }
 
-    /**
-     * Echo info message.
-     *
-     * @param string $message
-     */
-    public function info($message)
-    {
-        $this->log(self::INFO, $message);
-    }
-
-    /**
-     * Echo error message.
-     *
-     * @param string $message
-     */
-    public function error($message)
-    {
-        $this->log(self::ERROR, $message);
-    }
-
-    /**
-     * Generate usage example.
-     * @param string $name
-     * @param array $rule
-     * @return string
-     */
     private function formatUsage($name, $rule)
     {
         $example = $rule['required'] ? " {$name}" : "=\"{$name}\"";
@@ -172,91 +142,44 @@ class Cli
     }
 }
 
-$description = 'Send notifications to your desktop directly from your terminal.';
-$rules = [
-    'title'    => [
-        'name'     => 'title',
-        'info'     => 'Notification title.',
-        'required' => true,
-    ],
-    'body'     => [
-        'name'     => 'body',
-        'info'     => 'Notification body.',
-        'required' => true,
-    ],
-    'icon'     => [
-        'name'     => 'icon',
-        'info'     => 'Notification icon.',
-        'optional' => true,
-    ],
-    'subtitle' => [
-        'name'     => 'subtitle',
-        'info'     => 'Notification subtitle. Only works on macOS (AppleScriptNotifier).',
-        'optional' => true,
-    ],
-    'sound'    => [
-        'name'     => 'sound',
-        'info'     => 'Notification sound. Only works on macOS (AppleScriptNotifier).',
-        'optional' => true,
-    ],
-    'url'      => [
-        'name'     => 'url',
-        'info'     => 'Notification url. Only works on macOS (TerminalNotifierNotifier).',
-        'optional' => true,
-    ],
-    'help'     => [
-        'name' => 'help',
-        'info' => 'Show this help.',
-        'flag' => true,
-    ],
-];
+$cli = new Cli();
 
-$cli = new Cli($description, $rules);
-
-// Trying to parse args.
 try {
     $cli->parse();
 } catch (Exception $e) {
-    $cli->error($e->getMessage());
+    $cli->log($e->getMessage());
     exit(1);
 }
 
-// Checking for help.
-if ($cli->defined('help')) {
-    $cli->usage();
+if ($cli->hasOption('help')) {
+    $cli->showUsage();
     exit(0);
 }
 
-// Checking validation for required.
-if (!$cli->valid()) {
+if (!$cli->validate()) {
     exit(1);
 }
 
-// Create a Notifier.
 $notifier = NotifierFactory::create();
 
-// Create Notification.
 $notification = (new Notification())
-    ->setTitle($cli->get('title'))
-    ->setBody($cli->get('body'));
+    ->setTitle($cli->getOption('title'))
+    ->setBody($cli->getOption('body'));
 
-// Handle icon.
-if ($cli->defined('icon')) {
-    $notification->setIcon($cli->get('icon'));
+if ($cli->hasOption('icon')) {
+    $notification->setIcon($cli->getOption('icon'));
 }
 
-// Handle subtitle, sound and url.
-if ($cli->defined('subtitle')) {
-    $notification->addOption('subtitle', $cli->get('subtitle'));
+if ($cli->hasOption('subtitle')) {
+    $notification->addOption('subtitle', $cli->getOption('subtitle'));
 }
 
-if ($cli->defined('sound')) {
-    $notification->addOption('sound', $cli->get('sound'));
+if ($cli->hasOption('sound')) {
+    $notification->addOption('sound', $cli->getOption('sound'));
 }
 
-if ($cli->defined('url')) {
-    $notification->addOption('url', $cli->get('url'));
+if ($cli->hasOption('url')) {
+    $notification->addOption('url', $cli->getOption('url'));
 }
 
-// Send notification.
 $notifier->send($notification);
