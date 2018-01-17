@@ -15,8 +15,9 @@ use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\NotifierFactory;
 use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
 use Joli\JoliNotif\Util\OsHelper;
+use PHPUnit\Framework\TestCase;
 
-class NotifierFactoryTest extends \PHPUnit_Framework_TestCase
+class NotifierFactoryTest extends TestCase
 {
     public function testGetDefaultNotifiers()
     {

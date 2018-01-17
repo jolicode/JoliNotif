@@ -12,8 +12,9 @@
 namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Notification;
+use PHPUnit\Framework\TestCase;
 
-class NotificationTest extends \PHPUnit_Framework_TestCase
+class NotificationTest extends TestCase
 {
     public function testItExtractsIconFromPhar()
     {
@@ -50,11 +51,11 @@ PHAR_BOOTSTRAP;
         $phar->addFromString($iconRelativePath, $iconContent);
         $phar->setStub($phar->createDefaultStub('bootstrap.php'));
 
-        $this->assertTrue(is_file($pharPath));
+        $this->assertFileExists($pharPath);
 
         exec('php '.$pharPath);
 
-        $this->assertTrue(is_file($extractedIconPath));
+        $this->assertFileExists($extractedIconPath);
         $this->assertSame($iconContent, file_get_contents($extractedIconPath));
     }
 
@@ -63,6 +64,6 @@ PHAR_BOOTSTRAP;
         $notification = new Notification();
         $notification->setIcon(__DIR__.'/../tests/fixtures/image.gif');
 
-        $this->assertSame(__DIR__.'/fixtures/image.gif', $notification->getIcon());
+        $this->assertFileEquals(__DIR__.'/fixtures/image.gif', $notification->getIcon());
     }
 }
