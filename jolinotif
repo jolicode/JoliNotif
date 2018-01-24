@@ -1,0 +1,185 @@
+#!/usr/bin/env php
+<?php
+
+use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\NotifierFactory;
+
+require __DIR__ . '/vendor/autoload.php';
+
+final class Cli
+{
+    private $description = 'Send notifications to your desktop directly from your terminal.';
+    private $arguments = [];
+    private $command = [];
+
+    private $rules = [
+        'title'    => [
+            'name'     => 'title',
+            'info'     => 'Notification title.',
+            'required' => true,
+        ],
+        'body'     => [
+            'name'     => 'body',
+            'info'     => 'Notification body.',
+            'required' => true,
+        ],
+        'icon'     => [
+            'name'     => 'icon',
+            'info'     => 'Notification icon.',
+            'optional' => true,
+        ],
+        'subtitle' => [
+            'name'     => 'subtitle',
+            'info'     => 'Notification subtitle. Only works on macOS (AppleScriptNotifier).',
+            'optional' => true,
+        ],
+        'sound'    => [
+            'name'     => 'sound',
+            'info'     => 'Notification sound. Only works on macOS (AppleScriptNotifier).',
+            'optional' => true,
+        ],
+        'url'      => [
+            'name'     => 'url',
+            'info'     => 'Notification url. Only works on macOS (TerminalNotifierNotifier).',
+            'optional' => true,
+        ],
+        'help'     => [
+            'name' => 'help',
+            'info' => 'Show this help.',
+            'flag' => true,
+        ],
+    ];
+
+    public function __construct()
+    {
+        $this->command = $_SERVER['argv'][0];
+    }
+
+    public function parse()
+    {
+        $options = '';
+        $longOptions = array_map(function ($rule) {
+            $required = $rule['required'] ? ':' : '';
+            $optional = $rule['optional'] ? '::' : '';
+
+            return $rule['name'] . $required . $optional;
+        }, $this->rules);
+
+        $this->arguments = getopt($options, $longOptions) ?: [];
+    }
+
+    public function getOption(string $name)
+    {
+        return $this->arguments[$name] ?: false;
+    }
+
+    public function hasOption(string $name)
+    {
+        return isset($this->arguments[$name]);
+    }
+
+    public function validate()
+    {
+        $valid = true;
+
+        foreach ($this->rules as $rule) {
+            if ($rule['required'] && !$this->hasOption($rule['name'])) {
+                $this->log("Please specify notification {$rule['name']}! --{$rule['name']}");
+                $valid = false;
+            }
+        }
+
+        return $valid;
+    }
+
+    public function showUsage()
+    {
+        $required = [];
+        $optional = [];
+        $usage = $this->command;
+
+        foreach ($this->rules as $name => $rule) {
+            $prefix = $postfix = '';
+            if ($rule['required']) {
+                $required[$name] = $rule;
+            } else {
+                $optional[$name] = $rule;
+                $prefix = '[';
+                $postfix = ']';
+            }
+            $usage .= ' ' . $prefix . $this->formatUsage($name, $rule) . $postfix;
+        }
+
+        $this->log($this->description);
+        $this->log(PHP_EOL . 'Usage: ' . trim($usage));
+
+        $this->log(PHP_EOL . 'Required Arguments:');
+        foreach ($required as $name => $info) {
+            $value = $this->formatUsage($name, $info);
+            $this->log("\t{$value}");
+            $this->log("\t\t{$info['info']}");
+        }
+
+        $this->log(PHP_EOL . 'Optional Arguments:');
+        foreach ($optional as $name => $info) {
+            $value = $this->formatUsage($name, $info);
+            $this->log("\t{$value}");
+            $this->log("\t\t{$info['info']}");
+        }
+    }
+
+    public function log(string $message)
+    {
+        echo $message . PHP_EOL;
+    }
+
+    private function formatUsage($name, $rule)
+    {
+        $example = $rule['required'] ? " {$name}" : "=\"{$name}\"";
+        $value = $rule['flag'] ? '' : $example;
+
+        return '--' . $name . $value;
+    }
+}
+
+$cli = new Cli();
+
+try {
+    $cli->parse();
+} catch (Exception $e) {
+    $cli->log($e->getMessage());
+    exit(1);
+}
+
+if ($cli->hasOption('help')) {
+    $cli->showUsage();
+    exit(0);
+}
+
+if (!$cli->validate()) {
+    exit(1);
+}
+
+$notifier = NotifierFactory::create();
+
+$notification = (new Notification())
+    ->setTitle($cli->getOption('title'))
+    ->setBody($cli->getOption('body'));
+
+if ($cli->hasOption('icon')) {
+    $notification->setIcon($cli->getOption('icon'));
+}
+
+if ($cli->hasOption('subtitle')) {
+    $notification->addOption('subtitle', $cli->getOption('subtitle'));
+}
+
+if ($cli->hasOption('sound')) {
+    $notification->addOption('sound', $cli->getOption('sound'));
+}
+
+if ($cli->hasOption('url')) {
+    $notification->addOption('url', $cli->getOption('url'));
+}
+
+$notifier->send($notification);

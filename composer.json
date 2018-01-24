@@ -35,5 +35,8 @@
     },
     "config": {
         "bin-dir": "bin"
-    }
+    },
+    "bin": [
+        "jolinotif"
+    ]
 }

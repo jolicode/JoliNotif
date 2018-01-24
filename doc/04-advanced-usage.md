@@ -18,6 +18,8 @@ cronjob:
 
 ## Next readings
 
+* [CLI usage](05-cli-usage.md)
+
 Previous pages:
 
 * [Notifier](03-notifier.md)

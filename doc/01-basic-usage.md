@@ -60,6 +60,7 @@ And you're done!
 * [Notification](02-notification.md)
 * [Notifier](03-notifier.md)
 * [Advanced usage](04-advanced-usage.md)
+* [CLI usage](05-cli-usage.md)
 
 Previous pages:
 
