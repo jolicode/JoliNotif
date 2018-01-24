@@ -4,7 +4,7 @@
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
 
-require_once('vendor/autoload.php');
+require __DIR__ . '/vendor/autoload.php';
 
 final class Cli
 {
