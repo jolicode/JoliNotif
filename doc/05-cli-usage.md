@@ -7,6 +7,7 @@ Install package globally:
 ```bash
 $ composer global require jolicode/jolinotif
 ```
+
 **Note!** Make sure to place the `~/.composer/vendor/bin` directory (or the equivalent directory for your OS) in your PATH so the transfer executable can be located by your system. Simply add this directory to your PATH in your `~/.bashrc` (or `~/.bash_profile`) like this:
 
 ```
@@ -17,6 +18,7 @@ $ source ~/.bashrc
 ## Usage
 
 To get help just run:
+
 ```
 ./jolinotif --help
 ```

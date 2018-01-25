@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Added binary script to run jolinotif in CLI
+
 ## 1.2.0 (2017-07-17)
 
 * Added support for sound and subtitle option on AppleScript notifier

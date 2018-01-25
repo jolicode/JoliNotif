@@ -8,11 +8,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 final class Cli
 {
-    private $description = 'Send notifications to your desktop directly from your terminal.';
-    private $arguments = [];
-    private $command = [];
+    const DESCRIPTION = 'Send notifications to your desktop directly from your terminal.';
 
-    private $rules = [
+    // Move to a constant when PHP required version is bumped to PHP >= 5.6
+    private static $rules = [
         'title'    => [
             'name'     => 'title',
             'info'     => 'Notification title.',
@@ -26,29 +25,33 @@ final class Cli
         'icon'     => [
             'name'     => 'icon',
             'info'     => 'Notification icon.',
-            'optional' => true,
+            'required' => false,
         ],
         'subtitle' => [
             'name'     => 'subtitle',
             'info'     => 'Notification subtitle. Only works on macOS (AppleScriptNotifier).',
-            'optional' => true,
+            'required' => false,
         ],
         'sound'    => [
             'name'     => 'sound',
             'info'     => 'Notification sound. Only works on macOS (AppleScriptNotifier).',
-            'optional' => true,
+            'required' => false,
         ],
         'url'      => [
             'name'     => 'url',
             'info'     => 'Notification url. Only works on macOS (TerminalNotifierNotifier).',
-            'optional' => true,
+            'required' => false,
         ],
         'help'     => [
             'name' => 'help',
             'info' => 'Show this help.',
+            'required' => false,
             'flag' => true,
         ],
     ];
+
+    private $arguments = [];
+    private $command = [];
 
     public function __construct()
     {
@@ -59,11 +62,10 @@ final class Cli
     {
         $options = '';
         $longOptions = array_map(function ($rule) {
-            $required = $rule['required'] ? ':' : '';
-            $optional = $rule['optional'] ? '::' : '';
+            $flag = $rule['required'] ? ':' : '::';
 
-            return $rule['name'] . $required . $optional;
-        }, $this->rules);
+            return $rule['name'] . $flag;
+        }, self::$rules);
 
         $this->arguments = getopt($options, $longOptions) ?: [];
     }
@@ -82,9 +84,9 @@ final class Cli
     {
         $valid = true;
 
-        foreach ($this->rules as $rule) {
+        foreach (self::$rules as $rule) {
             if ($rule['required'] && !$this->hasOption($rule['name'])) {
-                $this->log("Please specify notification {$rule['name']}! --{$rule['name']}");
+                $this->log("Please specify notification {$rule['name']} with the option --{$rule['name']}");
                 $valid = false;
             }
         }
@@ -98,7 +100,7 @@ final class Cli
         $optional = [];
         $usage = $this->command;
 
-        foreach ($this->rules as $name => $rule) {
+        foreach (self::$rules as $name => $rule) {
             $prefix = $postfix = '';
             if ($rule['required']) {
                 $required[$name] = $rule;
@@ -110,7 +112,7 @@ final class Cli
             $usage .= ' ' . $prefix . $this->formatUsage($name, $rule) . $postfix;
         }
 
-        $this->log($this->description);
+        $this->log(self::DESCRIPTION);
         $this->log(PHP_EOL . 'Usage: ' . trim($usage));
 
         $this->log(PHP_EOL . 'Required Arguments:');
@@ -136,7 +138,7 @@ final class Cli
     private function formatUsage($name, $rule)
     {
         $example = $rule['required'] ? " {$name}" : "=\"{$name}\"";
-        $value = $rule['flag'] ? '' : $example;
+        $value = isset($rule['flag']) && $rule['flag'] ? '' : $example;
 
         return '--' . $name . $value;
     }

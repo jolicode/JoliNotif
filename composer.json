@@ -33,9 +33,6 @@
             "dev-master": "1.2.x-dev"
         }
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "bin": [
         "jolinotif"
     ]
