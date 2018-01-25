@@ -33,8 +33,8 @@ before_script:
     - composer install --no-interaction
 
 script:
-    - ./bin/phpunit
-    - if [ "$check_cs" = "true" ]; then bin/php-cs-fixer fix --config=.php_cs --dry-run --diff; fi;
+    - ./vendor/bin/phpunit
+    - if [ "$check_cs" = "true" ]; then vendor/bin/php-cs-fixer fix --config=.php_cs --dry-run --diff; fi;
 
 branches:
     only:
