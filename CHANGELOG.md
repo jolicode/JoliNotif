@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 1.3.0 (2018-01-25)
 
 * Added binary script to run jolinotif in CLI
 
