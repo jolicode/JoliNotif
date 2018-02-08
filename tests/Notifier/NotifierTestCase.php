@@ -16,10 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class NotifierTestCase extends TestCase
 {
-    /**
-     * @return Notifier
-     */
-    abstract protected function getNotifier();
+    abstract protected function getNotifier(): Notifier;
 
     /**
      * Call protected/private method of a class.
@@ -30,7 +27,7 @@ abstract class NotifierTestCase extends TestCase
      *
      * @return mixed method return
      */
-    protected function invokeMethod($object, $methodName, array $parameters = [])
+    protected function invokeMethod($object, string $methodName, array $parameters = [])
     {
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

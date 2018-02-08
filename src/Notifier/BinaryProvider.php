@@ -19,34 +19,26 @@ interface BinaryProvider
 {
     /**
      * Return whether the embedded binary can be used on the current system.
-     *
-     * @return bool
      */
-    public function canBeUsed();
+    public function canBeUsed(): bool;
 
     /**
      * Return the absolute path of the directory containing all the files.
-     *
-     * @return string
      */
-    public function getRootDir();
+    public function getRootDir(): string;
 
     /**
      * Return the path of the embedded binary.
      *
      * The path should be relative to the directory pointed by getRootDir().
-     *
-     * @return array
      */
-    public function getEmbeddedBinary();
+    public function getEmbeddedBinary(): string;
 
     /**
      * Return an array of files that should be extracted when JoliNotif is
      * used inside a phar archive.
      *
      * All paths should be relative to the directory pointed by getRootDir().
-     *
-     * @return array
      */
-    public function getExtraFiles();
+    public function getExtraFiles(): array;
 }

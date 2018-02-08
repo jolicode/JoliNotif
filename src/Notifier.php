@@ -20,26 +20,18 @@ interface Notifier
     /**
      * This method is called to check whether the notifier can be used on the
      * current system or not.
-     *
-     * @return bool
      */
-    public function isSupported();
+    public function isSupported(): bool;
 
     /**
      * The supported notifier with the higher priority will be preferred.
-     *
-     * @return int
      */
-    public function getPriority();
+    public function getPriority(): int;
 
     /**
      * Send the given notification.
      *
-     * @param Notification $notification
-     *
      * @throws Exception\InvalidNotificationException if the notification is invalid
-     *
-     * @return bool
      */
-    public function send(Notification $notification);
+    public function send(Notification $notification): bool;
 }

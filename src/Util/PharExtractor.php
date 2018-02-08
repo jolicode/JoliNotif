@@ -15,12 +15,8 @@ class PharExtractor
 {
     /**
      * Return whether the file path is located inside a phar.
-     *
-     * @param string $filePath
-     *
-     * @return bool
      */
-    public static function isLocatedInsideAPhar($filePath)
+    public static function isLocatedInsideAPhar(string $filePath): bool
     {
         return 0 === strpos($filePath, 'phar://');
     }
@@ -28,12 +24,9 @@ class PharExtractor
     /**
      * Extract the file from the phar archive to make it accessible for native commands.
      *
-     * @param string $filePath  the absolute file path to extract
-     * @param bool   $overwrite
-     *
-     * @return string
+     * The absolute file path to extract should be passed in the first argument.
      */
-    public static function extractFile($filePath, $overwrite = false)
+    public static function extractFile(string $filePath, bool $overwrite = false): string
     {
         $pharPath = \Phar::running(false);
 

@@ -16,7 +16,7 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Util\OsHelper;
 use Joli\JoliNotif\Util\PharExtractor;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 abstract class CliBasedNotifier implements Notifier
 {
@@ -33,7 +33,7 @@ abstract class CliBasedNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function isSupported()
+    public function isSupported(): bool
     {
         if (self::SUPPORT_UNKNOWN !== $this->support) {
             return self::SUPPORT_NONE !== $this->support;
@@ -59,13 +59,13 @@ abstract class CliBasedNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function send(Notification $notification)
+    public function send(Notification $notification): bool
     {
         if (!$notification->getBody()) {
             throw new InvalidNotificationException($notification, 'Notification body can not be empty');
         }
 
-        $builder = new ProcessBuilder();
+        $arguments = $this->getCommandLineArguments($notification);
 
         if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
             $dir = rtrim($this->getRootDir(), '/').'/';
@@ -79,14 +79,12 @@ abstract class CliBasedNotifier implements Notifier
                 }
             }
 
-            $builder->setPrefix($embeddedBinary);
+            $binary = $embeddedBinary;
         } else {
-            $builder->setPrefix($this->getBinary());
+            $binary = $this->getBinary();
         }
 
-        $this->configureProcess($builder, $notification);
-
-        $process = $builder->getProcess();
+        $process = new Process(array_merge([$binary], $arguments));
         $process->run();
 
         return $process->isSuccessful();
@@ -94,30 +92,23 @@ abstract class CliBasedNotifier implements Notifier
 
     /**
      * Configure the process to run in order to send the notification.
-     *
-     * @param ProcessBuilder $processBuilder
-     * @param Notification   $notification
      */
-    abstract protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification);
+    abstract protected function getCommandLineArguments(Notification $notification): array;
 
     /**
      * Get the binary to check existence.
-     *
-     * @return string
      */
-    abstract protected function getBinary();
+    abstract protected function getBinary(): string;
 
     /**
      * Check whether a binary is available.
-     *
-     * @return bool
      */
-    protected function isBinaryAvailable()
+    protected function isBinaryAvailable(): bool
     {
         if (OsHelper::isUnix()) {
             // Do not use the 'which' program to check if a binary exists.
             // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-            $builder = new ProcessBuilder([
+            $process = new Process([
                 'sh',
                 '-c',
                 'command -v $0',
@@ -125,13 +116,12 @@ abstract class CliBasedNotifier implements Notifier
             ]);
         } else {
             // 'where' is available on Windows since Server 2003
-            $builder = new ProcessBuilder([
+            $process = new Process([
                 'where',
                 $this->getBinary(),
             ]);
         }
 
-        $process = $builder->getProcess();
         $process->run();
 
         return $process->isSuccessful();

@@ -19,7 +19,7 @@ class NullNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function isSupported()
+    public function isSupported(): bool
     {
         return true;
     }
@@ -27,7 +27,7 @@ class NullNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY_LOW;
     }
@@ -35,7 +35,7 @@ class NullNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function send(Notification $notification)
+    public function send(Notification $notification): bool
     {
         return false;
     }

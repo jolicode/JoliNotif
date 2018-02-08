@@ -1,5 +1,13 @@
 # Changes between versions
 
+## Not yet released
+
+* Dropped support for Symfony < 3.3
+* Dropped support for PHP < 7 & HHVM
+* Fixed compatibility with Symfony 4
+* Added better CI configuration
+* Added typehints everywhere
+
 ## 1.3.0 (2018-01-25)
 
 * Added binary script to run jolinotif in CLI

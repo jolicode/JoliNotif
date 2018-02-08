@@ -13,7 +13,6 @@ namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This notifier can be used on Mac OS X 10.9+.
@@ -23,7 +22,7 @@ class AppleScriptNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function isSupported()
+    public function isSupported(): bool
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             return parent::isSupported();
@@ -35,7 +34,7 @@ class AppleScriptNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'osascript';
     }
@@ -43,7 +42,7 @@ class AppleScriptNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY_LOW;
     }
@@ -51,7 +50,7 @@ class AppleScriptNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    protected function getCommandLineArguments(Notification $notification): array
     {
         $script = 'display notification "'.str_replace('"', '\\"', $notification->getBody()).'"';
 
@@ -67,7 +66,9 @@ class AppleScriptNotifier extends CliBasedNotifier
             $script .= ' sound name "'.str_replace('"', '\\"', $notification->getOption('sound')).'"';
         }
 
-        $processBuilder->add('-e');
-        $processBuilder->add($script);
+        return [
+            '-e',
+            $script,
+        ];
     }
 }

@@ -36,7 +36,7 @@ class ConfigurableNotifier implements Notifier
      * @param $priority
      * @param $sendReturn
      */
-    public function __construct($supported, $priority = Notifier::PRIORITY_MEDIUM, $sendReturn = true)
+    public function __construct(bool $supported, int $priority = Notifier::PRIORITY_MEDIUM, bool $sendReturn = true)
     {
         $this->supported = $supported;
         $this->priority = $priority;
@@ -46,7 +46,7 @@ class ConfigurableNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function isSupported()
+    public function isSupported(): bool
     {
         return $this->supported;
     }
@@ -54,7 +54,7 @@ class ConfigurableNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return $this->priority;
     }
@@ -62,7 +62,7 @@ class ConfigurableNotifier implements Notifier
     /**
      * {@inheritdoc}
      */
-    public function send(Notification $notification)
+    public function send(Notification $notification): bool
     {
         return $this->sendReturn;
     }

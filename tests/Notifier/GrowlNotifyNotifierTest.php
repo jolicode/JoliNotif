@@ -17,6 +17,7 @@ use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 class GrowlNotifyNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
+
     const BINARY = 'growlnotify';
 
     public function testGetBinary()
@@ -33,7 +34,7 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
         $this->assertSame(Notifier::PRIORITY_HIGH, $notifier->getPriority());
     }
 
-    protected function getNotifier()
+    protected function getNotifier(): Notifier
     {
         return new GrowlNotifyNotifier();
     }
@@ -41,7 +42,7 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotification()
+    protected function getExpectedCommandLineForNotification(): string
     {
         return <<<CLI
 'growlnotify' '--message' 'I'\''m the notification body'
@@ -51,7 +52,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithATitle()
+    protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<CLI
 'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title'
@@ -61,7 +62,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAnIcon()
+    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = $this->getIconDir();
 
@@ -73,7 +74,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAllOptions()
+    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = $this->getIconDir();
 

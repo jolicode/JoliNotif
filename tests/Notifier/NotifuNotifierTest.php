@@ -18,6 +18,7 @@ class NotifuNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
     use BinaryProviderTestTrait;
+
     const BINARY = 'notifu';
 
     public function testGetBinary()
@@ -34,7 +35,7 @@ class NotifuNotifierTest extends NotifierTestCase
         $this->assertSame(Notifier::PRIORITY_LOW, $notifier->getPriority());
     }
 
-    protected function getNotifier()
+    protected function getNotifier(): Notifier
     {
         return new NotifuNotifier();
     }
@@ -42,7 +43,7 @@ class NotifuNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotification()
+    protected function getExpectedCommandLineForNotification(): string
     {
         return <<<CLI
 'notifu' '/m' 'I'\''m the notification body'
@@ -52,7 +53,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithATitle()
+    protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<CLI
 'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\\''m the notification title'
@@ -62,7 +63,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAnIcon()
+    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = $this->getIconDir();
 
@@ -74,7 +75,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAllOptions()
+    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = $this->getIconDir();
 

@@ -12,7 +12,6 @@
 namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This notifier can be used on most Linux distributions, using the command notify-send.
@@ -23,7 +22,7 @@ class NotifySendNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'notify-send';
     }
@@ -31,7 +30,7 @@ class NotifySendNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
@@ -39,17 +38,21 @@ class NotifySendNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    protected function getCommandLineArguments(Notification $notification): array
     {
+        $arguments = [];
+
         if ($notification->getIcon()) {
-            $processBuilder->add('--icon');
-            $processBuilder->add($notification->getIcon());
+            $arguments[] = '--icon';
+            $arguments[] = $notification->getIcon();
         }
 
         if ($notification->getTitle()) {
-            $processBuilder->add($notification->getTitle());
+            $arguments[] = $notification->getTitle();
         }
 
-        $processBuilder->add($notification->getBody());
+        $arguments[] = $notification->getBody();
+
+        return $arguments;
     }
 }

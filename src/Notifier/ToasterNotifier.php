@@ -13,7 +13,6 @@ namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This notifier can be used on Windows Eight and higher and provides its own
@@ -24,7 +23,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'toast';
     }
@@ -32,7 +31,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
@@ -40,7 +39,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function canBeUsed()
+    public function canBeUsed(): bool
     {
         return OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher();
     }
@@ -48,7 +47,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getRootDir()
+    public function getRootDir(): string
     {
         return dirname(dirname(__DIR__)).'/bin/toaster';
     }
@@ -56,7 +55,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getEmbeddedBinary()
+    public function getEmbeddedBinary(): string
     {
         return 'toast.exe';
     }
@@ -64,7 +63,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    public function getExtraFiles()
+    public function getExtraFiles(): array
     {
         return [
             'Microsoft.WindowsAPICodePack.dll',
@@ -75,19 +74,23 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    protected function getCommandLineArguments(Notification $notification): array
     {
-        $processBuilder->add('-m');
-        $processBuilder->add($notification->getBody());
+        $arguments = [
+            '-m',
+            $notification->getBody(),
+        ];
 
         if ($notification->getTitle()) {
-            $processBuilder->add('-t');
-            $processBuilder->add($notification->getTitle());
+            $arguments[] = '-t';
+            $arguments[] = $notification->getTitle();
         }
 
         if ($notification->getIcon()) {
-            $processBuilder->add('-p');
-            $processBuilder->add($notification->getIcon());
+            $arguments[] = '-p';
+            $arguments[] = $notification->getIcon();
         }
+
+        return $arguments;
     }
 }

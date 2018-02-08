@@ -30,26 +30,17 @@ class OsHelper
      */
     private static $macOSVersion;
 
-    /**
-     * @return bool
-     */
-    public static function isUnix()
+    public static function isUnix(): bool
     {
         return '/' === DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindows()
+    public static function isWindows(): bool
     {
         return '\\' === DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindowsSeven()
+    public static function isWindowsSeven(): bool
     {
         if (null === self::$kernelVersion) {
             self::$kernelVersion = php_uname('r');
@@ -58,10 +49,7 @@ class OsHelper
         return '6.1' === self::$kernelVersion;
     }
 
-    /**
-     * @return bool
-     */
-    public static function isWindowsEightOrHigher()
+    public static function isWindowsEightOrHigher(): bool
     {
         if (null === self::$kernelVersion) {
             self::$kernelVersion = php_uname('r');
@@ -70,10 +58,7 @@ class OsHelper
         return version_compare(self::$kernelVersion, '6.2', '>=');
     }
 
-    /**
-     * @return bool
-     */
-    public static function isMacOS()
+    public static function isMacOS(): bool
     {
         if (null === self::$kernelName) {
             self::$kernelName = php_uname('s');
@@ -82,10 +67,7 @@ class OsHelper
         return false !== strpos(self::$kernelName, 'Darwin');
     }
 
-    /**
-     * @return string
-     */
-    public static function getMacOSVersion()
+    public static function getMacOSVersion(): string
     {
         if (null === self::$macOSVersion) {
             $process = new Process('sw_vers -productVersion');

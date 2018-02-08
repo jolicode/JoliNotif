@@ -31,10 +31,7 @@ class InvalidNotificationException extends \LogicException implements Exception
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return Notification
-     */
-    public function getNotification()
+    public function getNotification(): Notification
     {
         return $this->notification;
     }

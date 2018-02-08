@@ -18,6 +18,7 @@ use Joli\JoliNotif\Util\OsHelper;
 class AppleScriptNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
+
     const BINARY = 'osascript';
 
     public function testIsSupported()
@@ -45,7 +46,7 @@ class AppleScriptNotifierTest extends NotifierTestCase
         $this->assertSame(Notifier::PRIORITY_LOW, $notifier->getPriority());
     }
 
-    protected function getNotifier()
+    protected function getNotifier(): Notifier
     {
         return new AppleScriptNotifier();
     }
@@ -53,7 +54,7 @@ class AppleScriptNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotification()
+    protected function getExpectedCommandLineForNotification(): string
     {
         return <<<CLI
 'osascript' '-e' 'display notification "I'\''m the notification body"'
@@ -63,7 +64,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithATitle()
+    protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<CLI
 'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
@@ -73,7 +74,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithASubtitle()
+    protected function getExpectedCommandLineForNotificationWithASubtitle(): string
     {
         return <<<CLI
 'osascript' '-e' 'display notification "I'\''m the notification body" subtitle "I'\''m the notification subtitle"'
@@ -83,7 +84,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithASound()
+    protected function getExpectedCommandLineForNotificationWithASound(): string
     {
         return <<<CLI
 'osascript' '-e' 'display notification "I'\''m the notification body" sound name "Frog"'
@@ -93,7 +94,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAnIcon()
+    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         return <<<CLI
 'osascript' '-e' 'display notification "I'\''m the notification body"'
@@ -103,7 +104,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAllOptions()
+    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         return <<<CLI
 'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle" sound name "Frog"'
