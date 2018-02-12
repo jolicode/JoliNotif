@@ -39,7 +39,7 @@ class NullNotifierTest extends NotifierTestCase
         $this->assertFalse($notifier->send($notification));
     }
 
-    protected function getNotifier()
+    protected function getNotifier(): Notifier
     {
         return new NullNotifier();
     }

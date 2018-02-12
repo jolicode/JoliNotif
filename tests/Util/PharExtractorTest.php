@@ -85,10 +85,7 @@ class PharExtractorTest extends TestCase
         unlink($extractedFilePath);
     }
 
-    /**
-     * @return string
-     */
-    private function getTestDir()
+    private function getTestDir(): string
     {
         $testDir = sys_get_temp_dir().'/test-jolinotif';
 
@@ -99,13 +96,7 @@ class PharExtractorTest extends TestCase
         return $testDir;
     }
 
-    /**
-     * @param string $pharPath
-     * @param string $fileRelativePath
-     * @param string $fileContent
-     * @param bool   $overwrite
-     */
-    private function generatePhar($pharPath, $fileRelativePath, $fileContent, $overwrite)
+    private function generatePhar(string $pharPath, string $fileRelativePath, string $fileContent, bool $overwrite)
     {
         $rootPackage = dirname(dirname(__DIR__));
         $bootstrap = <<<'PHAR_BOOTSTRAP'

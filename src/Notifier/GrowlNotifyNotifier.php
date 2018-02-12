@@ -12,7 +12,6 @@
 namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This notifier can be used on Mac OS X when growlnotify command is available.
@@ -22,7 +21,7 @@ class GrowlNotifyNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'growlnotify';
     }
@@ -30,7 +29,7 @@ class GrowlNotifyNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY_HIGH;
     }
@@ -38,19 +37,23 @@ class GrowlNotifyNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    protected function getCommandLineArguments(Notification $notification): array
     {
-        $processBuilder->add('--message');
-        $processBuilder->add($notification->getBody());
+        $arguments = [
+            '--message',
+            $notification->getBody(),
+        ];
 
         if ($notification->getTitle()) {
-            $processBuilder->add('--title');
-            $processBuilder->add($notification->getTitle());
+            $arguments[] = '--title';
+            $arguments[] = $notification->getTitle();
         }
 
         if ($notification->getIcon()) {
-            $processBuilder->add('--image');
-            $processBuilder->add($notification->getIcon());
+            $arguments[] = '--image';
+            $arguments[] = $notification->getIcon();
         }
+
+        return $arguments;
     }
 }

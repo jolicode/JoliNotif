@@ -16,17 +16,17 @@ use Joli\JoliNotif\Util\PharExtractor;
 class Notification
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $title;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $body;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $icon;
 
@@ -36,19 +36,14 @@ class Notification
     private $options = [];
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTitle()
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     *
-     * @return $this
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -56,19 +51,14 @@ class Notification
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getBody()
     {
         return $this->body;
     }
 
-    /**
-     * @param string $body
-     *
-     * @return $this
-     */
-    public function setBody($body)
+    public function setBody(string $body): self
     {
         $this->body = $body;
 
@@ -76,19 +66,14 @@ class Notification
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIcon()
     {
         return $this->icon;
     }
 
-    /**
-     * @param string $icon
-     *
-     * @return $this
-     */
-    public function setIcon($icon)
+    public function setIcon(string $icon): self
     {
         // This makes the icon accessible for native commands when it's embedded inside a phar
         if (PharExtractor::isLocatedInsideAPhar($icon)) {
@@ -104,11 +89,9 @@ class Notification
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
+     * @return string|null
      */
-    public function getOption($key)
+    public function getOption(string $key)
     {
         if (!array_key_exists($key, $this->options)) {
             return null;
@@ -117,13 +100,7 @@ class Notification
         return $this->options[$key];
     }
 
-    /**
-     * @param string $key
-     * @param string $option
-     *
-     * @return $this
-     */
-    public function addOption($key, $option)
+    public function addOption(string $key, string $option): self
     {
         $this->options[$key] = $option;
 

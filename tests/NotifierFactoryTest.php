@@ -161,7 +161,7 @@ class NotifierFactoryTest extends TestCase
         ]);
     }
 
-    private function assertNotifierClasses($expectedNotifierClasses, $notifiers)
+    private function assertNotifierClasses(array $expectedNotifierClasses, array $notifiers)
     {
         $expectedCount = count($expectedNotifierClasses);
         $this->assertSame($expectedCount, count($notifiers));

@@ -10,8 +10,7 @@ final class Cli
 {
     const DESCRIPTION = 'Send notifications to your desktop directly from your terminal.';
 
-    // Move to a constant when PHP required version is bumped to PHP >= 5.6
-    private static $rules = [
+    const RULES = [
         'title'    => [
             'name'     => 'title',
             'info'     => 'Notification title.',
@@ -65,7 +64,7 @@ final class Cli
             $flag = $rule['required'] ? ':' : '::';
 
             return $rule['name'] . $flag;
-        }, self::$rules);
+        }, self::RULES);
 
         $this->arguments = getopt($options, $longOptions) ?: [];
     }
@@ -84,7 +83,7 @@ final class Cli
     {
         $valid = true;
 
-        foreach (self::$rules as $rule) {
+        foreach (self::RULES as $rule) {
             if ($rule['required'] && !$this->hasOption($rule['name'])) {
                 $this->log("Please specify notification {$rule['name']} with the option --{$rule['name']}");
                 $valid = false;
@@ -100,7 +99,7 @@ final class Cli
         $optional = [];
         $usage = $this->command;
 
-        foreach (self::$rules as $name => $rule) {
+        foreach (self::RULES as $name => $rule) {
             $prefix = $postfix = '';
             if ($rule['required']) {
                 $required[$name] = $rule;

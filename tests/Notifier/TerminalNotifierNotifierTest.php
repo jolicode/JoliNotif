@@ -18,6 +18,7 @@ use Joli\JoliNotif\Util\OsHelper;
 class TerminalNotifierNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
+
     const BINARY = 'terminal-notifier';
 
     public function testGetBinary()
@@ -34,7 +35,7 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
         $this->assertSame(Notifier::PRIORITY_MEDIUM, $notifier->getPriority());
     }
 
-    protected function getNotifier()
+    protected function getNotifier(): Notifier
     {
         return new TerminalNotifierNotifier();
     }
@@ -42,7 +43,7 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotification()
+    protected function getExpectedCommandLineForNotification(): string
     {
         return <<<CLI
 'terminal-notifier' '-message' 'I'\''m the notification body'
@@ -52,7 +53,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithATitle()
+    protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<CLI
 'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title'
@@ -62,7 +63,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    protected function getExpectedCommandLineForNotificationWithAnUrl(): string
     {
         return <<<CLI
 'terminal-notifier' '-message' 'I'\''m the notification body' '-open' 'https://google.com'
@@ -72,7 +73,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAnIcon()
+    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             $iconDir = $this->getIconDir();
@@ -90,7 +91,7 @@ CLI;
     /**
      * {@inheritdoc}
      */
-    protected function getExpectedCommandLineForNotificationWithAllOptions()
+    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             $iconDir = $this->getIconDir();

@@ -13,7 +13,6 @@ namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
-use Symfony\Component\Process\ProcessBuilder;
 
 /**
  * This notifier can be used on Mac OS X 10.8, or higher, using the
@@ -24,7 +23,7 @@ class TerminalNotifierNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getBinary()
+    public function getBinary(): string
     {
         return 'terminal-notifier';
     }
@@ -32,7 +31,7 @@ class TerminalNotifierNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
@@ -40,24 +39,28 @@ class TerminalNotifierNotifier extends CliBasedNotifier
     /**
      * {@inheritdoc}
      */
-    protected function configureProcess(ProcessBuilder $processBuilder, Notification $notification)
+    protected function getCommandLineArguments(Notification $notification): array
     {
-        $processBuilder->add('-message');
-        $processBuilder->add($notification->getBody());
+        $arguments = [
+            '-message',
+            $notification->getBody(),
+        ];
 
         if ($notification->getTitle()) {
-            $processBuilder->add('-title');
-            $processBuilder->add($notification->getTitle());
+            $arguments[] = '-title';
+            $arguments[] = $notification->getTitle();
         }
 
         if ($notification->getIcon() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $processBuilder->add('-appIcon');
-            $processBuilder->add($notification->getIcon());
+            $arguments[] = '-appIcon';
+            $arguments[] = $notification->getIcon();
         }
 
         if ($notification->getOption('url')) {
-            $processBuilder->add('-open');
-            $processBuilder->add($notification->getOption('url'));
+            $arguments[] = '-open';
+            $arguments[] = $notification->getOption('url');
         }
+
+        return $arguments;
     }
 }

@@ -13,7 +13,7 @@ namespace Joli\JoliNotif\tests\Notifier;
 
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
-use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\Process;
 
 /**
  * Classes using this trait should define a BINARY constant and extend
@@ -36,29 +36,20 @@ trait CliBasedNotifierTestTrait
     }
 
     /**
-     * @param Notification $notification
-     * @param string       $expectedCommandLine
-     *
      * @dataProvider provideValidNotifications
      */
-    public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, $expectedCommandLine)
+    public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, string $expectedCommandLine)
     {
         try {
-            $processBuilder = new ProcessBuilder();
-            $processBuilder->setPrefix(self::BINARY);
+            $arguments = $this->invokeMethod($this->getNotifier(), 'getCommandLineArguments', [$notification]);
 
-            $this->invokeMethod($this->getNotifier(), 'configureProcess', [$processBuilder, $notification]);
-
-            $this->assertSame($expectedCommandLine, $processBuilder->getProcess()->getCommandLine());
+            $this->assertSame($expectedCommandLine, (new Process(array_merge([self::BINARY], $arguments)))->getCommandLine());
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
         }
     }
 
-    /**
-     * @return array
-     */
-    public function provideValidNotifications()
+    public function provideValidNotifications(): array
     {
         $iconDir = $this->getIconDir();
 
@@ -140,58 +131,40 @@ trait CliBasedNotifierTestTrait
         }
     }
 
-    public function getIconDir()
+    public function getIconDir(): string
     {
         return realpath(dirname(__DIR__).'/fixtures');
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotification();
+    abstract protected function getExpectedCommandLineForNotification(): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotificationWithATitle();
+    abstract protected function getExpectedCommandLineForNotificationWithATitle(): string;
 
     /**
      * Subtitle is supported only on few notifier.
-     *
-     * @return string
      */
-    protected function getExpectedCommandLineForNotificationWithASubtitle()
+    protected function getExpectedCommandLineForNotificationWithASubtitle(): string
     {
         return $this->getExpectedCommandLineForNotification();
     }
 
     /**
      * Sound is supported only on few notifier.
-     *
-     * @return string
      */
-    protected function getExpectedCommandLineForNotificationWithASound()
+    protected function getExpectedCommandLineForNotificationWithASound(): string
     {
         return $this->getExpectedCommandLineForNotification();
     }
 
     /**
      * Sound is supported only on few notifier.
-     *
-     * @return string
      */
-    protected function getExpectedCommandLineForNotificationWithAnUrl()
+    protected function getExpectedCommandLineForNotificationWithAnUrl(): string
     {
         return $this->getExpectedCommandLineForNotification();
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotificationWithAnIcon();
+    abstract protected function getExpectedCommandLineForNotificationWithAnIcon(): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedCommandLineForNotificationWithAllOptions();
+    abstract protected function getExpectedCommandLineForNotificationWithAllOptions(): string;
 }

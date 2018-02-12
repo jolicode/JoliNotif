@@ -25,10 +25,8 @@ class NotifierFactory
 {
     /**
      * @param Notifier[] $notifiers
-     *
-     * @return Notifier
      */
-    public static function create(array $notifiers = [])
+    public static function create(array $notifiers = []): Notifier
     {
         if (empty($notifiers)) {
             $notifiers = static::getDefaultNotifiers();
@@ -45,10 +43,8 @@ class NotifierFactory
 
     /**
      * @param Notifier[] $notifiers
-     *
-     * @return Notifier
      */
-    public static function createOrThrowException(array $notifiers = [])
+    public static function createOrThrowException(array $notifiers = []): Notifier
     {
         if (empty($notifiers)) {
             $notifiers = static::getDefaultNotifiers();
@@ -66,7 +62,7 @@ class NotifierFactory
     /**
      * @return Notifier[]
      */
-    public static function getDefaultNotifiers()
+    public static function getDefaultNotifiers(): array
     {
         // Don't retrieve notifiers which are certainly not supported on this
         // system. This helps to lower the number of process to run.
@@ -80,7 +76,7 @@ class NotifierFactory
     /**
      * @return Notifier[]
      */
-    private static function getUnixNotifiers()
+    private static function getUnixNotifiers(): array
     {
         return [
             new GrowlNotifyNotifier(),
@@ -93,7 +89,7 @@ class NotifierFactory
     /**
      * @return Notifier[]
      */
-    private static function getWindowsNotifiers()
+    private static function getWindowsNotifiers(): array
     {
         return [
             new ToasterNotifier(),
@@ -106,7 +102,7 @@ class NotifierFactory
      *
      * @return Notifier|null
      */
-    private static function chooseBestNotifier($notifiers)
+    private static function chooseBestNotifier(array $notifiers)
     {
         /** @var Notifier|null $bestNotifier */
         $bestNotifier = null;
