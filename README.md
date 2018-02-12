@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/jolicode/JoliNotif.svg?branch=master)](https://travis-ci.org/jolicode/JoliNotif)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b/mini.png)](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b)
 
-PHP >= 5.4
+PHP >= 7.0 (support for PHP 5.4+ was available in version 1.x)
 
 JoliNotif is a PHP library to send notifications to your desktop directly from
 your script. It takes care of using the right binary available, without having
