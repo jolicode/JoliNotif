@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.0.0 (2018-02-12)
 
 * Dropped support for Symfony < 3.3
 * Dropped support for PHP < 7 & HHVM
