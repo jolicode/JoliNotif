@@ -66,7 +66,7 @@ class NotifierFactory
     {
         // Don't retrieve notifiers which are certainly not supported on this
         // system. This helps to lower the number of process to run.
-        if (OsHelper::isUnix()) {
+        if (OsHelper::isUnix() && !OsHelper::isWindowsSubsystemForLinux()) {
             return self::getUnixNotifiers();
         }
 

@@ -35,6 +35,11 @@ class OsHelper
         return '/' === DIRECTORY_SEPARATOR;
     }
 
+    public static function isWindowsSubsystemForLinux(): bool
+    {
+        return self::isUnix() && mb_strpos(strtolower(php_uname()), 'microsoft') !== false;
+    }
+
     public static function isWindows(): bool
     {
         return '\\' === DIRECTORY_SEPARATOR;
