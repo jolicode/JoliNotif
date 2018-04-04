@@ -4,7 +4,13 @@
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\NotifierFactory;
 
-require __DIR__ . '/vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    $loader = require(__DIR__ . '/vendor/autoload.php');
+} elseif (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
+    $loader = require(__DIR__ . '/../../../vendor/autoload.php');
+} else {
+    throw new \RuntimeException('Unable to load autoloader.');
+}
 
 final class Cli
 {

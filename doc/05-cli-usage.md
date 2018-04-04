@@ -20,7 +20,7 @@ $ source ~/.bashrc
 To get help just run:
 
 ```
-./jolinotif --help
+jolinotif --help
 ```
 
 In case of troubles use following format for passing the param: `--param="value"`.  

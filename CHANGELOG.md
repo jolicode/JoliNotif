@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fixed autoloader in CLI script
+
 ## 2.0.0 (2018-02-12)
 
 * Dropped support for Symfony < 3.3
