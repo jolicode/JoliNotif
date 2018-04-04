@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.0.1 (2018-04-04)
 
 * Fixed autoloader in CLI script
 
