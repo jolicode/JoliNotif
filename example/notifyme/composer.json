@@ -1,0 +1,7 @@
+{
+    "require": {
+        "jolicode/jolinotif": "^2.0",
+        "react/event-loop": "^0.5.2",
+        "react/http": "^0.8.3"
+    }
+}
