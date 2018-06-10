@@ -12,6 +12,7 @@ $loop = React\EventLoop\Factory::create();
 
 // ReactPHP HTTP Server
 $server = new \React\Http\Server([
+    // Representation of an incoming, server-side HTTP request.
     function (ServerRequestInterface $request) {
 
     	$path = $request->getUri()->getPath();
@@ -21,7 +22,7 @@ $server = new \React\Http\Server([
         // Get data from Parsed in Body Fields
         $data = $request->getParsedBody();
 
-        if ($path = '/') {
+        if ($path == '/') {
 
         	switch ($method) {
         		case 'GET':
@@ -34,21 +35,20 @@ $server = new \React\Http\Server([
         			    (new Notification())
         			    ->setTitle('Notification From WebApp')
         			    ->setBody('This is cool right?')
-        			    // ->setIcon(__DIR__.'/path/to/your/icon.png')
+        			    ->setIcon(__DIR__.'/../icon-success.png')
         			    // ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptNotifier)
         			    // ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptNotifier)
         			;
 
         			// Send it
         			$notifier->send($notification);
+                    return new Response(200, ['Content-Type' => 'text/plain'],  $response);
         			break;
         		case 'POST':
-        			$response = "This Using ReactPHP EventLoop and Http!";
+        			// 
         			break;
         	}
-        	return new Response(200, ['Content-Type' => 'text/plain'],  $response);
         }
-
     }
 ]);
 
