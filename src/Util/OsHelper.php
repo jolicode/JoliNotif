@@ -32,17 +32,17 @@ class OsHelper
 
     public static function isUnix(): bool
     {
-        return '/' === DIRECTORY_SEPARATOR;
+        return '/' === \DIRECTORY_SEPARATOR;
     }
 
     public static function isWindowsSubsystemForLinux(): bool
     {
-        return self::isUnix() && mb_strpos(strtolower(php_uname()), 'microsoft') !== false;
+        return self::isUnix() && false !== mb_strpos(strtolower(php_uname()), 'microsoft');
     }
 
     public static function isWindows(): bool
     {
-        return '\\' === DIRECTORY_SEPARATOR;
+        return '\\' === \DIRECTORY_SEPARATOR;
     }
 
     public static function isWindowsSeven(): bool

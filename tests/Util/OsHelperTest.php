@@ -18,22 +18,22 @@ class OsHelperTest extends TestCase
 {
     public function testIsUnix()
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if ('\\' === \DIRECTORY_SEPARATOR) {
             $this->assertFalse(OsHelper::isUnix());
         }
 
-        if ('/' === DIRECTORY_SEPARATOR) {
+        if ('/' === \DIRECTORY_SEPARATOR) {
             $this->assertTrue(OsHelper::isUnix());
         }
     }
 
     public function testIsWindows()
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if ('\\' === \DIRECTORY_SEPARATOR) {
             $this->assertTrue(OsHelper::isWindows());
         }
 
-        if ('/' === DIRECTORY_SEPARATOR) {
+        if ('/' === \DIRECTORY_SEPARATOR) {
             $this->assertFalse(OsHelper::isWindows());
         }
     }
