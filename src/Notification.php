@@ -11,6 +11,7 @@
 
 namespace Joli\JoliNotif;
 
+use Joli\JoliNotif\Util\OsHelper;
 use Joli\JoliNotif\Util\PharExtractor;
 
 class Notification
@@ -80,7 +81,9 @@ class Notification
             $icon = PharExtractor::extractFile($icon);
         } else {
             // Makes the icon path absolute (expanding all symbolic links and resolving references like "/../")
-            $icon = realpath($icon);
+            $icon = OsHelper::isWindowsSubsystemForLinux()
+                ? preg_replace('/^\/mnt\/([a-z])\//', '$1:\\', $icon, 1)
+                : realpath($icon);
         }
 
         $this->icon = $icon;

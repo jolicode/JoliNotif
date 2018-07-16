@@ -41,7 +41,11 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function canBeUsed(): bool
     {
-        return OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher();
+        return
+            (OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher())
+            ||
+            OsHelper::isWindowsSubsystemForLinux()
+        ;
     }
 
     /**
