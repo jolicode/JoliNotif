@@ -1,22 +1,24 @@
-# JoliNotif
+<p align="center">
+    <img src=doc/images/demo.gif alt="JoliNotif demo" />
+</p>
 
-[![Latest Stable Version](https://poser.pugx.org/jolicode/jolinotif/v/stable)](https://packagist.org/packages/jolicode/jolinotif)
-[![Total Downloads](https://poser.pugx.org/jolicode/jolinotif/downloads)](https://packagist.org/packages/jolicode/jolinotif)
-[![Latest Unstable Version](https://poser.pugx.org/jolicode/jolinotif/v/unstable)](https://packagist.org/packages/jolicode/jolinotif)
-[![Build Status](https://travis-ci.org/jolicode/JoliNotif.svg?branch=master)](https://travis-ci.org/jolicode/JoliNotif)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b/mini.png)](https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b)
+<p align="center">
+    <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/downloads" alt="Total Downloads"></img></a>
+    <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/v/stable" alt="Latest Stable Version"></img></a>
+    <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/v/unstable" alt="Latest Unstable Version"></img></a>
+    <a href="https://travis-ci.org/jolicode/JoliNotif"><img src="https://travis-ci.org/jolicode/JoliNotif.svg?branch=master" alt="Build Status"></img></a>
+    <a href="https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b"><img src="https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b/mini.png" alt="SensioLabsInsight"></img></a>
+</p>
 
-PHP >= 7.0 (support for PHP 5.4+ was available in version 1.x)
+# About JoliNotif
 
-JoliNotif is a PHP library to send notifications to your desktop directly from
-your script. It takes care of using the right binary available, without having
-to worry if you're running on Linux, Windows or MacOS.
+JoliNotif is a cross-platform PHP library to display desktop notifications.
+It works on Linux, Windows or MacOS.
 
-![Demo](doc/images/demo.gif)
+Requires PHP >= 7.0 (support for PHP 5.4+ was available in version 1.x).
 
-For example, if you have a long running PHP task - like executing a large test
-suite, launching a deployment script - you can use JoliNotif to inform your
-users that a task just finished.
+>**Note**: This library can not be used in a web context (FPM or equivalent).
+Use it in your CLI scripts or in a [CRON](doc/04-advanced-usage.md#notification-in-cron)
 
 ## Installation
 
@@ -28,8 +30,8 @@ composer require "jolicode/jolinotif"
 
 ## Usage
 
-Use the `NotifierFactory` to create a `Notifier` according to which notifiers
-are available on your system, then use it to send your notification:
+Use the `NotifierFactory` to create the correct `Notifier` (adapted to your OS),
+then use it to send your notification:
 
 ```php
 include __DIR__.'/vendor/autoload.php';
@@ -52,6 +54,12 @@ $notification =
 
 // Send it
 $notifier->send($notification);
+```
+
+A [shell executable](doc/05-cli-usage.md) is also provided to use JoliNotif from CLI:
+
+```shell
+jolinotif --title "Hello" --body "World"
 ```
 
 ## Further documentation
