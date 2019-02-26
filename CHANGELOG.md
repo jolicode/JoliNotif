@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.0.2 (2019-02-26)
 
 * Fixed compatibility with Windows Subsystem for Linux
 * Fixed compatibility with Symfony 4.2
