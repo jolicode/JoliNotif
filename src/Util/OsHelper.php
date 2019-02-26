@@ -75,7 +75,7 @@ class OsHelper
     public static function getMacOSVersion(): string
     {
         if (null === self::$macOSVersion) {
-            $process = new Process('sw_vers -productVersion');
+            $process = new Process(['sw_vers', '-productVersion']);
             $process->run();
             self::$macOSVersion = (string) trim($process->getOutput());
         }
