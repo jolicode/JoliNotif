@@ -20,7 +20,7 @@ class NotificationTest extends TestCase
     {
         $key = uniqid();
         $iconContent = $key;
-        $rootPackage = dirname(__DIR__);
+        $rootPackage = \dirname(__DIR__);
         $iconRelativePath = 'Resources/notification/icon-'.$key.'.png';
         $testDir = sys_get_temp_dir().'/test-jolinotif';
         $pharPath = $testDir.'/notification-extract-icon-'.$key.'.phar';

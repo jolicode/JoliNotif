@@ -64,7 +64,7 @@ class NotifierFactoryTest extends TestCase
             ];
         }
 
-        $this->assertContains(get_class($notifier), $expectedNotifierClasses);
+        $this->assertContains(\get_class($notifier), $expectedNotifierClasses);
     }
 
     public function testCreateUsesGivenNotifiers()
@@ -163,8 +163,8 @@ class NotifierFactoryTest extends TestCase
 
     private function assertNotifierClasses(array $expectedNotifierClasses, array $notifiers)
     {
-        $expectedCount = count($expectedNotifierClasses);
-        $this->assertSame($expectedCount, count($notifiers));
+        $expectedCount = \count($expectedNotifierClasses);
+        $this->assertSame($expectedCount, \count($notifiers));
 
         for ($i = 0; $i < $expectedCount; ++$i) {
             $this->assertInstanceOf($expectedNotifierClasses[$i], $notifiers[$i]);
