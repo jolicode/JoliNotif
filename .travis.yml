@@ -2,8 +2,6 @@ dist: bionic
 language: php
 
 php:
-  - 7.0
-  - 7.1
   - 7.2
   - 7.3
   - 7.4
@@ -16,16 +14,16 @@ env:
 matrix:
     fast_finish: true
     include:
-        - php: 7.0
+        - php: 7.2
           env: TARGET=cs_dry_run
-        - php: 7.0
+        - php: 7.2
           env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak
         # test 3.4 LTS
-        - php: 7.0
+        - php: 7.2
           env: SYMFONY_VERSION=3.4.*
-        # test the latest stable 4.x release
-        - php: 7.1
-          env: SYMFONY_VERSION=^4.0
+        # test 4.4 LTS
+        - php: 7.2
+          env: SYMFONY_VERSION=^4.4
         # test the latest version
         - php: 7.2
           env: SYMFONY_VERSION=^5.0

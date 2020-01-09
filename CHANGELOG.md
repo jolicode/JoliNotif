@@ -1,5 +1,10 @@
 # Changes between versions
 
+## Not yet released
+
+* Added support for Symfony > 5.0
+* Dropped support for PHP < 7.2
+
 ## 2.0.2 (2019-02-26)
 
 * Fixed compatibility with Windows Subsystem for Linux
