@@ -37,6 +37,7 @@ trait BinaryProviderTestTrait
         if (!$notifier->getExtraFiles()) {
             // Nothing to test here
             $this->addToAssertionCount(1);
+
             return;
         }
 

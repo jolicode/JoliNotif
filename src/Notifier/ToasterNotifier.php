@@ -53,7 +53,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir(): string
     {
-        return dirname(dirname(__DIR__)).'/bin/toaster';
+        return \dirname(\dirname(__DIR__)).'/bin/toaster';
     }
 
     /**

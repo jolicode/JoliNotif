@@ -60,7 +60,7 @@ class OsHelperTest extends TestCase
             '6.3', // 8.1
             '6.4', // 10
         ];
-        $isEightOrHigher = in_array(php_uname('r'), $eightOrHigher, true);
+        $isEightOrHigher = \in_array(php_uname('r'), $eightOrHigher, true);
 
         $this->assertSame($isEightOrHigher, OsHelper::isWindowsEightOrHigher());
     }
