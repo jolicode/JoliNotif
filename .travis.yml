@@ -1,9 +1,12 @@
+dist: bionic
 language: php
 
 php:
-    - 7.0
-    - 7.1
-    - 7.2
+  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
 
 env:
     global:
@@ -23,11 +26,15 @@ matrix:
         # test the latest stable 4.x release
         - php: 7.1
           env: SYMFONY_VERSION=^4.0
-        # test the latest release (including beta releases)
+        # test the latest version
         - php: 7.2
-          env: DEPENDENCIES=beta
-
-sudo: false
+          env: SYMFONY_VERSION=^5.0
+        # test the latest version
+        - php: 7.3
+          env: SYMFONY_VERSION=^5.0
+        # test the latest version
+        - php: 7.4
+          env: SYMFONY_VERSION=^5.0
 
 cache:
     directories:
