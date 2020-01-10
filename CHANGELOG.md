@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.1.0 (2020-01-10)
 
 * Added support for Symfony > 5.0
 * Dropped support for PHP < 7.2
