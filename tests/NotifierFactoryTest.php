@@ -11,6 +11,7 @@
 
 namespace Joli\JoliNotif\tests;
 
+use Joli\JoliNotif\Exception\NoSupportedNotifierException;
 use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\NotifierFactory;
 use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
@@ -152,9 +153,10 @@ class NotifierFactoryTest extends TestCase
         $this->assertSame($notifier3, $notifier);
     }
 
-    /** @expectedException \Joli\JoliNotif\Exception\NoSupportedNotifierException */
     public function testCreateOrThrowExceptionWithNoSupportedNotifiersThrowsException()
     {
+        $this->expectException(NoSupportedNotifierException::class);
+
         NotifierFactory::createOrThrowException([
             new ConfigurableNotifier(false),
             new ConfigurableNotifier(false),
