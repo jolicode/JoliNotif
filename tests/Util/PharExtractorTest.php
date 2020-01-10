@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Util;
 
 use Joli\JoliNotif\Util\PharExtractor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Finder\Finder;
 
 class PharExtractorTest extends TestCase
 {
@@ -104,23 +105,31 @@ class PharExtractorTest extends TestCase
 
 require __DIR__.'/vendor/autoload.php';
 
-$filePath = THE_FILE;
-$overwrite = OVERWRITE;
+$filePath = '/{{ THE_FILE }}';
+$overwrite = {{ OVERWRITE }};
 
 \Joli\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
 
 ?>
 PHAR_BOOTSTRAP;
 
+        $files = (new Finder())
+            ->in("$rootPackage/src")
+            ->in("$rootPackage/tests/fixtures")
+            ->in("$rootPackage/vendor")
+            ->notPath('vendor/symfony/phpunit-bridge/bin/simple-phpunit')
+            ->files()
+        ;
+
         $phar = new \Phar($pharPath);
-        $phar->buildFromDirectory($rootPackage, '#(src|vendor)#');
+        $phar->buildFromIterator($files, $rootPackage);
         $phar->addFromString('bootstrap.php', str_replace(
             [
-                'THE_FILE',
-                'OVERWRITE',
+                '{{ THE_FILE }}',
+                '{{ OVERWRITE }}',
             ],
             [
-                '\'/'.$fileRelativePath.'\'',
+                $fileRelativePath,
                 $overwrite ? 'true' : 'false',
             ],
             $bootstrap

@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Notification;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Finder\Finder;
 
 class NotificationTest extends TestCase
 {
@@ -35,17 +36,25 @@ class NotificationTest extends TestCase
 
 require __DIR__.'/vendor/autoload.php';
 
-$iconPath = THE_ICON;
+$iconPath = '/{{ THE_ICON }}';
 $notification = new \Joli\JoliNotif\Notification();
 $notification->setBody('My notification');
 $notification->setIcon(__DIR__.$iconPath);
 PHAR_BOOTSTRAP;
 
+        $files = (new Finder())
+            ->in("$rootPackage/src")
+            ->in("$rootPackage/tests/fixtures")
+            ->in("$rootPackage/vendor")
+            ->notPath('vendor/symfony/phpunit-bridge/bin/simple-phpunit')
+            ->files()
+        ;
+
         $phar = new \Phar($pharPath);
-        $phar->buildFromDirectory($rootPackage, '#(src|tests/fixtures|vendor)#');
+        $phar->buildFromIterator($files, $rootPackage);
         $phar->addFromString('bootstrap.php', str_replace(
-            'THE_ICON',
-            '\'/'.$iconRelativePath.'\'',
+            '{{ THE_ICON }}',
+            $iconRelativePath,
             $bootstrap
         ));
         $phar->addFromString($iconRelativePath, $iconContent);

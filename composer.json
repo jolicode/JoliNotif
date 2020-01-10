@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2.0",
-        "symfony/phpunit-bridge": "^3.3"
+        "symfony/phpunit-bridge": "^3.3",
+        "symfony/finder": "^5.0"
     },
     "extra": {
         "branch-alias": {
