@@ -96,7 +96,7 @@ class Notification
      */
     public function getOption(string $key)
     {
-        if (!array_key_exists($key, $this->options)) {
+        if (!\array_key_exists($key, $this->options)) {
             return null;
         }
 

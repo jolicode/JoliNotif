@@ -34,6 +34,13 @@ trait BinaryProviderTestTrait
     {
         $notifier = $this->getNotifier();
 
+        if (!$notifier->getExtraFiles()) {
+            // Nothing to test here
+            $this->addToAssertionCount(1);
+
+            return;
+        }
+
         foreach ($notifier->getExtraFiles() as $file) {
             $this->assertFileExists($notifier->getRootDir().\DIRECTORY_SEPARATOR.$file);
         }

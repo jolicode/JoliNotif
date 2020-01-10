@@ -22,18 +22,22 @@
     },
     "require": {
         "php": ">=7.0",
-        "symfony/process": "~3.3|~4.0|~5.0"
+        "symfony/process": "^3.3|^4.0|^5.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "~2.0",
-        "symfony/phpunit-bridge": "^3.3"
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "symfony/finder": "^3.3|^4.0|^5.0",
+        "symfony/phpunit-bridge": "^3.4.26|^4.0|^5.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "2.1.x-dev"
         }
     },
     "bin": [
         "jolinotif"
-    ]
+    ],
+    "config": {
+        "sort-packages": true
+    }
 }

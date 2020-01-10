@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Util;
 
 use Joli\JoliNotif\Util\PharExtractor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Finder\Finder;
 
 class PharExtractorTest extends TestCase
 {
@@ -26,7 +27,7 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFile()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $pharPath = $this->getTestDir().'/phar-extractor-'.$key.'.phar';
         $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
@@ -43,7 +44,7 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $pharPath = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
         $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
@@ -65,7 +66,7 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFileOverwritesExistingFileIfSpecified()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $pharPath = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';
         $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
@@ -98,29 +99,37 @@ class PharExtractorTest extends TestCase
 
     private function generatePhar(string $pharPath, string $fileRelativePath, string $fileContent, bool $overwrite)
     {
-        $rootPackage = dirname(dirname(__DIR__));
+        $rootPackage = \dirname(\dirname(__DIR__));
         $bootstrap = <<<'PHAR_BOOTSTRAP'
 <?php
 
 require __DIR__.'/vendor/autoload.php';
 
-$filePath = THE_FILE;
-$overwrite = OVERWRITE;
+$filePath = '/{{ THE_FILE }}';
+$overwrite = {{ OVERWRITE }};
 
 \Joli\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
 
 ?>
 PHAR_BOOTSTRAP;
 
+        $files = (new Finder())
+            ->in("$rootPackage/src")
+            ->in("$rootPackage/tests/fixtures")
+            ->in("$rootPackage/vendor")
+            ->notPath('vendor/symfony/phpunit-bridge/bin/simple-phpunit')
+            ->files()
+        ;
+
         $phar = new \Phar($pharPath);
-        $phar->buildFromDirectory($rootPackage, '#(src|vendor)#');
+        $phar->buildFromIterator($files, $rootPackage);
         $phar->addFromString('bootstrap.php', str_replace(
             [
-                'THE_FILE',
-                'OVERWRITE',
+                '{{ THE_FILE }}',
+                '{{ OVERWRITE }}',
             ],
             [
-                '\'/'.$fileRelativePath.'\'',
+                $fileRelativePath,
                 $overwrite ? 'true' : 'false',
             ],
             $bootstrap
