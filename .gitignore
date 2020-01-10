@@ -1,11 +1,10 @@
 # Dependencies
-/vendor
+/vendor/
 
 # Composer
-composer.phar
-composer.lock
+/composer.lock
 
-# Box
-build
-
-.php_cs.cache
+# Tools
+/build/
+/.php_cs.cache
+/.phpunit.result.cache
