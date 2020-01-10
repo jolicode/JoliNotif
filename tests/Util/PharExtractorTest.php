@@ -26,7 +26,7 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFile()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $pharPath = $this->getTestDir().'/phar-extractor-'.$key.'.phar';
         $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
@@ -43,7 +43,7 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $pharPath = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
         $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
@@ -65,7 +65,7 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFileOverwritesExistingFileIfSpecified()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $pharPath = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';
         $relativeFilePath = 'path/to/file-'.$key.'.txt';
         $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;

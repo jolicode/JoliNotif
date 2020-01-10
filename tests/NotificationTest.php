@@ -18,7 +18,7 @@ class NotificationTest extends TestCase
 {
     public function testItExtractsIconFromPhar()
     {
-        $key = uniqid();
+        $key = uniqid('', true);
         $iconContent = $key;
         $rootPackage = dirname(__DIR__);
         $iconRelativePath = 'Resources/notification/icon-'.$key.'.png';
