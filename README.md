@@ -15,7 +15,7 @@
 JoliNotif is a cross-platform PHP library to display desktop notifications.
 It works on Linux, Windows or MacOS.
 
-Requires PHP >= 7.0 (support for PHP 5.4+ was available in version 1.x).
+Requires PHP >= 7.2 (support for PHP 5 was available in version 1.x, for PHP 7.0 and 7.1 in version < 2.1.0).
 
 >**Note**: This library can not be used in a web context (FPM or equivalent).
 Use it in your CLI scripts or in a [CRON](doc/04-advanced-usage.md#notification-in-cron)
