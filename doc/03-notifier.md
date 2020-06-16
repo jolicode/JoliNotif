@@ -33,6 +33,16 @@ Here is the full list of supported notifiers, grouped by platform:
 
 ### Linux
 
+#### KDialogNotifier
+
+This notifier uses the executable `kdialog` (part of the standard KDE 5 Plasma
+Desktop installation) which should be installed by default on most Linux
+distributions which use the KDE 5 Plasma Desktop such as KUbuntu.
+
+kdialog can display notifications with a body and a title. It does not support
+icons. A default timeout of 5 seconds is hard-coded for the notification as it
+needs to be part of the command line.
+
 #### NotifySendNotifier
 
 This notifier uses the executable `notify-send` (available in the
