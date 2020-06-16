@@ -12,7 +12,6 @@
 namespace Joli\JoliNotif\tests\Notifier;
 
 use Joli\JoliNotif\Notifier;
-use Joli\JoliNotif\Notifier\NotifySendNotifier;
 
 class KDialogNotifierTest extends NotifierTestCase
 {

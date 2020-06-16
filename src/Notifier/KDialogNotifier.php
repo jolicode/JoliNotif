@@ -43,7 +43,7 @@ class KDialogNotifier extends CliBasedNotifier
         $arguments = [];
 
         if ($notification->getTitle()) {
-	        $arguments[] = '--title';
+            $arguments[] = '--title';
             $arguments[] = $notification->getTitle();
         }
 
@@ -51,7 +51,7 @@ class KDialogNotifier extends CliBasedNotifier
         $arguments[] = $notification->getBody();
 
         // Timeout, in seconds
-	    $arguments[] = 5;
+        $arguments[] = 5;
 
         return $arguments;
     }

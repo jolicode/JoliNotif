@@ -83,7 +83,7 @@ class NotifierFactory
             new GrowlNotifyNotifier(),
             new TerminalNotifierNotifier(),
             new AppleScriptNotifier(),
-	        new KDialogNotifier(),
+            new KDialogNotifier(),
             new NotifySendNotifier(),
         ];
     }
