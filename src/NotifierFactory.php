@@ -14,6 +14,7 @@ namespace Joli\JoliNotif;
 use Joli\JoliNotif\Exception\NoSupportedNotifierException;
 use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
+use Joli\JoliNotif\Notifier\KDialogNotifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
@@ -82,6 +83,7 @@ class NotifierFactory
             new GrowlNotifyNotifier(),
             new TerminalNotifierNotifier(),
             new AppleScriptNotifier(),
+            new KDialogNotifier(),
             new NotifySendNotifier(),
         ];
     }

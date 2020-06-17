@@ -29,6 +29,7 @@ class NotifierFactoryTest extends TestCase
                 'Joli\\JoliNotif\\Notifier\\GrowlNotifyNotifier',
                 'Joli\\JoliNotif\\Notifier\\TerminalNotifierNotifier',
                 'Joli\\JoliNotif\\Notifier\\AppleScriptNotifier',
+                'Joli\\JoliNotif\\Notifier\\KDialogNotifier',
                 'Joli\\JoliNotif\\Notifier\\NotifySendNotifier',
             ];
         } else {
@@ -56,6 +57,7 @@ class NotifierFactoryTest extends TestCase
                 'Joli\\JoliNotif\\Notifier\\GrowlNotifyNotifier',
                 'Joli\\JoliNotif\\Notifier\\TerminalNotifierNotifier',
                 'Joli\\JoliNotif\\Notifier\\AppleScriptNotifier',
+                'Joli\\JoliNotif\\Notifier\\KDialogNotifier',
                 'Joli\\JoliNotif\\Notifier\\NotifySendNotifier',
             ];
         } else {
