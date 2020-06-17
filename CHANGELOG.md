@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Added support for kdialog - the native notifier on KDE Desktop
+
 ## 2.1.0 (2020-01-10)
 
 * Added support for Symfony > 5.0
