@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.2.0 (2020-06-17)
 
 * Added support for kdialog - the native notifier on KDE Desktop
 
