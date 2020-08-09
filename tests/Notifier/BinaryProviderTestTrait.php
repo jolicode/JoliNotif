@@ -20,7 +20,7 @@ trait BinaryProviderTestTrait
     {
         $notifier = $this->getNotifier();
 
-        $this->assertTrue(is_dir($notifier->getRootDir()));
+        $this->assertDirectoryExists($notifier->getRootDir());
     }
 
     public function testEmbeddedBinaryExists()
