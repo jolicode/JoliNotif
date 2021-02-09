@@ -6,15 +6,16 @@ Cronjobs are usually cli script. But JoliNotif's Unix/Linux notifiers are gui
 applications. This means you need to specify the display where the notification
 will be sent.
 
-You can achieve this by setting the `DISPLAY` environment variable in your
+You can achieve this by setting the `XDG_RUNTIME_DIR` environment variable in your
 cronjob:
 
 ```
-* * * * * env DISPLAY=:0 php /path/to/your/script
+* * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) php /path/to/your/script
 ```
 
-> **Note**: On some system, you may also need to run `xhost +local:`. For more
-> information, please have a look at [https://help.ubuntu.com/community/CronHowto#GUI_Applications](https://help.ubuntu.com/community/CronHowto#GUI_Applications)
+> **Note**: On some system, you may also/instead need to set DISPLAY env var
+> and/or to run `xhost +local:`. For more information, please have a look at
+> [https://help.ubuntu.com/community/CronHowto#GUI_Applications](https://help.ubuntu.com/community/CronHowto#GUI_Applications)
 
 ## Next readings
 
