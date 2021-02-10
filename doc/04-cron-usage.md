@@ -1,8 +1,8 @@
-# Advanced usage
+# CRON usage
 
-## Notification in cron
+## Configuration for CRON
 
-Cronjobs are usually cli script. But JoliNotif's Unix/Linux notifiers are gui
+Cronjobs are usually CLI scripts. But JoliNotif's Unix/Linux notifiers are GUI
 applications. This means you need to specify the display where the notification
 will be sent.
 
