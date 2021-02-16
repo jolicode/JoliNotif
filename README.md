@@ -18,7 +18,7 @@ It works on Linux, Windows or MacOS.
 Requires PHP >= 7.2 (support for PHP 5 was available in version 1.x, for PHP 7.0 and 7.1 in version < 2.1.0).
 
 >**Note**: This library can not be used in a web context (FPM or equivalent).
-Use it in your CLI scripts or in a [CRON](doc/04-advanced-usage.md#notification-in-cron)
+Use it in your CLI scripts or in a [CRON](doc/04-cron-usage.md)
 
 ## Installation
 
@@ -69,7 +69,7 @@ Discover more by reading the docs:
 * [Basic usage](doc/01-basic-usage.md)
 * [Notification](doc/02-notification.md)
 * [Notifier](doc/03-notifier.md)
-* [Advanced usage](doc/04-advanced-usage.md)
+* [CRON usage](doc/04-cron-usage.md)
 * [CLI usage](doc/05-cli-usage.md)
 
 You can see the current and past versions using one of the following:
