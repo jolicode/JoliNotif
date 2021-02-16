@@ -17,9 +17,13 @@ $ source ~/.bashrc
 
 ## Usage
 
+```bash
+jolinotif --title "Awesome notification" --body "This is quite a cool cross-platform notification!"
+```
+
 To get help just run:
 
-```
+```bash
 jolinotif --help
 ```
 
