@@ -13,21 +13,20 @@ namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\OsHelper;
+use Symfony\Component\Process\Process;
 
 /**
  * This notifier can be used on Windows Eight and higher and provides its own
  * binaries if not natively available.
- *
- * @deprecated since 2.3, use SnoreToastNotifier instead
  */
-class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
+class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
 {
     /**
      * {@inheritdoc}
      */
     public function getBinary(): string
     {
-        return 'toast';
+        return 'snoretoast';
     }
 
     /**
@@ -55,7 +54,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir(): string
     {
-        return \dirname(\dirname(__DIR__)).'/bin/toaster';
+        return \dirname(__DIR__, 2).'/bin/snoreToast';
     }
 
     /**
@@ -63,7 +62,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getEmbeddedBinary(): string
     {
-        return 'toast.exe';
+        return sprintf('snoretoast-%s.exe', OsHelper::getWindowsArchitecture());
     }
 
     /**
@@ -72,8 +71,8 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     public function getExtraFiles(): array
     {
         return [
-            'Microsoft.WindowsAPICodePack.dll',
-            'Microsoft.WindowsAPICodePack.Shell.dll',
+            'snoretoast-x86.exe',
+            'snoretoast-x64.exe',
         ];
     }
 
@@ -98,5 +97,13 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
         }
 
         return $arguments;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function handleExitCode(Process $process): bool
+    {
+        return 0 < $process->getExitCode();
     }
 }

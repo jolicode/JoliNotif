@@ -82,4 +82,9 @@ class OsHelper
 
         return self::$macOSVersion;
     }
+
+    public static function getWindowsArchitecture(): string
+    {
+        return 8 === PHP_INT_SIZE ? 'x64' : 'x86';
+    }
 }

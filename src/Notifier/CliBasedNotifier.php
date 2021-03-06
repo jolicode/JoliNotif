@@ -87,7 +87,7 @@ abstract class CliBasedNotifier implements Notifier
         $process = new Process(array_merge([$binary], $arguments));
         $process->run();
 
-        return $process->isSuccessful();
+        return $this->handleExitCode($process);
     }
 
     /**
@@ -125,5 +125,13 @@ abstract class CliBasedNotifier implements Notifier
         $process->run();
 
         return $process->isSuccessful();
+    }
+
+    /**
+     * Return whether the process executed successfully.
+     */
+    protected function handleExitCode(Process $process): bool
+    {
+        return 0 === $process->getExitCode();
     }
 }

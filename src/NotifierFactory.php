@@ -18,8 +18,8 @@ use Joli\JoliNotif\Notifier\KDialogNotifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
+use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
-use Joli\JoliNotif\Notifier\ToasterNotifier;
 use Joli\JoliNotif\Util\OsHelper;
 
 class NotifierFactory
@@ -94,7 +94,7 @@ class NotifierFactory
     private static function getWindowsNotifiers(): array
     {
         return [
-            new ToasterNotifier(),
+            new SnoreToastNotifier(),
             new NotifuNotifier(),
         ];
     }
