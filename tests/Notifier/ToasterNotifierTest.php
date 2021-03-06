@@ -16,8 +16,8 @@ use Joli\JoliNotif\Notifier\ToasterNotifier;
 
 class ToasterNotifierTest extends NotifierTestCase
 {
-    use CliBasedNotifierTestTrait;
     use BinaryProviderTestTrait;
+    use CliBasedNotifierTestTrait;
 
     const BINARY = 'toast';
 

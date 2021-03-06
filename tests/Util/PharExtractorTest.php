@@ -99,7 +99,7 @@ class PharExtractorTest extends TestCase
 
     private function generatePhar(string $pharPath, string $fileRelativePath, string $fileContent, bool $overwrite)
     {
-        $rootPackage = \dirname(\dirname(__DIR__));
+        $rootPackage = \dirname(__DIR__, 2);
         $bootstrap = <<<'PHAR_BOOTSTRAP'
 <?php
 

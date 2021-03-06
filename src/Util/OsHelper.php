@@ -85,6 +85,6 @@ class OsHelper
 
     public static function getWindowsArchitecture(): string
     {
-        return 8 === PHP_INT_SIZE ? 'x64' : 'x86';
+        return 8 === \PHP_INT_SIZE ? 'x64' : 'x86';
     }
 }
