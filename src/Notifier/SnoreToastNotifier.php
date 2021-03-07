@@ -62,7 +62,7 @@ class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getEmbeddedBinary(): string
     {
-        return sprintf('snoretoast-%s.exe', OsHelper::getWindowsArchitecture());
+        return 'snoretoast-x86.exe';
     }
 
     /**
@@ -70,10 +70,7 @@ class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getExtraFiles(): array
     {
-        return [
-            'snoretoast-x86.exe',
-            'snoretoast-x64.exe',
-        ];
+        return [];
     }
 
     /**
