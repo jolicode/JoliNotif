@@ -6,8 +6,6 @@
     <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/downloads" alt="Total Downloads"></img></a>
     <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/v/stable" alt="Latest Stable Version"></img></a>
     <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/v/unstable" alt="Latest Unstable Version"></img></a>
-    <a href="https://travis-ci.org/jolicode/JoliNotif"><img src="https://travis-ci.org/jolicode/JoliNotif.svg?branch=master" alt="Build Status"></img></a>
-    <a href="https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b"><img src="https://insight.sensiolabs.com/projects/9220d9bc-bb95-4478-b64e-78257f15266b/mini.png" alt="SensioLabsInsight"></img></a>
 </p>
 
 # About JoliNotif
