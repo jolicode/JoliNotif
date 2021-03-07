@@ -49,7 +49,7 @@ class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir(): string
     {
-        return \dirname(\dirname(__DIR__)).'/bin/notifu';
+        return \dirname(__DIR__, 2).'/bin/notifu';
     }
 
     /**

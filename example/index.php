@@ -27,7 +27,7 @@ if (!($notifier instanceof NullNotifier)) {
 
     $result = $notifier->send($notification);
 
-    echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', get_class($notifier), PHP_EOL;
+    echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', get_class($notifier), \PHP_EOL;
 } else {
-    echo 'No supported notifier', PHP_EOL;
+    echo 'No supported notifier', \PHP_EOL;
 }

@@ -1,5 +1,10 @@
 # Changes between versions
 
+## Not yet released
+
+* Added SnoreToastNotifier to fix notification on Windows 8+
+* Deprecated ToasterNotifier in favour of SnoreToastNotifier
+
 ## 2.2.0 (2020-06-17)
 
 * Added support for kdialog - the native notifier on KDE Desktop

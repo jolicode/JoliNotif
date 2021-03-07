@@ -16,8 +16,8 @@ use Joli\JoliNotif\Notifier\NotifuNotifier;
 
 class NotifuNotifierTest extends NotifierTestCase
 {
-    use CliBasedNotifierTestTrait;
     use BinaryProviderTestTrait;
+    use CliBasedNotifierTestTrait;
 
     const BINARY = 'notifu';
 

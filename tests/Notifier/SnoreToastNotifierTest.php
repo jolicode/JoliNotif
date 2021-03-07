@@ -12,14 +12,14 @@
 namespace Joli\JoliNotif\tests\Notifier;
 
 use Joli\JoliNotif\Notifier;
-use Joli\JoliNotif\Notifier\ToasterNotifier;
+use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 
-class ToasterNotifierTest extends NotifierTestCase
+class SnoreToastNotifierTest extends NotifierTestCase
 {
     use BinaryProviderTestTrait;
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'toast';
+    const BINARY = 'snoretoast';
 
     public function testGetBinary()
     {
@@ -37,7 +37,7 @@ class ToasterNotifierTest extends NotifierTestCase
 
     protected function getNotifier(): Notifier
     {
-        return new ToasterNotifier();
+        return new SnoreToastNotifier();
     }
 
     /**
@@ -46,7 +46,7 @@ class ToasterNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
-'toast' '-m' 'I'\''m the notification body'
+'snoretoast' '-m' 'I'\''m the notification body'
 CLI;
     }
 
@@ -56,7 +56,7 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<CLI
-'toast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
+'snoretoast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
 CLI;
     }
 
@@ -68,7 +68,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'toast' '-m' 'I'\''m the notification body' '-p' '${iconDir}/image.gif'
+'snoretoast' '-m' 'I'\''m the notification body' '-p' '${iconDir}/image.gif'
 CLI;
     }
 
@@ -80,7 +80,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'toast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title' '-p' '${iconDir}/image.gif'
+'snoretoast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title' '-p' '${iconDir}/image.gif'
 CLI;
     }
 }

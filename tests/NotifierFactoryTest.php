@@ -34,7 +34,7 @@ class NotifierFactoryTest extends TestCase
             ];
         } else {
             $expectedNotifierClasses = [
-                'JoliNotif\\Notifier\\ToasterNotifier',
+                'JoliNotif\\Notifier\\SnoreToastNotifier',
                 'JoliNotif\\Notifier\\NotifuNotifier',
             ];
         }
@@ -62,7 +62,7 @@ class NotifierFactoryTest extends TestCase
             ];
         } else {
             $expectedNotifierClasses = [
-                'Joli\\JoliNotif\\Notifier\\ToasterNotifier',
+                'Joli\\JoliNotif\\Notifier\\SnoreToastNotifier',
                 'Joli\\JoliNotif\\Notifier\\NotifuNotifier',
             ];
         }
