@@ -4,6 +4,7 @@
 
 * Added SnoreToastNotifier to fix notification on Windows 8+
 * Deprecated ToasterNotifier in favour of SnoreToastNotifier
+* Added support for PHP 8
 
 ## 2.2.0 (2020-06-17)
 
