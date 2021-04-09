@@ -17,6 +17,6 @@ The versioning is inspired by [Semantic Versioning](http://semver.org/):
 The branching is inspired by [@jbenet](https://github.com/jbenet)
 [simple git branching model](https://gist.github.com/jbenet/ee6c9ac48068889b0912):
 
-> 1. `master` must always be deployable.
+> 1. `main` must always be deployable.
 > 2. **all changes** are made through feature branches (pull-request + merge)
-> 3. rebase to avoid/resolve conflicts; merge in to `master`
+> 3. rebase to avoid/resolve conflicts; merge in to `main`

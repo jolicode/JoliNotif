@@ -73,11 +73,11 @@ git remote add upstream https://github.com/jolicode/JoliNotif.git
 Then get the upstream changes:
 
 ```shell
-git checkout master
-git pull --rebase origin master
-git pull --rebase upstream master
+git checkout main
+git pull --rebase origin main
+git pull --rebase upstream main
 git checkout <your-branch>
-git rebase master
+git rebase main
 ```
 
 Finally, publish your changes:
