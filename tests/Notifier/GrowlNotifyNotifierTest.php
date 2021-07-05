@@ -18,7 +18,7 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'growlnotify';
+    private const BINARY = 'growlnotify';
 
     public function testGetBinary()
     {

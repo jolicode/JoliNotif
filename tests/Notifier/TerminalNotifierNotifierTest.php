@@ -19,7 +19,7 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'terminal-notifier';
+    private const BINARY = 'terminal-notifier';
 
     public function testGetBinary()
     {

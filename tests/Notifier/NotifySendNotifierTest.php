@@ -18,7 +18,7 @@ class NotifySendNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'notify-send';
+    private const BINARY = 'notify-send';
 
     public function testGetBinary()
     {

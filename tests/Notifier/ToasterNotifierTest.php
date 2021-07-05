@@ -19,7 +19,7 @@ class ToasterNotifierTest extends NotifierTestCase
     use BinaryProviderTestTrait;
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'toast';
+    private const BINARY = 'toast';
 
     public function testGetBinary()
     {
