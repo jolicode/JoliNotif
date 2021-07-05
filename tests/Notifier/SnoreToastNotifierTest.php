@@ -19,7 +19,7 @@ class SnoreToastNotifierTest extends NotifierTestCase
     use BinaryProviderTestTrait;
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'snoretoast';
+    private const BINARY = 'snoretoast';
 
     public function testGetBinary()
     {

@@ -20,10 +20,10 @@ use Symfony\Component\Process\Process;
 
 abstract class CliBasedNotifier implements Notifier
 {
-    const SUPPORT_NONE = -1;
-    const SUPPORT_UNKNOWN = 0;
-    const SUPPORT_NATIVE = 1;
-    const SUPPORT_BINARY_PROVIDED = 2;
+    public const SUPPORT_NONE = -1;
+    public const SUPPORT_UNKNOWN = 0;
+    public const SUPPORT_NATIVE = 1;
+    public const SUPPORT_BINARY_PROVIDED = 2;
 
     /**
      * @var int One of the SUPPORT_XXX constants

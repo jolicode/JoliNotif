@@ -17,7 +17,7 @@ class KDialogNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'kdialog';
+    private const BINARY = 'kdialog';
 
     public function testGetBinary()
     {

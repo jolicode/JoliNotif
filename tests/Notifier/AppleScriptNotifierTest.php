@@ -19,7 +19,7 @@ class AppleScriptNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;
 
-    const BINARY = 'osascript';
+    private const BINARY = 'osascript';
 
     public function testIsSupported()
     {

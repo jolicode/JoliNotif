@@ -13,9 +13,9 @@ namespace Joli\JoliNotif;
 
 interface Notifier
 {
-    const PRIORITY_LOW = 0;
-    const PRIORITY_MEDIUM = 50;
-    const PRIORITY_HIGH = 100;
+    public const PRIORITY_LOW = 0;
+    public const PRIORITY_MEDIUM = 50;
+    public const PRIORITY_HIGH = 100;
 
     /**
      * This method is called to check whether the notifier can be used on the
