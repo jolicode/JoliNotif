@@ -3,8 +3,8 @@
 ## 2.4.0 (not released yet)
 
 * Dropped support for PHP < 7.4
-* Drop support for Symfony 3.x
-* Add support for Symfony 6.x
+* Dropped support for Symfony 3.x
+* Added support for Symfony 6.x
 
 ## 2.3.0 (2021-03-07)
 
