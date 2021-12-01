@@ -44,8 +44,7 @@ class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
     {
         return
             (OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher())
-            ||
-            OsHelper::isWindowsSubsystemForLinux()
+            || OsHelper::isWindowsSubsystemForLinux()
         ;
     }
 
@@ -54,7 +53,7 @@ class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir(): string
     {
-        return \dirname(__DIR__, 2).'/bin/snoreToast';
+        return \dirname(__DIR__, 2) . '/bin/snoreToast';
     }
 
     /**

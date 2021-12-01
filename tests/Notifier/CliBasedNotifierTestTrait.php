@@ -24,9 +24,9 @@ trait CliBasedNotifierTestTrait
     public function testIsSupported()
     {
         if (OsHelper::isUnix()) {
-            $commandLine = 'command -v '.static::BINARY.' >/dev/null 2>&1';
+            $commandLine = 'command -v ' . static::BINARY . ' >/dev/null 2>&1';
         } else {
-            $commandLine = 'where '.static::BINARY;
+            $commandLine = 'where ' . static::BINARY;
         }
 
         passthru($commandLine, $return);
@@ -86,7 +86,7 @@ trait CliBasedNotifierTestTrait
             [
                 (new Notification())
                     ->setBody('I\'m the notification body')
-                    ->setIcon($iconDir.'/image.gif'),
+                    ->setIcon($iconDir . '/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAnIcon(),
             ],
             [
@@ -96,7 +96,7 @@ trait CliBasedNotifierTestTrait
                     ->addOption('subtitle', 'I\'m the notification subtitle')
                     ->addOption('sound', 'Frog')
                     ->addOption('url', 'https://google.com')
-                    ->setIcon($iconDir.'/image.gif'),
+                    ->setIcon($iconDir . '/image.gif'),
                 $this->getExpectedCommandLineForNotificationWithAllOptions(),
             ],
         ];
@@ -133,7 +133,7 @@ trait CliBasedNotifierTestTrait
 
     public function getIconDir(): string
     {
-        return realpath(\dirname(__DIR__).'/fixtures');
+        return realpath(\dirname(__DIR__) . '/fixtures');
     }
 
     abstract protected function getExpectedCommandLineForNotification(): string;

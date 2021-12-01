@@ -13,16 +13,16 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\NotifierFactory;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $notifier = NotifierFactory::create();
 
 if (!($notifier instanceof NullNotifier)) {
     $notification =
         (new Notification())
-        ->setTitle('Notification example')
-        ->setBody('This is a notification example. Pretty cool isn\'t it?')
-        ->setIcon(__DIR__.'/icon-success.png')
+            ->setTitle('Notification example')
+            ->setBody('This is a notification example. Pretty cool isn\'t it?')
+            ->setIcon(__DIR__ . '/icon-success.png')
     ;
 
     $result = $notifier->send($notification);

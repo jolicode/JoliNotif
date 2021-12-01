@@ -43,7 +43,7 @@ class KDialogNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'kdialog' '--passivepopup' 'I'\''m the notification body' '5'
 CLI;
     }
@@ -53,7 +53,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'kdialog' '--title' 'I'\''m the notification title' '--passivepopup' 'I'\''m the notification body' '5'
 CLI;
     }
@@ -63,7 +63,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'kdialog' '--passivepopup' 'I'\''m the notification body' '5'
 CLI;
     }
@@ -73,7 +73,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'kdialog' '--title' 'I'\''m the notification title' '--passivepopup' 'I'\''m the notification body' '5'
 CLI;
     }

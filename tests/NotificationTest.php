@@ -22,10 +22,10 @@ class NotificationTest extends TestCase
         $key = uniqid('', true);
         $iconContent = $key;
         $rootPackage = \dirname(__DIR__);
-        $iconRelativePath = 'Resources/notification/icon-'.$key.'.png';
-        $testDir = sys_get_temp_dir().'/test-jolinotif';
-        $pharPath = $testDir.'/notification-extract-icon-'.$key.'.phar';
-        $extractedIconPath = sys_get_temp_dir().'/jolinotif/'.$iconRelativePath;
+        $iconRelativePath = 'Resources/notification/icon-' . $key . '.png';
+        $testDir = sys_get_temp_dir() . '/test-jolinotif';
+        $pharPath = $testDir . '/notification-extract-icon-' . $key . '.phar';
+        $extractedIconPath = sys_get_temp_dir() . '/jolinotif/' . $iconRelativePath;
 
         if (!is_dir($testDir)) {
             mkdir($testDir);
@@ -43,9 +43,9 @@ $notification->setIcon(__DIR__.$iconPath);
 PHAR_BOOTSTRAP;
 
         $files = (new Finder())
-            ->in("$rootPackage/src")
-            ->in("$rootPackage/tests/fixtures")
-            ->in("$rootPackage/vendor")
+            ->in("{$rootPackage}/src")
+            ->in("{$rootPackage}/tests/fixtures")
+            ->in("{$rootPackage}/vendor")
             ->notPath('vendor/symfony/phpunit-bridge/bin/simple-phpunit')
             ->files()
         ;
@@ -62,7 +62,7 @@ PHAR_BOOTSTRAP;
 
         $this->assertFileExists($pharPath);
 
-        exec('php '.$pharPath);
+        exec('php ' . $pharPath);
 
         $this->assertFileExists($extractedIconPath);
         $this->assertSame($iconContent, file_get_contents($extractedIconPath));
@@ -71,8 +71,8 @@ PHAR_BOOTSTRAP;
     public function testItResolvesRealPathToIcon()
     {
         $notification = new Notification();
-        $notification->setIcon(__DIR__.'/../tests/fixtures/image.gif');
+        $notification->setIcon(__DIR__ . '/../tests/fixtures/image.gif');
 
-        $this->assertFileEquals(__DIR__.'/fixtures/image.gif', $notification->getIcon());
+        $this->assertFileEquals(__DIR__ . '/fixtures/image.gif', $notification->getIcon());
     }
 }

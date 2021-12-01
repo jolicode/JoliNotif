@@ -44,7 +44,7 @@ class GrowlNotifyNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'growlnotify' '--message' 'I'\''m the notification body'
 CLI;
     }
@@ -54,7 +54,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title'
 CLI;
     }
@@ -67,7 +67,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'growlnotify' '--message' 'I'\''m the notification body' '--image' '${iconDir}/image.gif'
+'growlnotify' '--message' 'I'\\''m the notification body' '--image' '{$iconDir}/image.gif'
 CLI;
     }
 
@@ -79,7 +79,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title' '--image' '${iconDir}/image.gif'
+'growlnotify' '--message' 'I'\\''m the notification body' '--title' 'I'\\''m the notification title' '--image' '{$iconDir}/image.gif'
 CLI;
     }
 }

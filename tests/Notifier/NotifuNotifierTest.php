@@ -45,7 +45,7 @@ class NotifuNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'notifu' '/m' 'I'\''m the notification body'
 CLI;
     }
@@ -55,8 +55,8 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
-        return <<<CLI
-'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\\''m the notification title'
+        return <<<'CLI'
+'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\''m the notification title'
 CLI;
     }
 
@@ -68,7 +68,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'notifu' '/m' 'I'\''m the notification body' '/i' '${iconDir}/image.gif'
+'notifu' '/m' 'I'\\''m the notification body' '/i' '{$iconDir}/image.gif'
 CLI;
     }
 
@@ -80,7 +80,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\''m the notification title' '/i' '${iconDir}/image.gif'
+'notifu' '/m' 'I'\\''m the notification body' '/p' 'I'\\''m the notification title' '/i' '{$iconDir}/image.gif'
 CLI;
     }
 }

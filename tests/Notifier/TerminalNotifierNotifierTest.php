@@ -45,7 +45,7 @@ class TerminalNotifierNotifierTest extends NotifierTestCase
      */
     protected function getExpectedCommandLineForNotification(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'terminal-notifier' '-message' 'I'\''m the notification body'
 CLI;
     }
@@ -55,7 +55,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title'
 CLI;
     }
@@ -65,7 +65,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithAnUrl(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'terminal-notifier' '-message' 'I'\''m the notification body' '-open' 'https://google.com'
 CLI;
     }
@@ -79,11 +79,11 @@ CLI;
             $iconDir = $this->getIconDir();
 
             return <<<CLI
-'terminal-notifier' '-message' 'I'\''m the notification body' '-appIcon' '${iconDir}/image.gif'
+'terminal-notifier' '-message' 'I'\\''m the notification body' '-appIcon' '{$iconDir}/image.gif'
 CLI;
         }
 
-        return <<<CLI
+        return <<<'CLI'
 'terminal-notifier' '-message' 'I'\''m the notification body'
 CLI;
     }
@@ -97,11 +97,11 @@ CLI;
             $iconDir = $this->getIconDir();
 
             return <<<CLI
-'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-appIcon' '${iconDir}/image.gif' '-open' 'https://google.com'
+'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-appIcon' '{$iconDir}/image.gif' '-open' 'https://google.com'
 CLI;
         }
 
-        return <<<CLI
+        return <<<'CLI'
 'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com'
 CLI;
     }

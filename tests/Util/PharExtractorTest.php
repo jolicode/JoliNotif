@@ -28,13 +28,13 @@ class PharExtractorTest extends TestCase
     public function testExtractFile()
     {
         $key = uniqid('', true);
-        $pharPath = $this->getTestDir().'/phar-extractor-'.$key.'.phar';
-        $relativeFilePath = 'path/to/file-'.$key.'.txt';
-        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
+        $pharPath = $this->getTestDir() . '/phar-extractor-' . $key . '.phar';
+        $relativeFilePath = 'path/to/file-' . $key . '.txt';
+        $extractedFilePath = sys_get_temp_dir() . '/jolinotif/' . $relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
         $this->assertFileExists($pharPath);
-        exec('php '.$pharPath);
+        exec('php ' . $pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->assertFileExists($extractedFilePath);
@@ -45,18 +45,18 @@ class PharExtractorTest extends TestCase
     public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified()
     {
         $key = uniqid('', true);
-        $pharPath = $this->getTestDir().'/phar-extractor-no-overwrite-'.$key.'.phar';
-        $relativeFilePath = 'path/to/file-'.$key.'.txt';
-        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
+        $pharPath = $this->getTestDir() . '/phar-extractor-no-overwrite-' . $key . '.phar';
+        $relativeFilePath = 'path/to/file-' . $key . '.txt';
+        $extractedFilePath = sys_get_temp_dir() . '/jolinotif/' . $relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
         $this->assertFileExists($pharPath);
-        exec('php '.$pharPath);
+        exec('php ' . $pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->generatePhar($pharPath, $relativeFilePath, 'new content', false);
         $this->assertFileExists($pharPath);
-        exec('php '.$pharPath);
+        exec('php ' . $pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->assertFileExists($extractedFilePath);
@@ -67,18 +67,18 @@ class PharExtractorTest extends TestCase
     public function testExtractFileOverwritesExistingFileIfSpecified()
     {
         $key = uniqid('', true);
-        $pharPath = $this->getTestDir().'/phar-extractor-overwrite-'.$key.'.phar';
-        $relativeFilePath = 'path/to/file-'.$key.'.txt';
-        $extractedFilePath = sys_get_temp_dir().'/jolinotif/'.$relativeFilePath;
+        $pharPath = $this->getTestDir() . '/phar-extractor-overwrite-' . $key . '.phar';
+        $relativeFilePath = 'path/to/file-' . $key . '.txt';
+        $extractedFilePath = sys_get_temp_dir() . '/jolinotif/' . $relativeFilePath;
 
         $this->generatePhar($pharPath, $relativeFilePath, $key, false);
         $this->assertFileExists($pharPath);
-        exec('php '.$pharPath);
+        exec('php ' . $pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->generatePhar($pharPath, $relativeFilePath, 'new content', true);
         $this->assertFileExists($pharPath);
-        exec('php '.$pharPath);
+        exec('php ' . $pharPath);
         \Phar::unlinkArchive($pharPath);
 
         $this->assertFileExists($extractedFilePath);
@@ -88,7 +88,7 @@ class PharExtractorTest extends TestCase
 
     private function getTestDir(): string
     {
-        $testDir = sys_get_temp_dir().'/test-jolinotif';
+        $testDir = sys_get_temp_dir() . '/test-jolinotif';
 
         if (!is_dir($testDir)) {
             mkdir($testDir);
@@ -114,9 +114,9 @@ $overwrite = {{ OVERWRITE }};
 PHAR_BOOTSTRAP;
 
         $files = (new Finder())
-            ->in("$rootPackage/src")
-            ->in("$rootPackage/tests/fixtures")
-            ->in("$rootPackage/vendor")
+            ->in("{$rootPackage}/src")
+            ->in("{$rootPackage}/tests/fixtures")
+            ->in("{$rootPackage}/vendor")
             ->notPath('vendor/symfony/phpunit-bridge/bin/simple-phpunit')
             ->files()
         ;
