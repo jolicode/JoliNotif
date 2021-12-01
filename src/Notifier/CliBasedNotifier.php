@@ -68,14 +68,14 @@ abstract class CliBasedNotifier implements Notifier
         $arguments = $this->getCommandLineArguments($notification);
 
         if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProvider) {
-            $dir = rtrim($this->getRootDir(), '/').'/';
-            $embeddedBinary = $dir.$this->getEmbeddedBinary();
+            $dir = rtrim($this->getRootDir(), '/') . '/';
+            $embeddedBinary = $dir . $this->getEmbeddedBinary();
 
             if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {
                 $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
 
                 foreach ($this->getExtraFiles() as $file) {
-                    PharExtractor::extractFile($dir.$file);
+                    PharExtractor::extractFile($dir . $file);
                 }
             }
 

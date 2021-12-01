@@ -45,8 +45,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
     {
         return
             (OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher())
-            ||
-            OsHelper::isWindowsSubsystemForLinux()
+            || OsHelper::isWindowsSubsystemForLinux()
         ;
     }
 
@@ -55,7 +54,7 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
      */
     public function getRootDir(): string
     {
-        return \dirname(__DIR__, 2).'/bin/toaster';
+        return \dirname(__DIR__, 2) . '/bin/toaster';
     }
 
     /**

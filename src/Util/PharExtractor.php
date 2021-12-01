@@ -35,8 +35,8 @@ class PharExtractor
         }
 
         $relativeFilePath = substr($filePath, strpos($filePath, $pharPath) + \strlen($pharPath) + 1);
-        $tmpDir = sys_get_temp_dir().'/jolinotif';
-        $extractedFilePath = $tmpDir.'/'.$relativeFilePath;
+        $tmpDir = sys_get_temp_dir() . '/jolinotif';
+        $extractedFilePath = $tmpDir . '/' . $relativeFilePath;
 
         if (!file_exists($extractedFilePath) || $overwrite) {
             $phar = new \Phar($pharPath);

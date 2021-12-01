@@ -55,7 +55,7 @@ CLI;
      */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
-        return <<<CLI
+        return <<<'CLI'
 'snoretoast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
 CLI;
     }
@@ -68,7 +68,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'snoretoast' '-m' 'I'\''m the notification body' '-p' '${iconDir}/image.gif'
+'snoretoast' '-m' 'I'\\''m the notification body' '-p' '{$iconDir}/image.gif'
 CLI;
     }
 
@@ -80,7 +80,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'snoretoast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title' '-p' '${iconDir}/image.gif'
+'snoretoast' '-m' 'I'\\''m the notification body' '-t' 'I'\\''m the notification title' '-p' '{$iconDir}/image.gif'
 CLI;
     }
 }

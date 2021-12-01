@@ -52,18 +52,18 @@ class AppleScriptNotifier extends CliBasedNotifier
      */
     protected function getCommandLineArguments(Notification $notification): array
     {
-        $script = 'display notification "'.str_replace('"', '\\"', $notification->getBody()).'"';
+        $script = 'display notification "' . str_replace('"', '\\"', $notification->getBody()) . '"';
 
         if ($notification->getTitle()) {
-            $script .= ' with title "'.str_replace('"', '\\"', $notification->getTitle()).'"';
+            $script .= ' with title "' . str_replace('"', '\\"', $notification->getTitle()) . '"';
         }
 
         if ($notification->getOption('subtitle')) {
-            $script .= ' subtitle "'.str_replace('"', '\\"', $notification->getOption('subtitle')).'"';
+            $script .= ' subtitle "' . str_replace('"', '\\"', $notification->getOption('subtitle')) . '"';
         }
 
         if ($notification->getOption('sound')) {
-            $script .= ' sound name "'.str_replace('"', '\\"', $notification->getOption('sound')).'"';
+            $script .= ' sound name "' . str_replace('"', '\\"', $notification->getOption('sound')) . '"';
         }
 
         return [
