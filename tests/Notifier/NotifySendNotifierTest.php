@@ -45,8 +45,8 @@ class NotifySendNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
-'notify-send' 'I'\''m the notification body'
-CLI;
+            'notify-send' 'I'\''m the notification body'
+            CLI;
     }
 
     /**
@@ -55,8 +55,8 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
-'notify-send' 'I'\''m the notification title' 'I'\''m the notification body'
-CLI;
+            'notify-send' 'I'\''m the notification title' 'I'\''m the notification body'
+            CLI;
     }
 
     /**
@@ -67,8 +67,8 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification body'
-CLI;
+            'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification body'
+            CLI;
     }
 
     /**
@@ -79,7 +79,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification title' 'I'\\''m the notification body'
-CLI;
+            'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification title' 'I'\\''m the notification body'
+            CLI;
     }
 }

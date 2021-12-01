@@ -32,15 +32,15 @@ class NotificationTest extends TestCase
         }
 
         $bootstrap = <<<'PHAR_BOOTSTRAP'
-<?php
+            <?php
 
-require __DIR__.'/vendor/autoload.php';
+            require __DIR__.'/vendor/autoload.php';
 
-$iconPath = '/{{ THE_ICON }}';
-$notification = new \Joli\JoliNotif\Notification();
-$notification->setBody('My notification');
-$notification->setIcon(__DIR__.$iconPath);
-PHAR_BOOTSTRAP;
+            $iconPath = '/{{ THE_ICON }}';
+            $notification = new \Joli\JoliNotif\Notification();
+            $notification->setBody('My notification');
+            $notification->setIcon(__DIR__.$iconPath);
+            PHAR_BOOTSTRAP;
 
         $files = (new Finder())
             ->in("{$rootPackage}/src")
