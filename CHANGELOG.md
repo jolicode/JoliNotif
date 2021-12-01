@@ -1,5 +1,7 @@
 # Changes between versions
 
+## 2.4.0 (not released yet)
+
 ## 2.3.0 (2021-03-07)
 
 * Added SnoreToastNotifier to fix notification on Windows 8+
