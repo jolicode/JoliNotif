@@ -101,17 +101,17 @@ class PharExtractorTest extends TestCase
     {
         $rootPackage = \dirname(__DIR__, 2);
         $bootstrap = <<<'PHAR_BOOTSTRAP'
-<?php
+            <?php
 
-require __DIR__.'/vendor/autoload.php';
+            require __DIR__.'/vendor/autoload.php';
 
-$filePath = '/{{ THE_FILE }}';
-$overwrite = {{ OVERWRITE }};
+            $filePath = '/{{ THE_FILE }}';
+            $overwrite = {{ OVERWRITE }};
 
-\Joli\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
+            \Joli\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
 
-?>
-PHAR_BOOTSTRAP;
+            ?>
+            PHAR_BOOTSTRAP;
 
         $files = (new Finder())
             ->in("{$rootPackage}/src")

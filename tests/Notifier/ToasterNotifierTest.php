@@ -46,8 +46,8 @@ class ToasterNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
-'toast' '-m' 'I'\''m the notification body'
-CLI;
+            'toast' '-m' 'I'\''m the notification body'
+            CLI;
     }
 
     /**
@@ -56,8 +56,8 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
-'toast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
-CLI;
+            'toast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
+            CLI;
     }
 
     /**
@@ -68,8 +68,8 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'toast' '-m' 'I'\\''m the notification body' '-p' '{$iconDir}/image.gif'
-CLI;
+            'toast' '-m' 'I'\\''m the notification body' '-p' '{$iconDir}/image.gif'
+            CLI;
     }
 
     /**
@@ -80,7 +80,7 @@ CLI;
         $iconDir = $this->getIconDir();
 
         return <<<CLI
-'toast' '-m' 'I'\\''m the notification body' '-t' 'I'\\''m the notification title' '-p' '{$iconDir}/image.gif'
-CLI;
+            'toast' '-m' 'I'\\''m the notification body' '-t' 'I'\\''m the notification title' '-p' '{$iconDir}/image.gif'
+            CLI;
     }
 }

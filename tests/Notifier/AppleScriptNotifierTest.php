@@ -57,8 +57,8 @@ class AppleScriptNotifierTest extends NotifierTestCase
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
-'osascript' '-e' 'display notification "I'\''m the notification body"'
-CLI;
+            'osascript' '-e' 'display notification "I'\''m the notification body"'
+            CLI;
     }
 
     /**
@@ -67,8 +67,8 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
-'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
-CLI;
+            'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
+            CLI;
     }
 
     /**
@@ -77,8 +77,8 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithASubtitle(): string
     {
         return <<<'CLI'
-'osascript' '-e' 'display notification "I'\''m the notification body" subtitle "I'\''m the notification subtitle"'
-CLI;
+            'osascript' '-e' 'display notification "I'\''m the notification body" subtitle "I'\''m the notification subtitle"'
+            CLI;
     }
 
     /**
@@ -87,8 +87,8 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithASound(): string
     {
         return <<<'CLI'
-'osascript' '-e' 'display notification "I'\''m the notification body" sound name "Frog"'
-CLI;
+            'osascript' '-e' 'display notification "I'\''m the notification body" sound name "Frog"'
+            CLI;
     }
 
     /**
@@ -97,8 +97,8 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         return <<<'CLI'
-'osascript' '-e' 'display notification "I'\''m the notification body"'
-CLI;
+            'osascript' '-e' 'display notification "I'\''m the notification body"'
+            CLI;
     }
 
     /**
@@ -107,7 +107,7 @@ CLI;
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         return <<<'CLI'
-'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle" sound name "Frog"'
-CLI;
+            'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle" sound name "Frog"'
+            CLI;
     }
 }
