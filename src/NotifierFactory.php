@@ -102,11 +102,11 @@ class NotifierFactory
     /**
      * @param Notifier[] $notifiers
      *
-     * @return null|Notifier
+     * @return Notifier|null
      */
     private static function chooseBestNotifier(array $notifiers)
     {
-        /** @var null|Notifier $bestNotifier */
+        /** @var Notifier|null $bestNotifier */
         $bestNotifier = null;
 
         foreach ($notifiers as $notifier) {
