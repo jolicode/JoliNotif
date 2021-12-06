@@ -28,10 +28,10 @@ $finder = PhpCsFixer\Finder::create()
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
-        '@Symfony' => true,
-        '@Symfony:risky' => true,
         '@PHP74Migration' => true,
         '@PhpCsFixer' => true,
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
         'php_unit_internal_class' => false, // From @PhpCsFixer but we don't want it
         'php_unit_test_class_requires_covers' => false, // From @PhpCsFixer but we don't want it
         'phpdoc_add_missing_param_annotation' => false, // From @PhpCsFixer but we don't want it

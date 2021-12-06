@@ -17,17 +17,17 @@ use Joli\JoliNotif\Util\PharExtractor;
 class Notification
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     private $title;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $body;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $icon;
 
@@ -37,7 +37,7 @@ class Notification
     private $options = [];
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getTitle()
     {
@@ -52,7 +52,7 @@ class Notification
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getBody()
     {
@@ -67,7 +67,7 @@ class Notification
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIcon()
     {
@@ -92,7 +92,7 @@ class Notification
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getOption(string $key)
     {
