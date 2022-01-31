@@ -34,7 +34,7 @@ For required params (title, body) equality sign and quotes can be omitted.
 
 Previous pages:
 
-* [Advanced usage](04-advanced-usage.md)
+* [CRON usage](04-cron-usage.md)
 * [Notifier](03-notifier.md)
 * [Notification](02-notification.md)
 * [Basic usage](01-basic-usage.md)

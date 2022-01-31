@@ -116,7 +116,7 @@ can only display icon with the .ico format.
 
 ## Next readings
 
-* [Advanced usage](04-advanced-usage.md)
+* [CRON usage](04-cron-usage.md)
 * [CLI usage](05-cli-usage.md)
 
 Previous pages:
