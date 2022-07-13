@@ -15,20 +15,9 @@ use Symfony\Component\Process\Process;
 
 class OsHelper
 {
-    /**
-     * @var string
-     */
-    private static $kernelName;
-
-    /**
-     * @var string
-     */
-    private static $kernelVersion;
-
-    /**
-     * @var string
-     */
-    private static $macOSVersion;
+    private static string $kernelName;
+    private static string $kernelVersion;
+    private static string $macOSVersion;
 
     public static function isUnix(): bool
     {
@@ -47,7 +36,7 @@ class OsHelper
 
     public static function isWindowsSeven(): bool
     {
-        if (null === self::$kernelVersion) {
+        if (!isset(self::$kernelVersion)) {
             self::$kernelVersion = php_uname('r');
         }
 
@@ -56,7 +45,7 @@ class OsHelper
 
     public static function isWindowsEightOrHigher(): bool
     {
-        if (null === self::$kernelVersion) {
+        if (!isset(self::$kernelVersion)) {
             self::$kernelVersion = php_uname('r');
         }
 
@@ -65,7 +54,7 @@ class OsHelper
 
     public static function isMacOS(): bool
     {
-        if (null === self::$kernelName) {
+        if (!isset(self::$kernelName)) {
             self::$kernelName = php_uname('s');
         }
 
@@ -74,10 +63,10 @@ class OsHelper
 
     public static function getMacOSVersion(): string
     {
-        if (null === self::$macOSVersion) {
+        if (!isset(self::$macOSVersion)) {
             $process = new Process(['sw_vers', '-productVersion']);
             $process->run();
-            self::$macOSVersion = (string) trim($process->getOutput());
+            self::$macOSVersion = trim($process->getOutput());
         }
 
         return self::$macOSVersion;

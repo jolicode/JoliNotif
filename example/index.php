@@ -17,17 +17,18 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $notifier = NotifierFactory::create();
 
-if (!($notifier instanceof NullNotifier)) {
-    $notification =
-        (new Notification())
-            ->setTitle('Notification example')
-            ->setBody('This is a notification example. Pretty cool isn\'t it?')
-            ->setIcon(__DIR__ . '/icon-success.png')
-    ;
-
-    $result = $notifier->send($notification);
-
-    echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', get_class($notifier), \PHP_EOL;
-} else {
+if ($notifier instanceof NullNotifier) {
     echo 'No supported notifier', \PHP_EOL;
+    exit(1);
 }
+
+$notification =
+    (new Notification())
+        ->setTitle('Notification example')
+        ->setBody('This is a notification example. Pretty cool isn\'t it?')
+        ->setIcon(__DIR__ . '/icon-success.png')
+;
+
+$result = $notifier->send($notification);
+
+echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', get_class($notifier), \PHP_EOL;

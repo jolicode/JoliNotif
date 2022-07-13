@@ -12,7 +12,14 @@
 namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Exception\NoSupportedNotifierException;
+use Joli\JoliNotif\Notifier\AppleScriptNotifier;
+use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
+use Joli\JoliNotif\Notifier\KDialogNotifier;
+use Joli\JoliNotif\Notifier\NotifuNotifier;
+use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
+use Joli\JoliNotif\Notifier\SnoreToastNotifier;
+use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
 use Joli\JoliNotif\NotifierFactory;
 use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
 use Joli\JoliNotif\Util\OsHelper;
@@ -26,16 +33,16 @@ class NotifierFactoryTest extends TestCase
 
         if (OsHelper::isUnix()) {
             $expectedNotifierClasses = [
-                'Joli\\JoliNotif\\Notifier\\GrowlNotifyNotifier',
-                'Joli\\JoliNotif\\Notifier\\TerminalNotifierNotifier',
-                'Joli\\JoliNotif\\Notifier\\AppleScriptNotifier',
-                'Joli\\JoliNotif\\Notifier\\KDialogNotifier',
-                'Joli\\JoliNotif\\Notifier\\NotifySendNotifier',
+                GrowlNotifyNotifier::class,
+                TerminalNotifierNotifier::class,
+                AppleScriptNotifier::class,
+                KDialogNotifier::class,
+                NotifySendNotifier::class,
             ];
         } else {
             $expectedNotifierClasses = [
-                'JoliNotif\\Notifier\\SnoreToastNotifier',
-                'JoliNotif\\Notifier\\NotifuNotifier',
+                SnoreToastNotifier::class,
+                NotifuNotifier::class,
             ];
         }
 
@@ -54,16 +61,16 @@ class NotifierFactoryTest extends TestCase
 
         if (OsHelper::isUnix()) {
             $expectedNotifierClasses = [
-                'Joli\\JoliNotif\\Notifier\\GrowlNotifyNotifier',
-                'Joli\\JoliNotif\\Notifier\\TerminalNotifierNotifier',
-                'Joli\\JoliNotif\\Notifier\\AppleScriptNotifier',
-                'Joli\\JoliNotif\\Notifier\\KDialogNotifier',
-                'Joli\\JoliNotif\\Notifier\\NotifySendNotifier',
+                GrowlNotifyNotifier::class,
+                TerminalNotifierNotifier::class,
+                AppleScriptNotifier::class,
+                KDialogNotifier::class,
+                NotifySendNotifier::class,
             ];
         } else {
             $expectedNotifierClasses = [
-                'Joli\\JoliNotif\\Notifier\\SnoreToastNotifier',
-                'Joli\\JoliNotif\\Notifier\\NotifuNotifier',
+                SnoreToastNotifier::class,
+                NotifuNotifier::class,
             ];
         }
 
@@ -86,7 +93,7 @@ class NotifierFactoryTest extends TestCase
             new ConfigurableNotifier(false),
         ]);
 
-        $this->assertInstanceOf('Joli\\JoliNotif\\Notifier\\NullNotifier', $notifier);
+        $this->assertInstanceOf(NullNotifier::class, $notifier);
     }
 
     public function testCreateUsesTheOnlySupportedNotifier()

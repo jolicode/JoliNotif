@@ -16,26 +16,10 @@ use Joli\JoliNotif\Notifier;
 
 class ConfigurableNotifier implements Notifier
 {
-    /**
-     * @var bool
-     */
-    private $supported;
+    private bool $supported;
+    private int $priority;
+    private bool $sendReturn;
 
-    /**
-     * @var int
-     */
-    private $priority;
-
-    /**
-     * @var bool
-     */
-    private $sendReturn;
-
-    /**
-     * @param $supported
-     * @param $priority
-     * @param $sendReturn
-     */
     public function __construct(bool $supported, int $priority = Notifier::PRIORITY_MEDIUM, bool $sendReturn = true)
     {
         $this->supported = $supported;

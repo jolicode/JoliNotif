@@ -29,17 +29,11 @@ class NotifierFactory
      */
     public static function create(array $notifiers = []): Notifier
     {
-        if (empty($notifiers)) {
+        if (!$notifiers) {
             $notifiers = static::getDefaultNotifiers();
         }
 
-        $bestNotifier = self::chooseBestNotifier($notifiers);
-
-        if (null === $bestNotifier) {
-            $bestNotifier = new NullNotifier();
-        }
-
-        return $bestNotifier;
+        return self::chooseBestNotifier($notifiers) ?: new NullNotifier();
     }
 
     /**
@@ -53,7 +47,7 @@ class NotifierFactory
 
         $bestNotifier = self::chooseBestNotifier($notifiers);
 
-        if (null === $bestNotifier) {
+        if (!$bestNotifier) {
             throw new NoSupportedNotifierException();
         }
 
@@ -101,10 +95,8 @@ class NotifierFactory
 
     /**
      * @param Notifier[] $notifiers
-     *
-     * @return Notifier|null
      */
-    private static function chooseBestNotifier(array $notifiers)
+    private static function chooseBestNotifier(array $notifiers): ?Notifier
     {
         /** @var Notifier|null $bestNotifier */
         $bestNotifier = null;
