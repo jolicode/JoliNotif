@@ -16,30 +16,12 @@ use Joli\JoliNotif\Util\PharExtractor;
 
 class Notification
 {
-    /**
-     * @var string|null
-     */
-    private $title;
+    private ?string $title = null;
+    private ?string $body = null;
+    private ?string $icon = null;
+    private array $options = [];
 
-    /**
-     * @var string|null
-     */
-    private $body;
-
-    /**
-     * @var string|null
-     */
-    private $icon;
-
-    /**
-     * @var array
-     */
-    private $options = [];
-
-    /**
-     * @return string|null
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -51,10 +33,7 @@ class Notification
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getBody()
+    public function getBody(): ?string
     {
         return $this->body;
     }
@@ -66,10 +45,7 @@ class Notification
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
@@ -91,16 +67,9 @@ class Notification
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getOption(string $key)
+    public function getOption(string $key): ?string
     {
-        if (!\array_key_exists($key, $this->options)) {
-            return null;
-        }
-
-        return $this->options[$key];
+        return $this->options[$key] ?? null;
     }
 
     public function addOption(string $key, string $option): self

@@ -28,7 +28,7 @@ abstract class CliBasedNotifier implements Notifier
     /**
      * @var int One of the SUPPORT_XXX constants
      */
-    private $support = self::SUPPORT_UNKNOWN;
+    private int $support = self::SUPPORT_UNKNOWN;
 
     /**
      * {@inheritdoc}

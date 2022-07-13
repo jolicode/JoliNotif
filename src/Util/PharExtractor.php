@@ -30,7 +30,7 @@ class PharExtractor
     {
         $pharPath = \Phar::running(false);
 
-        if (empty($pharPath)) {
+        if (!$pharPath) {
             return '';
         }
 
