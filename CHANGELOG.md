@@ -1,6 +1,6 @@
 # Changes between versions
 
-## 2.5.0 (not released yet)
+## 2.5.0 (2022-12-24)
 
 * Dropped support for PHP 7.4
 * Dropped support for Symfony 4.x
