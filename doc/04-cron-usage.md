@@ -13,8 +13,9 @@ cronjob:
 * * * * * XDG_RUNTIME_DIR=/run/user/$(id -u) php /path/to/your/script
 ```
 
-> **Note**: On some system, you may also/instead need to set DISPLAY env var
-> and/or to run `xhost +local:`. For more information, please have a look at
+> **Note**
+> On some system, you may also/instead need to set DISPLAY env var and/or to
+> run `xhost +local:`. For more information, please have a look at
 > [https://help.ubuntu.com/community/CronHowto#GUI_Applications](https://help.ubuntu.com/community/CronHowto#GUI_Applications)
 
 ## Next readings

@@ -16,8 +16,8 @@ It works on Linux, Windows or MacOS.
 Requires PHP >= 7.4 (support for PHP 5 was available in version 1.x, for PHP 7.0
 and 7.1 in version < 2.1.0, for PHP 7.2 and 7.3 in version < 2.4.0).
 
->**Note**: This library can not be used in a web context (FPM or equivalent).
-Use it in your CLI scripts or in a [CRON](doc/04-cron-usage.md)
+> **Note**
+> This library can not be used in a web context (FPM or equivalent). Use it in your CLI scripts or in a [CRON](doc/04-cron-usage.md)
 
 ## Installation
 
