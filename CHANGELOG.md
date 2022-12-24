@@ -1,5 +1,11 @@
 # Changes between versions
 
+## 2.5.0 (not released yet)
+
+* Dropped support for PHP 7.4
+* Dropped support for Symfony 4.x
+* Added support for PHP 8.2
+
 ## 2.4.0 (2021-12-01)
 
 * Dropped support for PHP < 7.4
