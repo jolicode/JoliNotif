@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: PHP-CS-Fixer
               uses: docker://oskarstark/php-cs-fixer-ga
@@ -35,7 +35,7 @@ jobs:
                       name: '(prefer lowest dependencies)'
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@v2
