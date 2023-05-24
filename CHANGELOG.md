@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Added PHAR to GitHub releases
+
 ## 2.5.1 (2023-05-24)
 
 * Fixed permissions on Windows notifiers binaries
