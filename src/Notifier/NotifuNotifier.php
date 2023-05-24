@@ -20,57 +20,36 @@ use Joli\JoliNotif\Util\OsHelper;
  */
 class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'notifu';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_LOW;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(): bool
     {
         return OsHelper::isWindows() && OsHelper::isWindowsSeven();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRootDir(): string
     {
         return \dirname(__DIR__, 2) . '/bin/notifu';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEmbeddedBinary(): string
     {
         return 'notifu.exe';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExtraFiles(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $arguments = [

@@ -18,7 +18,7 @@ class PharExtractor
      */
     public static function isLocatedInsideAPhar(string $filePath): bool
     {
-        return 0 === strpos($filePath, 'phar://');
+        return str_starts_with($filePath, 'phar://');
     }
 
     /**

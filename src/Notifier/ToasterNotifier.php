@@ -22,52 +22,33 @@ use Joli\JoliNotif\Util\OsHelper;
  */
 class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'toast';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(): bool
     {
         return
             (OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher())
-            || OsHelper::isWindowsSubsystemForLinux()
-        ;
+            || OsHelper::isWindowsSubsystemForLinux();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRootDir(): string
     {
         return \dirname(__DIR__, 2) . '/bin/toaster';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEmbeddedBinary(): string
     {
         return 'toast.exe';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExtraFiles(): array
     {
         return [
@@ -76,9 +57,6 @@ class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $arguments = [

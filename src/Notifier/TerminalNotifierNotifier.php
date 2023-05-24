@@ -20,25 +20,16 @@ use Joli\JoliNotif\Util\OsHelper;
  */
 class TerminalNotifierNotifier extends CliBasedNotifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'terminal-notifier';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $arguments = [

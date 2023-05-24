@@ -74,7 +74,7 @@ class NotifierFactoryTest extends TestCase
             ];
         }
 
-        $this->assertContains(\get_class($notifier), $expectedNotifierClasses);
+        $this->assertContains($notifier::class, $expectedNotifierClasses);
     }
 
     public function testCreateUsesGivenNotifiers()

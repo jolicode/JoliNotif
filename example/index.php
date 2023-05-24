@@ -31,4 +31,4 @@ $notification =
 
 $result = $notifier->send($notification);
 
-echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', get_class($notifier), \PHP_EOL;
+echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', $notifier::class, \PHP_EOL;

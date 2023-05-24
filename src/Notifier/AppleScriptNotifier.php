@@ -19,9 +19,6 @@ use Joli\JoliNotif\Util\OsHelper;
  */
 class AppleScriptNotifier extends CliBasedNotifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported(): bool
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
@@ -31,25 +28,16 @@ class AppleScriptNotifier extends CliBasedNotifier
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'osascript';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_LOW;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $script = 'display notification "' . str_replace('"', '\\"', $notification->getBody()) . '"';
