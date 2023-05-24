@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.5.2 (2023-05-24)
 
 * Added PHAR to GitHub releases
 
