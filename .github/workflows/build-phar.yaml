@@ -22,5 +22,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: 'jolinotif'
-          path: tools/phar/build/castor.phar
+          path: tools/phar/build/jolinotif.phar
           if-no-files-found: error
