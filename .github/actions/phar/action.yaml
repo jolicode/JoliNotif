@@ -1,0 +1,29 @@
+name: 'Build the PHAR'
+description: 'Build the PHAR for the current commit'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Install dependencies (lib)
+      run: composer install --prefer-dist --no-progress --no-dev --optimize-autoloader --classmap-authoritative
+      shell: bash
+
+    - name: Install dependencies (PHAR builder)
+      run: composer install --prefer-dist --no-progress --optimize-autoloader --classmap-authoritative
+      shell: bash
+      working-directory: tools/phar
+
+    - name: Compile PHAR
+      run: vendor/bin/box compile
+      shell: bash
+      working-directory: tools/phar
+
+    - name: Ensure PHAR is OK
+      run: build/jolinotif.phar
+      shell: bash
+      working-directory: tools/phar

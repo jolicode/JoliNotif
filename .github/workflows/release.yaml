@@ -1,0 +1,35 @@
+name: Attach PHAR to the release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  phar_release:
+    name: Create a PHAR and upload it
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the PHAR
+        uses: ./.github/actions/phar
+
+      - name: Get release
+        id: get_release
+        uses: bruceadams/get-release@v1.3.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Upload release binary
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
+          asset_path: ./tools/phar/build/jolinotif.phar
+          asset_name: jolinotif.phar
+          asset_content_type: application/octet-stream
