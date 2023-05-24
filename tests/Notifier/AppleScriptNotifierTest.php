@@ -51,9 +51,6 @@ class AppleScriptNotifierTest extends NotifierTestCase
         return new AppleScriptNotifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
@@ -61,9 +58,6 @@ class AppleScriptNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
@@ -71,9 +65,6 @@ class AppleScriptNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithASubtitle(): string
     {
         return <<<'CLI'
@@ -81,9 +72,6 @@ class AppleScriptNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithASound(): string
     {
         return <<<'CLI'
@@ -91,9 +79,6 @@ class AppleScriptNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         return <<<'CLI'
@@ -101,9 +86,6 @@ class AppleScriptNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         return <<<'CLI'

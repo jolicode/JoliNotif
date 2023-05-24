@@ -58,7 +58,7 @@ class OsHelper
             self::$kernelName = php_uname('s');
         }
 
-        return false !== strpos(self::$kernelName, 'Darwin');
+        return str_contains(self::$kernelName, 'Darwin');
     }
 
     public static function getMacOSVersion(): string

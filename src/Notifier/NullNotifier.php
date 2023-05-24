@@ -16,25 +16,16 @@ use Joli\JoliNotif\Notifier;
 
 class NullNotifier implements Notifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_LOW;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(Notification $notification): bool
     {
         return false;

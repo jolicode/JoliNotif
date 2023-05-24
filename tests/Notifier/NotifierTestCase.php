@@ -29,7 +29,7 @@ abstract class NotifierTestCase extends TestCase
      */
     protected function invokeMethod($object, string $methodName, array $parameters = [])
     {
-        $reflection = new \ReflectionClass(\get_class($object));
+        $reflection = new \ReflectionClass($object::class);
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 

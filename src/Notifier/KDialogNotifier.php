@@ -19,25 +19,16 @@ use Joli\JoliNotif\Notification;
  */
 class KDialogNotifier extends CliBasedNotifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'kdialog';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_HIGH;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $arguments = [];

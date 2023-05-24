@@ -21,60 +21,38 @@ use Symfony\Component\Process\Process;
  */
 class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'snoretoast';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBeUsed(): bool
     {
         return
             (OsHelper::isWindows() && OsHelper::isWindowsEightOrHigher())
-            || OsHelper::isWindowsSubsystemForLinux()
-        ;
+            || OsHelper::isWindowsSubsystemForLinux();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRootDir(): string
     {
         return \dirname(__DIR__, 2) . '/bin/snoreToast';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEmbeddedBinary(): string
     {
         return 'snoretoast-x86.exe';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExtraFiles(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $arguments = [
@@ -95,9 +73,6 @@ class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
         return $arguments;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function handleExitCode(Process $process): bool
     {
         return 0 < $process->getExitCode();

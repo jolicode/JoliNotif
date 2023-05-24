@@ -27,25 +27,16 @@ class ConfigurableNotifier implements Notifier
         $this->sendReturn = $sendReturn;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported(): bool
     {
         return $this->supported;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(Notification $notification): bool
     {
         return $this->sendReturn;

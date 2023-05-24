@@ -38,9 +38,6 @@ class KDialogNotifierTest extends NotifierTestCase
         return new Notifier\KDialogNotifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
@@ -48,9 +45,6 @@ class KDialogNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
@@ -58,9 +52,6 @@ class KDialogNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         return <<<'CLI'
@@ -68,9 +59,6 @@ class KDialogNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         return <<<'CLI'

@@ -40,9 +40,6 @@ class NotifuNotifierTest extends NotifierTestCase
         return new NotifuNotifier();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
@@ -50,9 +47,6 @@ class NotifuNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
@@ -60,9 +54,6 @@ class NotifuNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = $this->getIconDir();
@@ -72,9 +63,6 @@ class NotifuNotifierTest extends NotifierTestCase
             CLI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = $this->getIconDir();

@@ -19,25 +19,16 @@ use Joli\JoliNotif\Notification;
  */
 class NotifySendNotifier extends CliBasedNotifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBinary(): string
     {
         return 'notify-send';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return static::PRIORITY_MEDIUM;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getCommandLineArguments(Notification $notification): array
     {
         $arguments = [];

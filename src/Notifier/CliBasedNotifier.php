@@ -30,9 +30,6 @@ abstract class CliBasedNotifier implements Notifier
      */
     private int $support = self::SUPPORT_UNKNOWN;
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSupported(): bool
     {
         if (self::SUPPORT_UNKNOWN !== $this->support) {
@@ -56,9 +53,6 @@ abstract class CliBasedNotifier implements Notifier
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function send(Notification $notification): bool
     {
         if (!$notification->getBody()) {

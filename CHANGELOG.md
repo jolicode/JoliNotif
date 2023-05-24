@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fixed permissions on Windows notifiers binaries
+
 ## 2.5.0 (2022-12-24)
 
 * Dropped support for PHP 7.4
