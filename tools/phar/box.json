@@ -1,8 +1,7 @@
 {
-    "chmod": "0755",
+    "base-path": "../../",
     "directories": [
         "bin",
-        "example",
         "src"
     ],
     "files": [
@@ -21,7 +20,6 @@
         }
     ],
     "git-version": "package_version",
-    "main": "example/index.php",
-    "output": "build/jolinotif.phar",
-    "stub": true
+    "main": "jolinotif",
+    "output": "tools/phar/build/jolinotif.phar"
 }

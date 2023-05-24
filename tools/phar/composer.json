@@ -1,0 +1,21 @@
+{
+  "name": "jolicode/jolinotif-phar",
+  "description": "Tooling for building JoliNotif PHAR",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Loïck Piera",
+      "email": "pyrech@gmail.com"
+    }
+  ],
+  "require": {
+    "humbug/box": "^4.3.8",
+    "humbug/php-scoper": "^0.18.3"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  }
+}

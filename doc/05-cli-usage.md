@@ -2,7 +2,9 @@
 
 ## Installation
 
-Install package globally:
+There is two ways to install JoliNotif for a CLI usage.
+
+### Install package globally with Composer
 
 ```bash
 $ composer global require jolicode/jolinotif
@@ -17,6 +19,15 @@ $ composer global require jolicode/jolinotif
 ```
 $ echo "export PATH=~/.composer/vendor/bin:$PATH" >> ~/.bashrc
 $ source ~/.bashrc
+```
+
+### Download the PHAR executable
+
+You can download the latest version of JoliNotif as a PHAR file from the [releases
+page](https://github.com/jolicode/JoliNotif/releases):
+
+```bash
+curl https://github.com/jolicode/JoliNotif/releases/latest/download/jolinotif.phar && sudo mv jolinotif.phar /usr/local/bin/jolinotif
 ```
 
 ## Usage
