@@ -21,14 +21,14 @@
         }
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "jolicode/php-os-helper": "^0.1.0",
-        "symfony/process": "^5.4 || ^6.0"
+        "symfony/process": "^5.4 || ^6.0 || ^7.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.13",
-        "symfony/finder": "^5.4 || ^6.0",
-        "symfony/phpunit-bridge": "^5.4 || ^6.0"
+        "symfony/finder": "^5.4 || ^6.0 || ^7.0",
+        "symfony/phpunit-bridge": "^5.4 || ^6.0 || ^7.0"
     },
     "bin": [
         "jolinotif"
