@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 2.6.0 (2023-12-03)
 
 * Deprecated Joli\JoliNotif\Util\OsHelper in favor of jolicode/php-os-helper package
 * Added support for Symfony 7.x
