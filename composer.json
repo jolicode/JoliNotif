@@ -22,6 +22,7 @@
     },
     "require": {
         "php": ">=8.0",
+        "jolicode/php-os-helper": "^0.1.0",
         "symfony/process": "^5.4 || ^6.0"
     },
     "require-dev": {

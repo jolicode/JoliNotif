@@ -14,8 +14,8 @@ namespace Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier;
-use Joli\JoliNotif\Util\OsHelper;
 use Joli\JoliNotif\Util\PharExtractor;
+use JoliCode\PhpOsHelper\OsHelper;
 use Symfony\Component\Process\Process;
 
 abstract class CliBasedNotifier implements Notifier

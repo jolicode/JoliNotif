@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Deprecated Joli\JoliNotif\Util\OsHelper in favor of jolicode/php-os-helper package
+
 ## 2.5.2 (2023-05-24)
 
 * Added PHAR to GitHub releases
