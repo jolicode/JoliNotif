@@ -20,7 +20,7 @@ use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
-use Joli\JoliNotif\Util\OsHelper;
+use JoliCode\PhpOsHelper\OsHelper;
 
 class NotifierFactory
 {

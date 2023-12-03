@@ -11,8 +11,8 @@
 
 namespace Joli\JoliNotif;
 
-use Joli\JoliNotif\Util\OsHelper;
 use Joli\JoliNotif\Util\PharExtractor;
+use JoliCode\PhpOsHelper\OsHelper;
 
 class Notification
 {

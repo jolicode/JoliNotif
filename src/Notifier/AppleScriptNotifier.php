@@ -12,7 +12,7 @@
 namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
-use Joli\JoliNotif\Util\OsHelper;
+use JoliCode\PhpOsHelper\OsHelper;
 
 /**
  * This notifier can be used on Mac OS X 10.9+.

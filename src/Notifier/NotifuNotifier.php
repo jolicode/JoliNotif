@@ -12,7 +12,7 @@
 namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
-use Joli\JoliNotif\Util\OsHelper;
+use JoliCode\PhpOsHelper\OsHelper;
 
 /**
  * This notifier can be used on Windows Seven and provides its own binaries if

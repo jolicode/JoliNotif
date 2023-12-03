@@ -11,64 +11,9 @@
 
 namespace Joli\JoliNotif\Util;
 
-use Symfony\Component\Process\Process;
+use JoliCode\PhpOsHelper\OsHelper as BaseOsHelper;
 
-class OsHelper
-{
-    private static string $kernelName;
-    private static string $kernelVersion;
-    private static string $macOSVersion;
-
-    public static function isUnix(): bool
-    {
-        return '/' === \DIRECTORY_SEPARATOR;
-    }
-
-    public static function isWindowsSubsystemForLinux(): bool
-    {
-        return self::isUnix() && false !== mb_strpos(strtolower(php_uname()), 'microsoft');
-    }
-
-    public static function isWindows(): bool
-    {
-        return '\\' === \DIRECTORY_SEPARATOR;
-    }
-
-    public static function isWindowsSeven(): bool
-    {
-        if (!isset(self::$kernelVersion)) {
-            self::$kernelVersion = php_uname('r');
-        }
-
-        return '6.1' === self::$kernelVersion;
-    }
-
-    public static function isWindowsEightOrHigher(): bool
-    {
-        if (!isset(self::$kernelVersion)) {
-            self::$kernelVersion = php_uname('r');
-        }
-
-        return version_compare(self::$kernelVersion, '6.2', '>=');
-    }
-
-    public static function isMacOS(): bool
-    {
-        if (!isset(self::$kernelName)) {
-            self::$kernelName = php_uname('s');
-        }
-
-        return str_contains(self::$kernelName, 'Darwin');
-    }
-
-    public static function getMacOSVersion(): string
-    {
-        if (!isset(self::$macOSVersion)) {
-            $process = new Process(['sw_vers', '-productVersion']);
-            $process->run();
-            self::$macOSVersion = trim($process->getOutput());
-        }
-
-        return self::$macOSVersion;
-    }
-}
+/**
+ * @deprecated since 2.6, use OsHelper from jolicode/php-os-helper instead
+ */
+class OsHelper extends BaseOsHelper {}
