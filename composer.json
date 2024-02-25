@@ -29,6 +29,9 @@
         "symfony/finder": "^5.4 || ^6.0 || ^7.0",
         "symfony/phpunit-bridge": "^5.4 || ^6.0 || ^7.0"
     },
+    "suggest": {
+        "ext-ffi": "Needed to send notifications via libnotify"
+    },
     "bin": [
         "jolinotif"
     ],

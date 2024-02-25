@@ -51,6 +51,13 @@ distributions.
 
 notify-send can display notification with a body, a title and an icon.
 
+##### LibNotifyNotifier
+
+This notifier use the FFI PHP extension. 
+The C library `libnotify` should be installed by default on most Linux distributions wih graphical interface.
+
+LibNotifyNotifier can display notification with a body, a title and an icon.
+
 ### Mac OS
 
 #### GrowlNotifyNotifier
