@@ -21,7 +21,7 @@ class InvalidNotificationException extends \LogicException implements Exception
         Notification $notification,
         $message = '',
         $code = 0,
-        Exception $previous = null
+        ?Exception $previous = null
     ) {
         $this->notification = $notification;
 

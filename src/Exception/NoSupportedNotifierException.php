@@ -16,7 +16,7 @@ class NoSupportedNotifierException extends \RuntimeException implements Exceptio
     public function __construct(
         $message = 'No supported notifier',
         $code = 0,
-        Exception $previous = null
+        ?Exception $previous = null
     ) {
         parent::__construct($message, $code, $previous);
     }
