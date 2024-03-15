@@ -16,4 +16,6 @@ use JoliCode\PhpOsHelper\OsHelper as BaseOsHelper;
 /**
  * @deprecated since 2.6, use OsHelper from jolicode/php-os-helper instead
  */
-class OsHelper extends BaseOsHelper {}
+class OsHelper extends BaseOsHelper
+{
+}
