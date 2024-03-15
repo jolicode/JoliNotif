@@ -2,10 +2,10 @@ name: CI
 
 on:
     push:
-        branches: [ main ]
+        branches: [main]
     pull_request:
     schedule:
-        -   cron: '0 0 * * MON'
+        - cron: "0 0 * * MON"
 
 jobs:
     check-cs:
@@ -18,7 +18,7 @@ jobs:
             - name: PHP-CS-Fixer
               uses: docker://oskarstark/php-cs-fixer-ga
               with:
-                args: --config=.php-cs-fixer.php --diff --dry-run
+                  args: --config=.php-cs-fixer.php --diff --dry-run
 
     ci:
         name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
@@ -26,13 +26,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: ['8.2', '8.3']
-                composer-flags: ['']
-                name: ['']
+                php-version: ["8.2", "8.3"]
+                composer-flags: [""]
+                name: [""]
                 include:
                     - php-version: 8.1
-                      composer-flags: '--prefer-lowest'
-                      name: '(prefer lowest dependencies)'
+                      composer-flags: "--prefer-lowest"
+                      name: "(prefer lowest dependencies)"
         steps:
             - name: Checkout
               uses: actions/checkout@v4
