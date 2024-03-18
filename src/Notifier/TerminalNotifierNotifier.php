@@ -47,6 +47,11 @@ class TerminalNotifierNotifier extends CliBasedNotifier
             $arguments[] = $notification->getIcon();
         }
 
+        if ($notification->getOption('contentImage')) {
+            $arguments[] = '-contentImage';
+            $arguments[] = $notification->getOption('contentImage');
+        }        
+
         if ($notification->getOption('url')) {
             $arguments[] = '-open';
             $arguments[] = $notification->getOption('url');
