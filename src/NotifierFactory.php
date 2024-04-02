@@ -20,6 +20,7 @@ use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
+use Joli\JoliNotif\Notifier\WslNotifySendNotifier;
 use JoliCode\PhpOsHelper\OsHelper;
 
 class NotifierFactory
@@ -79,6 +80,7 @@ class NotifierFactory
             new AppleScriptNotifier(),
             new KDialogNotifier(),
             new NotifySendNotifier(),
+            new WslNotifySendNotifier(),
         ];
     }
 

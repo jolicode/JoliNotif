@@ -78,6 +78,15 @@ AppleScript can display notification with only a body and a title. AppleScript
 don't support to set an icon and will always use instead the icon of the
 application sending the notification, in our case, the terminal.
 
+#### WslNotifySendNotifier
+
+This notifier uses the executable `wsl-notify-send`. 
+It permit to send notification from Windows Subsystem for Linux to Windows.
+
+wsl-notify-send can display notification with a body and a title.
+
+Icon is partially supported by `wsl-notify-send`, but it's not possible to set an icon for now.
+
 ### Windows
 
 #### SnoreToastNotifier

@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not released yet
+
+* Added wsl-notify-send notifier for Windows Subsystem for Linux
+
 ## 2.6.0 (2023-12-03)
 
 * Deprecated Joli\JoliNotif\Util\OsHelper in favor of jolicode/php-os-helper package

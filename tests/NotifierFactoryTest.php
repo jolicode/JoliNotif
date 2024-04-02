@@ -20,6 +20,7 @@ use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
+use Joli\JoliNotif\Notifier\WslNotifySendNotifier;
 use Joli\JoliNotif\NotifierFactory;
 use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
 use Joli\JoliNotif\Util\OsHelper;
@@ -38,6 +39,7 @@ class NotifierFactoryTest extends TestCase
                 AppleScriptNotifier::class,
                 KDialogNotifier::class,
                 NotifySendNotifier::class,
+                WslNotifySendNotifier::class,
             ];
         } else {
             $expectedNotifierClasses = [
@@ -66,6 +68,7 @@ class NotifierFactoryTest extends TestCase
                 AppleScriptNotifier::class,
                 KDialogNotifier::class,
                 NotifySendNotifier::class,
+                WslNotifySendNotifier::class,
             ];
         } else {
             $expectedNotifierClasses = [
