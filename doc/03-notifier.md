@@ -78,13 +78,24 @@ AppleScript can display notification with only a body and a title. AppleScript
 don't support to set an icon and will always use instead the icon of the
 application sending the notification, in our case, the terminal.
 
+#### WslNotifySendNotifier
+
+This notifier uses the executable `wsl-notify-send`. 
+It permits to send notification from Windows Subsystem for Linux to Windows.
+
+wsl-notify-send can display notification with a body and a title.
+
+Icon is partially supported by `wsl-notify-send`, but it's not possible to set
+an icon for now.
+
 ### Windows
 
 #### SnoreToastNotifier
 
-This notifier uses the Windows application called SnoreToastNotifier. It works on Windows
-8 and higher. Because SnoreToastNotifier is probably not installed on your system,
-JoliNotif embed the binaries inside the [bin/snoreToast](bin/snoreToast) directory.
+This notifier uses the Windows application called SnoreToastNotifier. It works
+on Windows 8 and higher. Because SnoreToastNotifier is probably not installed
+on your system, JoliNotif embed the binaries inside the [bin/snoreToast](bin/snoreToast)
+directory.
 
 When you use JoliNotif inside a phar archive, we take care to extract those
 binaries in the system temp directory to be able to execute them.
