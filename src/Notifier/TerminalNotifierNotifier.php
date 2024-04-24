@@ -43,14 +43,9 @@ class TerminalNotifierNotifier extends CliBasedNotifier
         }
 
         if ($notification->getIcon() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $arguments[] = '-appIcon';
+            $arguments[] = '-contentImage';
             $arguments[] = $notification->getIcon();
         }
-
-        if ($notification->getOption('contentImage')) {
-            $arguments[] = '-contentImage';
-            $arguments[] = $notification->getOption('contentImage');
-        }        
 
         if ($notification->getOption('url')) {
             $arguments[] = '-open';
