@@ -14,6 +14,9 @@ namespace Joli\JoliNotif\tests\fixtures;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier;
 
+/**
+ * @deprecated since 2.7, will be removed in 3.0. Use ConfigurableDriver instead.
+ */
 class ConfigurableNotifier implements Notifier
 {
     private bool $supported;

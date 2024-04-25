@@ -11,52 +11,16 @@
 
 namespace Joli\JoliNotif\Notifier;
 
-use Joli\JoliNotif\Notification;
-use JoliCode\PhpOsHelper\OsHelper;
+use Joli\JoliNotif\Driver\AppleScriptDriver;
+use Joli\JoliNotif\Notifier;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', AppleScriptNotifier::class);
 
 /**
  * This notifier can be used on Mac OS X 10.9+.
+ *
+ * @deprecated since 2.7, will be removed in 3.0
  */
-class AppleScriptNotifier extends CliBasedNotifier
+class AppleScriptNotifier extends AppleScriptDriver implements Notifier
 {
-    public function isSupported(): bool
-    {
-        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            return parent::isSupported();
-        }
-
-        return false;
-    }
-
-    public function getBinary(): string
-    {
-        return 'osascript';
-    }
-
-    public function getPriority(): int
-    {
-        return static::PRIORITY_LOW;
-    }
-
-    protected function getCommandLineArguments(Notification $notification): array
-    {
-        $script = 'display notification "' . str_replace('"', '\\"', $notification->getBody() ?? '') . '"';
-
-        if ($notification->getTitle()) {
-            $script .= ' with title "' . str_replace('"', '\\"', $notification->getTitle()) . '"';
-        }
-
-        if ($notification->getOption('subtitle')) {
-            $script .= ' subtitle "' . str_replace('"', '\\"', (string) $notification->getOption('subtitle')) . '"';
-        }
-
-        if ($notification->getOption('sound')) {
-            $script .= ' sound name "' . str_replace('"', '\\"', (string) $notification->getOption('sound')) . '"';
-        }
-
-        return [
-            '-e',
-            $script,
-        ];
-    }
 }

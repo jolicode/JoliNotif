@@ -11,47 +11,17 @@
 
 namespace Joli\JoliNotif\Notifier;
 
-use Joli\JoliNotif\Notification;
-use JoliCode\PhpOsHelper\OsHelper;
+use Joli\JoliNotif\Driver\TerminalNotifierDriver;
+use Joli\JoliNotif\Notifier;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', TerminalNotifierNotifier::class);
 
 /**
  * This notifier can be used on Mac OS X 10.8, or higher, using the
  * terminal-notifier binary.
+ *
+ * @deprecated since 2.7, will be removed in 3.0
  */
-class TerminalNotifierNotifier extends CliBasedNotifier
+class TerminalNotifierNotifier extends TerminalNotifierDriver implements Notifier
 {
-    public function getBinary(): string
-    {
-        return 'terminal-notifier';
-    }
-
-    public function getPriority(): int
-    {
-        return static::PRIORITY_MEDIUM;
-    }
-
-    protected function getCommandLineArguments(Notification $notification): array
-    {
-        $arguments = [
-            '-message',
-            $notification->getBody() ?? '',
-        ];
-
-        if ($notification->getTitle()) {
-            $arguments[] = '-title';
-            $arguments[] = $notification->getTitle();
-        }
-
-        if ($notification->getIcon() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $arguments[] = '-contentImage';
-            $arguments[] = $notification->getIcon();
-        }
-
-        if ($notification->getOption('url')) {
-            $arguments[] = '-open';
-            $arguments[] = $notification->getOption('url');
-        }
-
-        return $arguments;
-    }
 }

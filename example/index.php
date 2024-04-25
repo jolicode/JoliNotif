@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
+use Joli\JoliNotif\DefaultNotifier;
 use Joli\JoliNotif\Notification;
-use Joli\JoliNotif\Notifier\NullNotifier;
-use Joli\JoliNotif\NotifierFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$notifier = NotifierFactory::create();
+$notifier = new DefaultNotifier();
 
-if ($notifier instanceof NullNotifier) {
+if (!$notifier->getDriver()) {
     echo 'No supported notifier', \PHP_EOL;
     exit(1);
 }
@@ -31,4 +30,6 @@ $notification =
 
 $result = $notifier->send($notification);
 
-echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', $notifier::class, \PHP_EOL;
+$driver = $notifier->getDriver();
+
+echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class), \PHP_EOL;

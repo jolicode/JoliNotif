@@ -15,6 +15,9 @@ use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
 use Joli\JoliNotif\Util\OsHelper;
 
+/**
+ * @group legacy
+ */
 class TerminalNotifierNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;

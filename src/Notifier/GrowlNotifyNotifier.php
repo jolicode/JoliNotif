@@ -11,40 +11,16 @@
 
 namespace Joli\JoliNotif\Notifier;
 
-use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Driver\GrowlNotifyDriver;
+use Joli\JoliNotif\Notifier;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', GrowlNotifyNotifier::class);
 
 /**
  * This notifier can be used on Mac OS X when growlnotify command is available.
+ *
+ * @deprecated since 2.7, will be removed in 3.0
  */
-class GrowlNotifyNotifier extends CliBasedNotifier
+class GrowlNotifyNotifier extends GrowlNotifyDriver implements Notifier
 {
-    public function getBinary(): string
-    {
-        return 'growlnotify';
-    }
-
-    public function getPriority(): int
-    {
-        return static::PRIORITY_HIGH;
-    }
-
-    protected function getCommandLineArguments(Notification $notification): array
-    {
-        $arguments = [
-            '--message',
-            $notification->getBody() ?? '',
-        ];
-
-        if ($notification->getTitle()) {
-            $arguments[] = '--title';
-            $arguments[] = $notification->getTitle();
-        }
-
-        if ($notification->getIcon()) {
-            $arguments[] = '--image';
-            $arguments[] = $notification->getIcon();
-        }
-
-        return $arguments;
-    }
 }

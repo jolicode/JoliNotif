@@ -11,39 +11,17 @@
 
 namespace Joli\JoliNotif\Notifier;
 
-use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Driver\NotifySendDriver;
+use Joli\JoliNotif\Notifier;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', NotifySendNotifier::class);
 
 /**
  * This notifier can be used on most Linux distributions, using the command notify-send.
  * This command is packaged in libnotify-bin.
+ *
+ * @deprecated since 2.7, will be removed in 3.0
  */
-class NotifySendNotifier extends CliBasedNotifier
+class NotifySendNotifier extends NotifySendDriver implements Notifier
 {
-    public function getBinary(): string
-    {
-        return 'notify-send';
-    }
-
-    public function getPriority(): int
-    {
-        return static::PRIORITY_MEDIUM;
-    }
-
-    protected function getCommandLineArguments(Notification $notification): array
-    {
-        $arguments = [];
-
-        if ($notification->getIcon()) {
-            $arguments[] = '--icon';
-            $arguments[] = $notification->getIcon();
-        }
-
-        if ($notification->getTitle()) {
-            $arguments[] = $notification->getTitle();
-        }
-
-        $arguments[] = $notification->getBody() ?? '';
-
-        return $arguments;
-    }
 }

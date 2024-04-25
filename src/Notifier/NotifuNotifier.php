@@ -11,62 +11,17 @@
 
 namespace Joli\JoliNotif\Notifier;
 
-use Joli\JoliNotif\Notification;
-use JoliCode\PhpOsHelper\OsHelper;
+use Joli\JoliNotif\Driver\NotifuDriver;
+use Joli\JoliNotif\Notifier;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', NotifuNotifier::class);
 
 /**
  * This notifier can be used on Windows Seven and provides its own binaries if
  * not natively available.
+ *
+ * @deprecated since 2.7, will be removed in 3.0
  */
-class NotifuNotifier extends CliBasedNotifier implements BinaryProvider
+class NotifuNotifier extends NotifuDriver implements Notifier
 {
-    public function getBinary(): string
-    {
-        return 'notifu';
-    }
-
-    public function getPriority(): int
-    {
-        return static::PRIORITY_LOW;
-    }
-
-    public function canBeUsed(): bool
-    {
-        return OsHelper::isWindows() && OsHelper::isWindowsSeven();
-    }
-
-    public function getRootDir(): string
-    {
-        return \dirname(__DIR__, 2) . '/bin/notifu';
-    }
-
-    public function getEmbeddedBinary(): string
-    {
-        return 'notifu.exe';
-    }
-
-    public function getExtraFiles(): array
-    {
-        return [];
-    }
-
-    protected function getCommandLineArguments(Notification $notification): array
-    {
-        $arguments = [
-            '/m',
-            $notification->getBody() ?? '',
-        ];
-
-        if ($notification->getTitle()) {
-            $arguments[] = '/p';
-            $arguments[] = $notification->getTitle();
-        }
-
-        if ($notification->getIcon()) {
-            $arguments[] = '/i';
-            $arguments[] = $notification->getIcon();
-        }
-
-        return $arguments;
-    }
 }

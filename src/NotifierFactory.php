@@ -18,12 +18,16 @@ use Joli\JoliNotif\Notifier\KDialogNotifier;
 use Joli\JoliNotif\Notifier\LibNotifyNotifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 use Joli\JoliNotif\Notifier\NotifySendNotifier;
-use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
 use Joli\JoliNotif\Notifier\WslNotifySendNotifier;
 use JoliCode\PhpOsHelper\OsHelper;
 
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0. Use the %s class directly', NotifierFactory::class, DefaultNotifier::class);
+
+/**
+ * @deprecated since 2.7, will be removed in 3.0. Use the DefaultNotifier class directly.
+ */
 class NotifierFactory
 {
     /**
@@ -31,11 +35,7 @@ class NotifierFactory
      */
     public static function create(array $notifiers = []): Notifier
     {
-        if (!$notifiers) {
-            $notifiers = static::getDefaultNotifiers();
-        }
-
-        return self::chooseBestNotifier($notifiers) ?: new NullNotifier();
+        return new LegacyNotifier($notifiers);
     }
 
     /**
@@ -43,17 +43,13 @@ class NotifierFactory
      */
     public static function createOrThrowException(array $notifiers = []): Notifier
     {
-        if (empty($notifiers)) {
-            $notifiers = static::getDefaultNotifiers();
-        }
+        $legacyNotifier = new LegacyNotifier($notifiers);
 
-        $bestNotifier = self::chooseBestNotifier($notifiers);
-
-        if (!$bestNotifier) {
+        if (!$legacyNotifier->getDriver()) {
             throw new NoSupportedNotifierException();
         }
 
-        return $bestNotifier;
+        return $legacyNotifier;
     }
 
     /**
@@ -95,28 +91,5 @@ class NotifierFactory
             new NotifuNotifier(),
             new WslNotifySendNotifier(),
         ];
-    }
-
-    /**
-     * @param Notifier[] $notifiers
-     */
-    private static function chooseBestNotifier(array $notifiers): ?Notifier
-    {
-        /** @var Notifier|null $bestNotifier */
-        $bestNotifier = null;
-
-        foreach ($notifiers as $notifier) {
-            if (!$notifier->isSupported()) {
-                continue;
-            }
-
-            if (null !== $bestNotifier && $bestNotifier->getPriority() >= $notifier->getPriority()) {
-                continue;
-            }
-
-            $bestNotifier = $notifier;
-        }
-
-        return $bestNotifier;
     }
 }

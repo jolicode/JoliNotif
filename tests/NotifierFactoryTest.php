@@ -11,22 +11,34 @@
 
 namespace Joli\JoliNotif\tests;
 
+use Joli\JoliNotif\Driver\AppleScriptDriver;
+use Joli\JoliNotif\Driver\GrowlNotifyDriver;
+use Joli\JoliNotif\Driver\KDialogDriver;
+use Joli\JoliNotif\Driver\LibNotifyDriver;
+use Joli\JoliNotif\Driver\NotifuDriver;
+use Joli\JoliNotif\Driver\NotifySendDriver;
+use Joli\JoliNotif\Driver\SnoreToastDriver;
+use Joli\JoliNotif\Driver\TerminalNotifierDriver;
+use Joli\JoliNotif\Driver\WslNotifySendDriver;
 use Joli\JoliNotif\Exception\NoSupportedNotifierException;
+use Joli\JoliNotif\LegacyNotifier;
 use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 use Joli\JoliNotif\Notifier\KDialogNotifier;
 use Joli\JoliNotif\Notifier\LibNotifyNotifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 use Joli\JoliNotif\Notifier\NotifySendNotifier;
-use Joli\JoliNotif\Notifier\NullNotifier;
 use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 use Joli\JoliNotif\Notifier\TerminalNotifierNotifier;
 use Joli\JoliNotif\Notifier\WslNotifySendNotifier;
 use Joli\JoliNotif\NotifierFactory;
 use Joli\JoliNotif\tests\fixtures\ConfigurableNotifier;
-use Joli\JoliNotif\Util\OsHelper;
+use JoliCode\PhpOsHelper\OsHelper;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group legacy
+ */
 class NotifierFactoryTest extends TestCase
 {
     public function testGetDefaultNotifiers()
@@ -57,30 +69,28 @@ class NotifierFactoryTest extends TestCase
     {
         $notifier = NotifierFactory::create();
 
-        if ($notifier instanceof NullNotifier) {
-            $this->markTestSkipped('This test needs that at least one notifier is supported');
-        }
-
-        $this->assertInstanceOf('Joli\\JoliNotif\\Notifier', $notifier);
-
         if (OsHelper::isUnix()) {
-            $expectedNotifierClasses = [
-                LibNotifyNotifier::class,
-                GrowlNotifyNotifier::class,
-                TerminalNotifierNotifier::class,
-                AppleScriptNotifier::class,
-                KDialogNotifier::class,
-                NotifySendNotifier::class,
-                WslNotifySendNotifier::class,
+            $expectedDriverClasses = [
+                LibNotifyDriver::class,
+                GrowlNotifyDriver::class,
+                TerminalNotifierDriver::class,
+                AppleScriptDriver::class,
+                KDialogDriver::class,
+                NotifySendDriver::class,
             ];
         } else {
-            $expectedNotifierClasses = [
-                SnoreToastNotifier::class,
-                NotifuNotifier::class,
+            $expectedDriverClasses = [
+                SnoreToastDriver::class,
+                NotifuDriver::class,
+                WslNotifySendDriver::class,
             ];
         }
 
-        $this->assertContains($notifier::class, $expectedNotifierClasses);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertContains($driver::class, $expectedDriverClasses);
     }
 
     public function testCreateUsesGivenNotifiers()
@@ -89,7 +99,11 @@ class NotifierFactoryTest extends TestCase
             new ConfigurableNotifier(true),
         ]);
 
-        $this->assertInstanceOf('Joli\\JoliNotif\\tests\\fixtures\\ConfigurableNotifier', $notifier);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertInstanceOf(ConfigurableNotifier::class, $driver);
     }
 
     public function testCreateWithNoSupportedNotifiersReturnsANullNotifier()
@@ -99,7 +113,11 @@ class NotifierFactoryTest extends TestCase
             new ConfigurableNotifier(false),
         ]);
 
-        $this->assertInstanceOf(NullNotifier::class, $notifier);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertNull($driver);
     }
 
     public function testCreateUsesTheOnlySupportedNotifier()
@@ -110,7 +128,11 @@ class NotifierFactoryTest extends TestCase
             $expectedNotifier,
         ]);
 
-        $this->assertSame($expectedNotifier, $notifier);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertSame($expectedNotifier, $driver);
     }
 
     public function testCreateUsesTheFirstSupportedNotifierWhenNoPrioritiesAreGiven()
@@ -127,7 +149,11 @@ class NotifierFactoryTest extends TestCase
             $notifier4,
         ]);
 
-        $this->assertSame($notifier2, $notifier);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertSame($notifier2, $driver);
     }
 
     public function testCreateUsesTheBestSupportedNotifier()
@@ -146,7 +172,11 @@ class NotifierFactoryTest extends TestCase
             $notifier5,
         ]);
 
-        $this->assertSame($notifier3, $notifier);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertSame($notifier3, $driver);
     }
 
     public function testCreateUsesTheFirstOfTheBestSupportedNotifiers()
@@ -165,7 +195,11 @@ class NotifierFactoryTest extends TestCase
             $notifier5,
         ]);
 
-        $this->assertSame($notifier3, $notifier);
+        $this->assertInstanceOf(LegacyNotifier::class, $notifier);
+
+        $driver = $notifier->getDriver();
+
+        $this->assertSame($notifier3, $driver);
     }
 
     public function testCreateOrThrowExceptionWithNoSupportedNotifiersThrowsException()

@@ -1,31 +1,38 @@
 # Basic usage
 
-## Create a notifier
+## Create a notifier and sending a notification
 
-JoliNotif provides a `NotifierFactory` which creates the best supported
-notifier according to your platform. You don't have to care if you're running
-on Linux, Windows or Mac OS:
+JoliNotif provides a `DefaultNotifier` class which is the main entrypoint of
+the library. It's main goal is to provide a simple way to send a desktop
+notification without having to care about the platform you're running on. It
+will work whether you're on Linux, Windows or macOS.
 
 ```php
-use Joli\JoliNotif\NotifierFactory;
+use Joli\JoliNotif\DefaultNotifier;
+use Joli\JoliNotif\Notification;
 
-$notifier = NotifierFactory::create();
+$notifier = new DefaultNotifier();
+
+$notifier->send(new Notification());
 ```
 
-The factory use the notifier's priority to determine the best notifier to use.
-For example some notifier has a low priority because they don't support some
-notification options. The best notifier will then be returned.
+And you're done!
 
-> **Note**
-> The factory now returns a NullNotifier instead of null when no notifier is
-> available. You then no longer have to check for null value.
+Internally, the notifier will use each driver's priority to determine the
+best one available on your system.
+For example, some driver have a low priority because they don't support some
+notification options. So if a better driver is available, it will be used.
 
-If you really need to ensure a Notifier is available, you can use the
-`createOrThrowException` method. It will return the best notifier available or
-throw a `Joli\JoliNotif\Exception\NoSupportedNotifierException` if no one is
-available on the current system.
+> [!NOTE]
+> In case no driver is supported or if an error happens during notification
+> sending, the send method will return false.
 
-## Create your notification
+> [!TIP]
+> If you want to log when an error happens or if no driver is supported, you
+> can also pass an instance of `Psr\Log\LoggerInterface` as the first
+> parameter of the `DefaultNotifier`'s constructor.
+
+## Create and configure your notification
 
 Create a notification is as simple as instantiating a `Notification` and
 setting the option you want to use:
@@ -37,29 +44,18 @@ $notification =
     (new Notification())
     ->setBody('The notification body')
     ->setTitle('The notification title')
-    ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptNotifier)
-    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptNotifier)
-    ->addOption('url', 'https://google.com') // Only works on macOS (TerminalNotifierNotifier)
+    ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptDriver)
+    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptDriver)
+    ->addOption('url', 'https://google.com') // Only works on macOS (TerminalNotifierDriver)
 ;
 ```
 
-As you can see, the notification provides a fluent API.
-
-## Sending the notification
-
-Now that you get your notification, just send it via the notifier:
-
-```php
-$notifier->send($notification);
-```
-
-And you're done!
-
+As you can see, the notification class provides a fluent API.
 
 ## Next readings
 
 * [Notification](02-notification.md)
-* [Notifier](03-notifier.md)
+* [Drivers](03-drivers.md)
 * [CRON usage](04-cron-usage.md)
 * [CLI usage](05-cli-usage.md)
 

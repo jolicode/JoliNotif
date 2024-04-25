@@ -14,6 +14,9 @@ namespace Joli\JoliNotif\tests\Notifier;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\WslNotifySendNotifier;
 
+/**
+ * @group legacy
+ */
 class WslNotifySendNotifierTest extends NotifierTestCase
 {
     use BinaryProviderTestTrait;

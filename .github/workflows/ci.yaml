@@ -30,7 +30,7 @@ jobs:
         - name: PHPStan
           uses: docker://oskarstark/phpstan-ga
           env:
-            REQUIRE_DEV: true
+              REQUIRE_DEV: true
 
     ci:
         name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
@@ -71,7 +71,7 @@ jobs:
               run: |
                   composer update --prefer-dist --no-interaction ${{ matrix.composer-flags }}
 
-            - name: Install libnotify4 for LibNotifyNotifier
+            - name: Install libnotify4 for LibNotifyDriver
               run: |
                 sudo apt-get install -y --no-install-recommends --no-install-suggests libnotify4
 
@@ -79,19 +79,30 @@ jobs:
               run: php vendor/bin/simple-phpunit
 
     phar:
-      name: Create a PHAR and ensure it is working
-      runs-on: ubuntu-latest
+        name: Create a PHAR and ensure it is working
+        runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
+        steps:
+            - uses: actions/checkout@v4
 
-        - name: Build the PHAR
-          uses: ./.github/actions/phar
+            - name: Setup PHP, with composer and extensions
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-version }}
+                  extensions: mbstring, xml, ffi
+                  ini-values: phar.readonly="Off"
 
-        - name: Execute the PHAR
-          run: |
-            tools/phar/build/jolinotif.phar --help
+            - name: Install libnotify4 for LibNotifyDriver
+              run: |
+                sudo apt-get install -y --no-install-recommends --no-install-suggests libnotify4
 
-        - name: Trigger a notification
-          run: |
-            tools/phar/build/jolinotif.phar --title "Yolo" --body "Hello world!"
+            - name: Build the PHAR
+              uses: ./.github/actions/phar
+
+            - name: Execute the PHAR
+              run: |
+                tools/phar/build/jolinotif.phar --help
+
+            - name: Trigger a notification
+              run: |
+                tools/phar/build/jolinotif.phar --title "Yolo" --body "Hello world!" --verbose

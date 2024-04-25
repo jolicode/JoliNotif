@@ -11,10 +11,10 @@
 # About JoliNotif
 
 JoliNotif is a cross-platform PHP library to display desktop notifications.
-It works on Linux, Windows or MacOS.
+It works on Linux, Windows or macOS.
 
-Requires PHP >= 7.4 (support for PHP 5 was available in version 1.x, for PHP 7.0
-and 7.1 in version < 2.1.0, for PHP 7.2 and 7.3 in version < 2.4.0).
+Requires PHP >= 8.1 (support for PHP 5 was available in version 1.x, for PHP 7.0
+and 7.1 in version < 2.1.0, for PHP 7.2 and 7.3 in version < 2.4.0, for PHP < 8.0 in version 2.6.0).
 
 > [!NOTE]
 > This library can not be used in a web context (FPM or equivalent). Use
@@ -30,17 +30,13 @@ composer require "jolicode/jolinotif"
 
 ## Usage
 
-Use the `NotifierFactory` to create the correct `Notifier` (adapted to your OS),
-then use it to send your notification:
-
 ```php
 include __DIR__.'/vendor/autoload.php';
 
 use Joli\JoliNotif\Notification;
-use Joli\JoliNotif\NotifierFactory;
+use Joli\JoliNotif\DefaultNotifier;
 
-// Create a Notifier
-$notifier = NotifierFactory::create();
+$notifier = new DefaultNotifier();
 
 // Create your notification
 $notification =
@@ -48,8 +44,8 @@ $notification =
     ->setTitle('Notification title')
     ->setBody('This is the body of your notification')
     ->setIcon(__DIR__.'/path/to/your/icon.png')
-    ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptNotifier)
-    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptNotifier)
+    ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptDriver)
+    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptDriver)
 ;
 
 // Send it
@@ -68,7 +64,7 @@ Discover more by reading the docs:
 
 * [Basic usage](doc/01-basic-usage.md)
 * [Notification](doc/02-notification.md)
-* [Notifier](doc/03-notifier.md)
+* [Drivers](doc/03-drivers.md)
 * [CRON usage](doc/04-cron-usage.md)
 * [CLI usage](doc/05-cli-usage.md)
 

@@ -13,6 +13,9 @@ namespace Joli\JoliNotif\tests\Notifier;
 
 use Joli\JoliNotif\Notifier;
 
+/**
+ * @group legacy
+ */
 class KDialogNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;

@@ -11,6 +11,6 @@
 
 namespace Joli\JoliNotif\Exception;
 
-class FFIRuntimeException extends \RuntimeException implements Exception
+class FFIRuntimeException extends \RuntimeException implements ExceptionInterface
 {
 }
