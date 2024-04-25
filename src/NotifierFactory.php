@@ -80,7 +80,6 @@ class NotifierFactory
             new AppleScriptNotifier(),
             new KDialogNotifier(),
             new NotifySendNotifier(),
-            new WslNotifySendNotifier(),
         ];
     }
 
@@ -92,6 +91,7 @@ class NotifierFactory
         return [
             new SnoreToastNotifier(),
             new NotifuNotifier(),
+            new WslNotifySendNotifier(),
         ];
     }
 

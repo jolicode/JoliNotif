@@ -39,12 +39,12 @@ class NotifierFactoryTest extends TestCase
                 AppleScriptNotifier::class,
                 KDialogNotifier::class,
                 NotifySendNotifier::class,
-                WslNotifySendNotifier::class,
             ];
         } else {
             $expectedNotifierClasses = [
                 SnoreToastNotifier::class,
                 NotifuNotifier::class,
+                WslNotifySendNotifier::class,
             ];
         }
 
