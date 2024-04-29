@@ -56,7 +56,7 @@ class WslNotifySendNotifier extends CliBasedNotifier implements BinaryProvider
         $arguments = [
             '--appId',
             'JoliNotif',
-            $notification->getBody(),
+            $notification->getBody() ?? '',
         ];
 
         if ($notification->getTitle()) {

@@ -42,7 +42,7 @@ class NotifySendNotifier extends CliBasedNotifier
             $arguments[] = $notification->getTitle();
         }
 
-        $arguments[] = $notification->getBody();
+        $arguments[] = $notification->getBody() ?? '';
 
         return $arguments;
     }

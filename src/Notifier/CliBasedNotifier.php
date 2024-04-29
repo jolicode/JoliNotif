@@ -86,6 +86,8 @@ abstract class CliBasedNotifier implements Notifier
 
     /**
      * Configure the process to run in order to send the notification.
+     *
+     * @return list<string|int>
      */
     abstract protected function getCommandLineArguments(Notification $notification): array;
 

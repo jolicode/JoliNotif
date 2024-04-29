@@ -39,7 +39,7 @@ class KDialogNotifier extends CliBasedNotifier
         }
 
         $arguments[] = '--passivepopup';
-        $arguments[] = $notification->getBody();
+        $arguments[] = $notification->getBody() ?? '';
 
         // Timeout, in seconds
         $arguments[] = 5;

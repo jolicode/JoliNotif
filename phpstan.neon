@@ -1,0 +1,12 @@
+includes:
+    #- phpstan-baseline.neon
+
+parameters:
+    level: 9
+    paths:
+        - src
+    tmpDir: 'var/phpstan/tmp'
+    inferPrivatePropertyTypeFromConstructor: true
+    checkGenericClassInNonGenericObjectType: false
+    excludePaths:
+        analyse: []

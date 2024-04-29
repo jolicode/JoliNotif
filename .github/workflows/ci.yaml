@@ -20,6 +20,18 @@ jobs:
               with:
                   args: --config=.php-cs-fixer.php --diff --dry-run
 
+    phpstan:
+      name: Static Analysis
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: PHPStan
+          uses: docker://oskarstark/phpstan-ga
+          env:
+            REQUIRE_DEV: true
+
     ci:
         name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
         runs-on: ubuntu-latest
@@ -61,3 +73,21 @@ jobs:
 
             - name: Run Tests
               run: php vendor/bin/simple-phpunit
+
+    phar:
+      name: Create a PHAR and ensure it is working
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v3
+
+        - name: Build the PHAR
+          uses: ./.github/actions/phar
+
+        - name: Execute the PHAR
+          run: |
+            tools/phar/build/jolinotif.phar --help
+
+        - name: Trigger a notification
+          run: |
+            tools/phar/build/jolinotif.phar --title "Yolo" --body "Hello world!"

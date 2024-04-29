@@ -32,7 +32,7 @@ class GrowlNotifyNotifier extends CliBasedNotifier
     {
         $arguments = [
             '--message',
-            $notification->getBody(),
+            $notification->getBody() ?? '',
         ];
 
         if ($notification->getTitle()) {

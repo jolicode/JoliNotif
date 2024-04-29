@@ -1,0 +1,10 @@
+{
+    "require": {
+        "phpstan/phpstan": "^1.10.67"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    }
+}

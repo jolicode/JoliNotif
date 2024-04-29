@@ -22,7 +22,9 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->append([
         __FILE__,
+        'castor.php',
     ])
+    ->notPath('var')
 ;
 
 return (new PhpCsFixer\Config())

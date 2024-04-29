@@ -19,6 +19,7 @@ class Notification
     private ?string $title = null;
     private ?string $body = null;
     private ?string $icon = null;
+    /** @var array<string, string|int> */
     private array $options = [];
 
     public function getTitle(): ?string
@@ -62,17 +63,17 @@ class Notification
                 : realpath($icon);
         }
 
-        $this->icon = $icon;
+        $this->icon = \is_string($icon) ? $icon : null;
 
         return $this;
     }
 
-    public function getOption(string $key): ?string
+    public function getOption(string $key): string|int|null
     {
         return $this->options[$key] ?? null;
     }
 
-    public function addOption(string $key, string $option): self
+    public function addOption(string $key, string|int $option): self
     {
         $this->options[$key] = $option;
 

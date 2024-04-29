@@ -19,9 +19,9 @@ class InvalidNotificationException extends \LogicException implements Exception
 
     public function __construct(
         Notification $notification,
-        $message = '',
-        $code = 0,
-        ?Exception $previous = null
+        string $message = '',
+        int $code = 0,
+        ?\Throwable $previous = null
     ) {
         $this->notification = $notification;
 

@@ -1,25 +1,36 @@
 {
-    "base-path": "../../",
-    "directories": [
-        "bin",
-        "src"
-    ],
-    "files": [
-        "LICENSE",
-        "vendor/autoload.php"
-    ],
-    "finder": [
-        {
-            "name": "*.php",
-            "in": "vendor/composer"
-        },
-        {
-            "name": "*.php",
-            "exclude": ["Tests"],
-            "in": "vendor/symfony/process"
-        }
-    ],
-    "git-version": "package_version",
-    "main": "jolinotif",
-    "output": "tools/phar/build/jolinotif.phar"
+  "base-path": "../../",
+  "directories": [
+    "bin",
+    "src"
+  ],
+  "files": [
+    "LICENSE",
+    "vendor/autoload.php"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "in": "vendor/composer"
+    },
+    {
+      "name": "*.php",
+      "exclude": ["Tests"],
+      "in": "vendor/symfony/process"
+    },
+    {
+      "name": "*.php",
+      "exclude": ["Tests"],
+      "in": "vendor/jolicode/php-os-helper"
+    }
+  ],
+  "compactors": [
+    "KevinGH\\Box\\Compactor\\Php"
+  ],
+  "annotations": false,
+  "compression": "GZ",
+  "check-requirements": false,
+  "git-version": "package_version",
+  "main": "jolinotif",
+  "output": "tools/phar/build/jolinotif.phar"
 }

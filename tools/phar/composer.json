@@ -1,21 +1,23 @@
 {
-  "name": "jolicode/jolinotif-phar",
-  "description": "Tooling for building JoliNotif PHAR",
+  "name": "jolicode/castor-phar",
+  "description": "Tooling for building Castor phar",
   "type": "project",
   "license": "MIT",
   "authors": [
     {
-      "name": "Loïck Piera",
-      "email": "pyrech@gmail.com"
+      "name": "Joel Wurtz",
+      "email": "jwurtz@jolicode.com"
     }
   ],
   "require": {
-    "humbug/box": "^4.3.8",
-    "humbug/php-scoper": "^0.18.3"
+    "humbug/box": ">=4.5.1"
   },
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1"
+    }
   }
 }
