@@ -17,6 +17,11 @@
       "name": "*.php",
       "exclude": ["Tests"],
       "in": "vendor/symfony/process"
+    },
+    {
+      "name": "*.php",
+      "exclude": ["Tests"],
+      "in": "vendor/jolicode/php-os-helper"
     }
   ],
   "compactors": [

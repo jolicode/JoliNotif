@@ -4,6 +4,7 @@
 
 * Added wsl-notify-send notifier for Windows Subsystem for Linux
 * Changed TerminalNotifier to use contentImage option for icon instead of appIcon
+* Fixed phar missing some dependencies
 
 ## 2.6.0 (2023-12-03)
 
