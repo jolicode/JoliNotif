@@ -8,3 +8,7 @@
 /build/
 /.php-cs-fixer.cache
 /.phpunit.result.cache
+/var/
+
+# Castor
+.castor.stub.php

@@ -15,6 +15,16 @@ Here's some tips to make you the best contributor ever:
 * [Standard code](#standard-code)
 * [Keeping your fork up-to-date](#keeping-your-fork-up-to-date)
 
+Also, you will need to install Castor to run the tests and fix CS violations.
+See [Castor's documentation](https://castor.jolicode.com/getting-started/installation/)
+for more information.
+
+To install all the dependencies and tools, run the following command:
+
+```shell
+castor install
+```
+
 ## Rules
 
 Here are a few rules to follow in order to ease code reviews, and discussions
@@ -48,16 +58,23 @@ changes, improvements or alternatives may be given).
 Run the tests using the following script:
 
 ```shell
-make test
+castor phpunit
 ```
 
 ## Standard code
 
-Use [PHP CS fixer](http://cs.sensiolabs.org/) to make your code compliant with
-JoliNotif's coding standards:
+Use PHP-CS-Fixer to make your code compliant with JoliNotif's coding standards:
 
 ```shell
-make cs
+castor cs
+```
+
+## Static analysis
+
+Use PHPStan to ensure the code is free of errors:
+
+```shell
+castor phpstan
 ```
 
 ## Keeping your fork up-to-date

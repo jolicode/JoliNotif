@@ -57,7 +57,7 @@ class SnoreToastNotifier extends CliBasedNotifier implements BinaryProvider
     {
         $arguments = [
             '-m',
-            $notification->getBody(),
+            $notification->getBody() ?? '',
         ];
 
         if ($notification->getTitle()) {

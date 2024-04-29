@@ -1,0 +1,10 @@
+{
+    "require": {
+        "friendsofphp/php-cs-fixer": "^3.54.0"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        }
+    }
+}

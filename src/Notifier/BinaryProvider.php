@@ -39,6 +39,8 @@ interface BinaryProvider
      * used inside a phar archive.
      *
      * All paths should be relative to the directory pointed by getRootDir().
+     *
+     * @return list<string>
      */
     public function getExtraFiles(): array;
 }

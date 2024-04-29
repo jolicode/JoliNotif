@@ -14,9 +14,9 @@ namespace Joli\JoliNotif\Exception;
 class NoSupportedNotifierException extends \RuntimeException implements Exception
 {
     public function __construct(
-        $message = 'No supported notifier',
-        $code = 0,
-        ?Exception $previous = null
+        string $message = 'No supported notifier',
+        int $code = 0,
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
     }
