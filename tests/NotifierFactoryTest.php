@@ -15,6 +15,7 @@ use Joli\JoliNotif\Exception\NoSupportedNotifierException;
 use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 use Joli\JoliNotif\Notifier\KDialogNotifier;
+use Joli\JoliNotif\Notifier\LibNotifyNotifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 use Joli\JoliNotif\Notifier\NotifySendNotifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
@@ -34,6 +35,7 @@ class NotifierFactoryTest extends TestCase
 
         if (OsHelper::isUnix()) {
             $expectedNotifierClasses = [
+                LibNotifyNotifier::class,
                 GrowlNotifyNotifier::class,
                 TerminalNotifierNotifier::class,
                 AppleScriptNotifier::class,
@@ -63,6 +65,7 @@ class NotifierFactoryTest extends TestCase
 
         if (OsHelper::isUnix()) {
             $expectedNotifierClasses = [
+                LibNotifyNotifier::class,
                 GrowlNotifyNotifier::class,
                 TerminalNotifierNotifier::class,
                 AppleScriptNotifier::class,

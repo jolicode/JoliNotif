@@ -18,6 +18,11 @@ abstract class NotifierTestCase extends TestCase
 {
     abstract protected function getNotifier(): Notifier;
 
+    protected function getIconDir(): string
+    {
+        return realpath(\dirname(__DIR__) . '/fixtures');
+    }
+
     /**
      * Call protected/private method of a class.
      *
