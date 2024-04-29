@@ -131,11 +131,6 @@ trait CliBasedNotifierTestTrait
         }
     }
 
-    public function getIconDir(): string
-    {
-        return realpath(\dirname(__DIR__) . '/fixtures');
-    }
-
     abstract protected function getExpectedCommandLineForNotification(): string;
 
     abstract protected function getExpectedCommandLineForNotificationWithATitle(): string;

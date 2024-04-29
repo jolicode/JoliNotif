@@ -15,9 +15,8 @@ use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\LibNotifyNotifier;
-use PHPUnit\Framework\TestCase;
 
-class LibNotifyNotifierTest extends TestCase
+class LibNotifyNotifierTest extends NotifierTestCase
 {
     public function testGetPriority()
     {
@@ -46,12 +45,58 @@ class LibNotifyNotifierTest extends TestCase
             $this->markTestSkipped('Looks like libnotify is not installed');
         }
 
-        $closureToInitialize = \Closure::bind(static function (LibNotifyNotifier $notifier) {
-            $notifier->initialize();
-        }, null, LibNotifyNotifier::class);
-
         $this->assertTrue($notifier->isSupported());
-        $closureToInitialize($notifier);
+    }
+
+    public function testSendThrowsExceptionWhenNotificationDoesntHaveBody()
+    {
+        $notifier = $this->getNotifier();
+
+        $notification = new Notification();
+
+        try {
+            $notifier->send($notification);
+            $this->fail('Expected a InvalidNotificationException');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
+        }
+    }
+
+    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
+    {
+        $notifier = $this->getNotifier();
+
+        $notification = new Notification();
+        $notification->setBody('');
+
+        try {
+            $notifier->send($notification);
+            $this->fail('Expected a InvalidNotificationException');
+        } catch (\Exception $e) {
+            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
+        }
+    }
+
+    public function testSendNotificationWithAllOptions()
+    {
+        $notifier = $this->getNotifier();
+
+        $notification = (new Notification())
+            ->setBody('I\'m the notification body')
+            ->setTitle('I\'m the notification title')
+            ->addOption('subtitle', 'I\'m the notification subtitle')
+            ->addOption('sound', 'Frog')
+            ->addOption('url', 'https://google.com')
+            ->setIcon($this->getIconDir() . '/image.gif')
+        ;
+
+        $result = $notifier->send($notification);
+
+        if (!$result) {
+            $this->markTestSkipped('Notification was not sent');
+        }
+
+        $this->assertTrue($notifier->send($notification));
     }
 
     protected function getNotifier(): LibNotifyNotifier
