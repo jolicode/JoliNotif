@@ -10,3 +10,5 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     excludePaths:
         analyse: []
+    ignoreErrors:
+        - '#Call to an undefined method FFI::.+#'

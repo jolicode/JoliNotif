@@ -3,6 +3,7 @@
 ## Not released yet
 
 * Added wsl-notify-send notifier for Windows Subsystem for Linux
+* Added libnotify based notifier for Linux through FFI
 * Changed TerminalNotifier to use contentImage option for icon instead of appIcon
 * Fixed phar missing some dependencies
 

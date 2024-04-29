@@ -21,11 +21,11 @@ class LibNotifyNotifier implements Notifier
 {
     private static string $APP_NAME = 'jolinotif';
 
-    private ?\FFI $ffi;
+    private \FFI $ffi;
 
     public function __destruct()
     {
-        if (isset($this->ffi) && null !== $this->ffi) {
+        if (isset($this->ffi)) {
             $this->ffi->notify_uninit();
         }
     }
@@ -73,7 +73,14 @@ class LibNotifyNotifier implements Notifier
             return;
         }
 
-        $this->ffi = \FFI::load(__DIR__ . '/FFI/ffi-libnotify.h');
+        $ffi = \FFI::load(__DIR__ . '/FFI/ffi-libnotify.h');
+
+        if (!$ffi) {
+            throw new FFIRuntimeException('Unable to load libnotify');
+        }
+
+        $this->ffi = $ffi;
+
         if (!$this->ffi->notify_init(self::$APP_NAME)) {
             throw new FFIRuntimeException('Unable to initialize libnotify');
         }
