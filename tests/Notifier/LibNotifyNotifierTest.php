@@ -35,7 +35,7 @@ class LibNotifyNotifierTest extends NotifierTestCase
     }
 
     /**
-     * @requires ffi
+     * @requires extension ffi
      */
     public function testInitialize()
     {
@@ -77,6 +77,9 @@ class LibNotifyNotifierTest extends NotifierTestCase
         }
     }
 
+    /**
+     * @requires extension ffi
+     */
     public function testSendNotificationWithAllOptions()
     {
         $notifier = $this->getNotifier();
