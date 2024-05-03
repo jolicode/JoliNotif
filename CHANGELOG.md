@@ -2,8 +2,9 @@
 
 ## Not released yet
 
-* Fixed jolinotif executable in verbose mode when no driver is available
-* Changed jolinotif executable to better handle option passed several times
+* Fixed phar for Windows drivers
+* Fixed executable in verbose mode when no driver is available
+* Changed executable to better handle option passed several times
 
 ## 2.7.0 (2024-05-03)
 

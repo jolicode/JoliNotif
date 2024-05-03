@@ -1,5 +1,10 @@
 {
   "base-path": "../../",
+  "directories": [
+      "bin",
+      "src",
+      "vendor"
+  ],
   "files": [
     "LICENSE",
     "vendor/autoload.php"
