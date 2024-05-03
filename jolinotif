@@ -61,15 +61,17 @@ final class Cli
         ],
     ];
 
-    private $arguments = [];
-    private $command = [];
+    /** @var array<string, mixed> */
+    private array $arguments = [];
+
+    private readonly string $command;
 
     public function __construct()
     {
         $this->command = $_SERVER['argv'][0];
     }
 
-    public function parse()
+    public function parse(): void
     {
         $options = '';
         $longOptions = array_map(function ($rule) {
@@ -81,17 +83,33 @@ final class Cli
         $this->arguments = getopt($options, $longOptions) ?: [];
     }
 
-    public function getOption(string $name)
+    public function getOption(string $name): mixed
     {
         return $this->arguments[$name] ?: false;
     }
 
-    public function hasOption(string $name)
+    public function getStringOption(string $name): string
+    {
+        $option = $this->getOption($name);
+
+        if (is_array($option)) {
+            throw new Exception("Option --{$name} can be specified only once.");
+        }
+
+        if (!is_string($option) && !is_numeric($option)) {
+            // Probably not possible to reach this point
+            throw new Exception("Invalid type given for option --{$name}.");
+        }
+
+        return (string) $option;
+    }
+
+    public function hasOption(string $name): bool
     {
         return isset($this->arguments[$name]);
     }
 
-    public function validate()
+    public function validate(): bool
     {
         $valid = true;
 
@@ -100,12 +118,17 @@ final class Cli
                 $this->log("Please specify notification {$rule['name']} with the option --{$rule['name']}");
                 $valid = false;
             }
+
+            if ($this->hasOption($rule['name']) && is_array($this->getOption($rule['name']))) {
+                $this->log("Option --{$rule['name']} can be specified only once.");
+                $valid = false;
+            }
         }
 
         return $valid;
     }
 
-    public function showUsage()
+    public function showUsage(): void
     {
         $required = [];
         $optional = [];
@@ -141,12 +164,13 @@ final class Cli
         }
     }
 
-    public function log(string $message)
+    public function log(string $message): void
     {
         echo $message . PHP_EOL;
     }
 
-    private function formatUsage($name, $rule)
+    /** @param array{name: string, info: string, required: bool, flag?: bool} $rule */
+    private function formatUsage(string $name, array $rule): string
     {
         $example = $rule['required'] ? " {$name}" : "=\"{$name}\"";
         $value = isset($rule['flag']) && $rule['flag'] ? '' : $example;
@@ -176,30 +200,34 @@ if (!$cli->validate()) {
 $notifier = new DefaultNotifier();
 
 $notification = (new Notification())
-    ->setTitle($cli->getOption('title'))
-    ->setBody($cli->getOption('body'));
+    ->setTitle($cli->getStringOption('title'))
+    ->setBody($cli->getStringOption('body'));
 
 if ($cli->hasOption('icon')) {
-    $notification->setIcon($cli->getOption('icon'));
+    $notification->setIcon($cli->getStringOption('icon'));
 }
 
 if ($cli->hasOption('subtitle')) {
-    $notification->addOption('subtitle', $cli->getOption('subtitle'));
+    $notification->addOption('subtitle', $cli->getStringOption('subtitle'));
 }
 
 if ($cli->hasOption('sound')) {
-    $notification->addOption('sound', $cli->getOption('sound'));
+    $notification->addOption('sound', $cli->getStringOption('sound'));
 }
 
 if ($cli->hasOption('url')) {
-    $notification->addOption('url', $cli->getOption('url'));
+    $notification->addOption('url', $cli->getStringOption('url'));
 }
 
 $result = $notifier->send($notification);
 $driver = $notifier->getDriver();
 
 if ($cli->hasOption('verbose')) {
-    $cli->log(sprintf('Notification %s with %s. ', $result ? 'successfully sent' : 'failed', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class)));
+    if (!$driver) {
+        $cli->log('No driver available to display a notification on your system.');
+    } else {
+        $cli->log(sprintf('Notification %s with %s. ', $result ? 'successfully sent' : 'failed', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class)));
+    }
 }
 
 exit($result ? 0 : 1);
