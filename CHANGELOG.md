@@ -2,10 +2,14 @@
 
 ## Not released yet
 
+* Added a new NotifierInterface and DefaultNotifier as the main public API of this package
 * Added wsl-notify-send notifier for Windows Subsystem for Linux
 * Added libnotify based notifier for Linux through FFI
 * Changed TerminalNotifier to use contentImage option for icon instead of appIcon
 * Fixed phar missing some dependencies
+* Marked most of the classes as internal
+* Deprecated all the notifiers classes in favor of the new internal DriverInterface implementations
+* Deprecated the NotifierFactory in favor of the new DefaultNotifier class that hide driver implementation details
 
 ## 2.6.0 (2023-12-03)
 

@@ -15,6 +15,9 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\NullNotifier;
 
+/**
+ * @group legacy
+ */
 class NullNotifierTest extends NotifierTestCase
 {
     public function testGetPriority()

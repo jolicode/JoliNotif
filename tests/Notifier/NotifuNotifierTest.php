@@ -14,6 +14,9 @@ namespace Joli\JoliNotif\tests\Notifier;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\NotifuNotifier;
 
+/**
+ * @group legacy
+ */
 class NotifuNotifierTest extends NotifierTestCase
 {
     use BinaryProviderTestTrait;

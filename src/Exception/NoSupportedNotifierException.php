@@ -11,6 +11,11 @@
 
 namespace Joli\JoliNotif\Exception;
 
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', NoSupportedNotifierException::class);
+
+/**
+ * @deprecated since 2.7, will be removed in 3.0
+ */
 class NoSupportedNotifierException extends \RuntimeException implements Exception
 {
     public function __construct(

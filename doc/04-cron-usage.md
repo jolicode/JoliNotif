@@ -2,7 +2,7 @@
 
 ## Configuration for CRON
 
-Cronjobs are usually CLI scripts. But JoliNotif's Unix/Linux notifiers are GUI
+Cronjobs are usually CLI scripts. But JoliNotif's Unix/Linux drivers are GUI
 applications. This means you need to specify the display where the notification
 will be sent.
 
@@ -24,7 +24,7 @@ cronjob:
 
 Previous pages:
 
-* [Notifier](03-notifier.md)
+* [Drivers](03-drivers.md)
 * [Notification](02-notification.md)
 * [Basic usage](01-basic-usage.md)
 * [README](../README.md)

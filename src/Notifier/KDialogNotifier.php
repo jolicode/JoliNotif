@@ -11,39 +11,17 @@
 
 namespace Joli\JoliNotif\Notifier;
 
-use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Driver\KDialogDriver;
+use Joli\JoliNotif\Notifier;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', KDialogNotifier::class);
 
 /**
  * This notifier can be used on Linux distributions running KDE, using the command kdialog.
  * This command is shipped by default with KDE.
+ *
+ * @deprecated since 2.7, will be removed in 3.0
  */
-class KDialogNotifier extends CliBasedNotifier
+class KDialogNotifier extends KDialogDriver implements Notifier
 {
-    public function getBinary(): string
-    {
-        return 'kdialog';
-    }
-
-    public function getPriority(): int
-    {
-        return static::PRIORITY_HIGH;
-    }
-
-    protected function getCommandLineArguments(Notification $notification): array
-    {
-        $arguments = [];
-
-        if ($notification->getTitle()) {
-            $arguments[] = '--title';
-            $arguments[] = $notification->getTitle();
-        }
-
-        $arguments[] = '--passivepopup';
-        $arguments[] = $notification->getBody() ?? '';
-
-        // Timeout, in seconds
-        $arguments[] = 5;
-
-        return $arguments;
-    }
 }

@@ -12,13 +12,16 @@
 namespace Joli\JoliNotif\Notifier;
 
 use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Notifier;
 use JoliCode\PhpOsHelper\OsHelper;
+
+trigger_deprecation('jolicode/jolinotif', '2.3', 'The "%s" class is deprecated and will be removed in 3.0.', ToasterNotifier::class);
 
 /**
  * This notifier can be used on Windows Eight and higher and provides its own
  * binaries if not natively available.
  *
- * @deprecated since 2.3, use SnoreToastNotifier instead
+ * @deprecated since 2.3, will be removed in 3.0
  */
 class ToasterNotifier extends CliBasedNotifier implements BinaryProvider
 {

@@ -14,6 +14,9 @@ namespace Joli\JoliNotif\tests\Notifier;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\SnoreToastNotifier;
 
+/**
+ * @group legacy
+ */
 class SnoreToastNotifierTest extends NotifierTestCase
 {
     use BinaryProviderTestTrait;

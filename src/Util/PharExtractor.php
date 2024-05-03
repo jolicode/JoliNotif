@@ -11,6 +11,9 @@
 
 namespace Joli\JoliNotif\Util;
 
+/**
+ * @internal
+ */
 class PharExtractor
 {
     /**

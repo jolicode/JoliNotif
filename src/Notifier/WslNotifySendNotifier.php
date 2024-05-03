@@ -14,10 +14,13 @@ namespace Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
 
-/*
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" class is deprecated and will be removed in 3.0.', WslNotifySendNotifier::class);
+
+/**
  * This notifier can be used on Windows Subsystem for Linux and provides notifications using the `wsl-notify-send` binary.
  *
  * @see https://github.com/stuartleeks/wsl-notify-send the source code of the `wsl-notify-send` binary
+ * @deprecated since 2.7, will be removed in 3.0
  */
 class WslNotifySendNotifier extends CliBasedNotifier implements BinaryProvider
 {

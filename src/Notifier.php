@@ -11,27 +11,13 @@
 
 namespace Joli\JoliNotif;
 
-interface Notifier
+use Joli\JoliNotif\Driver\DriverInterface;
+
+trigger_deprecation('jolicode/jolinotif', '2.7', 'The "%s" interface is deprecated and will be removed in 3.0. Use "%s" instead.', Notifier::class, NotifierInterface::class);
+
+/**
+ * @deprecated since 2.7, use NotifierInterface instead
+ */
+interface Notifier extends NotifierInterface, DriverInterface
 {
-    public const PRIORITY_LOW = 0;
-    public const PRIORITY_MEDIUM = 50;
-    public const PRIORITY_HIGH = 100;
-
-    /**
-     * This method is called to check whether the notifier can be used on the
-     * current system or not.
-     */
-    public function isSupported(): bool;
-
-    /**
-     * The supported notifier with the higher priority will be preferred.
-     */
-    public function getPriority(): int;
-
-    /**
-     * Send the given notification.
-     *
-     * @throws Exception\InvalidNotificationException if the notification is invalid
-     */
-    public function send(Notification $notification): bool;
 }

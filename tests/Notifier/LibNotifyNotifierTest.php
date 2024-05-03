@@ -16,6 +16,9 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\LibNotifyNotifier;
 
+/**
+ * @group legacy
+ */
 class LibNotifyNotifierTest extends NotifierTestCase
 {
     public function testGetPriority()

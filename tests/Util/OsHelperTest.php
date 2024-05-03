@@ -14,6 +14,9 @@ namespace Joli\JoliNotif\tests\Util;
 use Joli\JoliNotif\Util\OsHelper;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @group legacy
+ */
 class OsHelperTest extends TestCase
 {
     public function testIsUnix()

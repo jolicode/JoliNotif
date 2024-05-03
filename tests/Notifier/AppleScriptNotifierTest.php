@@ -15,6 +15,9 @@ use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\AppleScriptNotifier;
 use Joli\JoliNotif\Util\OsHelper;
 
+/**
+ * @group legacy
+ */
 class AppleScriptNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;

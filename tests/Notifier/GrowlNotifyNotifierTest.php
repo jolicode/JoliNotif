@@ -14,6 +14,9 @@ namespace Joli\JoliNotif\tests\Notifier;
 use Joli\JoliNotif\Notifier;
 use Joli\JoliNotif\Notifier\GrowlNotifyNotifier;
 
+/**
+ * @group legacy
+ */
 class GrowlNotifyNotifierTest extends NotifierTestCase
 {
     use CliBasedNotifierTestTrait;

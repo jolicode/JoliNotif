@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Joli\JoliNotif\DefaultNotifier;
 use Joli\JoliNotif\Notification;
-use Joli\JoliNotif\NotifierFactory;
 
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     $loader = require(__DIR__ . '/vendor/autoload.php');
@@ -50,6 +50,12 @@ final class Cli
         'help'     => [
             'name' => 'help',
             'info' => 'Show this help.',
+            'required' => false,
+            'flag' => true,
+        ],
+        'verbose'     => [
+            'name' => 'verbose',
+            'info' => 'Output debug information.',
             'required' => false,
             'flag' => true,
         ],
@@ -167,7 +173,7 @@ if (!$cli->validate()) {
     exit(1);
 }
 
-$notifier = NotifierFactory::create();
+$notifier = new DefaultNotifier();
 
 $notification = (new Notification())
     ->setTitle($cli->getOption('title'))
@@ -189,4 +195,11 @@ if ($cli->hasOption('url')) {
     $notification->addOption('url', $cli->getOption('url'));
 }
 
-$notifier->send($notification);
+$result = $notifier->send($notification);
+$driver = $notifier->getDriver();
+
+if ($cli->hasOption('verbose')) {
+    $cli->log(sprintf('Notification %s with %s. ', $result ? 'successfully sent' : 'failed', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class)));
+}
+
+exit($result ? 0 : 1);
