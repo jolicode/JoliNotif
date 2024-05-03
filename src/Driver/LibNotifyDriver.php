@@ -14,6 +14,7 @@ namespace Joli\JoliNotif\Driver;
 use Joli\JoliNotif\Exception\FFIRuntimeException;
 use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
+use Joli\JoliNotif\Util\PharExtractor;
 use JoliCode\PhpOsHelper\OsHelper;
 
 class LibNotifyDriver implements DriverInterface
@@ -72,7 +73,13 @@ class LibNotifyDriver implements DriverInterface
             return;
         }
 
-        $ffi = \FFI::load(__DIR__ . '/FFI/ffi-libnotify.h');
+        $headerFile = __DIR__ . '/FFI/ffi-libnotify.h';
+
+        if (PharExtractor::isLocatedInsideAPhar($headerFile)) {
+            $headerFile = PharExtractor::extractFile($headerFile);
+        }
+
+        $ffi = \FFI::load($headerFile);
 
         if (!$ffi) {
             throw new FFIRuntimeException('Unable to load libnotify');
