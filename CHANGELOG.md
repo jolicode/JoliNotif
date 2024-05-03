@@ -2,9 +2,11 @@
 
 ## Not released yet
 
+## 2.7.1 (2024-05-03)
+
 * Fixed phar for Windows drivers
 * Fixed executable in verbose mode when no driver is available
-* Changed executable to better handle option passed several times
+* Fixed executable to better handle option passed several times
 
 ## 2.7.0 (2024-05-03)
 
