@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+* Fixed jolinotif executable in verbose mode when no driver is available
+
 ## 2.7.0 (2024-05-03)
 
 * Added a new NotifierInterface and DefaultNotifier as the main public API of this package

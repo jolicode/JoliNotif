@@ -199,7 +199,11 @@ $result = $notifier->send($notification);
 $driver = $notifier->getDriver();
 
 if ($cli->hasOption('verbose')) {
-    $cli->log(sprintf('Notification %s with %s. ', $result ? 'successfully sent' : 'failed', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class)));
+    if (!$driver) {
+        $cli->log('No driver available to display a notification on your system.');
+    } else {
+        $cli->log(sprintf('Notification %s with %s. ', $result ? 'successfully sent' : 'failed', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class)));
+    }
 }
 
 exit($result ? 0 : 1);
