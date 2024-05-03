@@ -18,6 +18,8 @@ use Symfony\Component\Process\Process;
 /**
  * This driver can be used on Windows Eight and higher and provides its own
  * binaries if not natively available.
+ *
+ * @internal
  */
 class SnoreToastDriver extends AbstractCliBasedDriver implements BinaryProviderInterface
 {

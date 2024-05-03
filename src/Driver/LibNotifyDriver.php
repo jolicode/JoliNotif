@@ -17,6 +17,11 @@ use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\PharExtractor;
 use JoliCode\PhpOsHelper\OsHelper;
 
+/**
+ * This driver can be used on Linux systems when libnotify and FFI are available.
+ *
+ * @internal
+ */
 class LibNotifyDriver implements DriverInterface
 {
     private const APP_NAME = 'JoliNotif';
