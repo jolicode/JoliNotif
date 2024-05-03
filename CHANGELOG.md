@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+## 2.7.0 (2024-05-03)
+
 * Added a new NotifierInterface and DefaultNotifier as the main public API of this package
 * Added wsl-notify-send notifier for Windows Subsystem for Linux
 * Added libnotify based notifier for Linux through FFI
