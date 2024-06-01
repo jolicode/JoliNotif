@@ -2,6 +2,10 @@
 
 ## Not released yet
 
+## 2.7.2 (2024-06-01)
+
+* Changed requirement on psr/log to allow all versions from 1.0 to 3.0
+
 ## 2.7.1 (2024-05-03)
 
 * Fixed phar for Windows drivers
