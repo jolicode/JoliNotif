@@ -34,7 +34,7 @@ class DefaultNotifier implements NotifierInterface
         ?LoggerInterface $logger = null,
         /** @var list<DriverInterface> $additionalDrivers */
         private readonly array $additionalDrivers = [],
-        private readonly bool $useOnlyAdditionalDrivers = false
+        private readonly bool $useOnlyAdditionalDrivers = false,
     ) {
         $this->logger = $logger ?? new NullLogger();
     }
