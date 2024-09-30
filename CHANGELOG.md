@@ -2,6 +2,10 @@
 
 ## Not released yet
 
+## 2.7.3 (2024-09-30)
+
+* Fixed SnoreToast and Notifu Windows drivers to be non blocking
+
 ## 2.7.2 (2024-06-01)
 
 * Changed requirement on psr/log to allow all versions from 1.0 to 3.0
