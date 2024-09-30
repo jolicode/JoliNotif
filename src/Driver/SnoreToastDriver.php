@@ -75,8 +75,13 @@ class SnoreToastDriver extends AbstractCliBasedDriver implements BinaryProviderI
         return $arguments;
     }
 
+    protected function launchProcess(Process $process): void
+    {
+        $process->start();
+    }
+
     protected function handleExitCode(Process $process): bool
     {
-        return 0 < $process->getExitCode();
+        return true;
     }
 }

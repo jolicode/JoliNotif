@@ -81,7 +81,7 @@ abstract class AbstractCliBasedDriver implements DriverInterface
         }
 
         $process = new Process(array_merge([$binary], $arguments));
-        $process->run();
+        $this->launchProcess($process);
 
         return $this->handleExitCode($process);
     }
@@ -123,6 +123,11 @@ abstract class AbstractCliBasedDriver implements DriverInterface
         $process->run();
 
         return $process->isSuccessful();
+    }
+
+    protected function launchProcess(Process $process): void
+    {
+        $process->run();
     }
 
     /**

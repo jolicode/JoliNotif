@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\Driver;
 
 use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
+use Symfony\Component\Process\Process;
 
 /**
  * This driver can be used on Windows Seven and provides its own binaries if
@@ -70,5 +71,15 @@ class NotifuDriver extends AbstractCliBasedDriver implements BinaryProviderInter
         }
 
         return $arguments;
+    }
+
+    protected function launchProcess(Process $process): void
+    {
+        $process->start();
+    }
+
+    protected function handleExitCode(Process $process): bool
+    {
+        return true;
     }
 }

@@ -32,4 +32,4 @@ $result = $notifier->send($notification);
 
 $driver = $notifier->getDriver();
 
-echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', str_replace('Joli\\JoliNotif\\Driver\\', '', $driver::class), \PHP_EOL;
+echo 'Notification ', $result ? 'successfully sent' : 'failed', ' with ', str_replace('Joli\JoliNotif\Driver\\', '', $driver::class), \PHP_EOL;
