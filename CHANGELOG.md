@@ -2,6 +2,12 @@
 
 ## Not released yet
 
+* Remove deprecated code:
+  * Joli\JoliNotif\NotifierFactory
+  * Joli\JoliNotif\Notifier interface and all implementations
+  * Toaster notifier and binary
+  * Joli\JoliNotif\Util\OsHelper class
+
 ## 2.7.3 (2024-09-30)
 
 * Fixed SnoreToast and Notifu Windows drivers to be non blocking

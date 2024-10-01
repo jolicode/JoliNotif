@@ -98,18 +98,6 @@ binaries in the system temp directory to be able to execute them.
 
 Toaster can display notification with a body, a title and an icon.
 
-#### NotifuDriver
-
-This driver uses the Windows application called Notifu. It works on Windows 7.
-Because Notifu is probably not installed on your system, JoliNotif embed the
-binary inside the [bin/notifu](bin/notifu) directory.
-
-When you use JoliNotif inside a phar archive, we take care to extract this
-binary in the system temp directory to be able to execute it.
-
-Notifu can display notification with a body, a title and an icon. Sadly, Notifu
-can only display icon with the .ico format.
-
 #### WslNotifySendDriver
 
 This driver uses the executable `wsl-notify-send`.
