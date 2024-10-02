@@ -27,9 +27,6 @@ use JoliCode\PhpOsHelper\OsHelper;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-/**
- * @group legacy
- */
 class DefaultNotifierTest extends TestCase
 {
     public function testCreateDefaultNotifier()
