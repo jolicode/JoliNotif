@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+## 3.0.0 (2024-10-02)
+
 * Remove deprecated code:
   * Joli\JoliNotif\NotifierFactory
   * Joli\JoliNotif\Notifier interface and all implementations
