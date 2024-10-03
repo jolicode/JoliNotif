@@ -54,6 +54,11 @@ class TerminalNotifierDriver extends AbstractCliBasedDriver
             $arguments[] = (string) $notification->getOption('url');
         }
 
+        if ($notification->getOption('sound')) {
+            $arguments[] = '-sound';
+            $arguments[] = (string) $notification->getOption('sound');
+        }
+
         return $arguments;
     }
 }

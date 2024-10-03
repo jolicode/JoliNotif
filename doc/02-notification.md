@@ -47,7 +47,7 @@ through the `addOption` method.
 
 ### Subtitle
 
-Only works with AppleScriptDriver at the moment.
+Only works with AppleScriptDriver and TerminalNotifierDriver at the moment.
 
 ```php
 $notification->addOption('subtitle', 'This is a subtitle');

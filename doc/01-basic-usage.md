@@ -45,7 +45,7 @@ $notification =
     ->setBody('The notification body')
     ->setTitle('The notification title')
     ->addOption('subtitle', 'This is a subtitle') // Only works on macOS (AppleScriptDriver)
-    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptDriver)
+    ->addOption('sound', 'Frog') // Only works on macOS (AppleScriptDriver & TerminalNotifierDriver)
     ->addOption('url', 'https://google.com') // Only works on macOS (TerminalNotifierDriver)
 ;
 ```
