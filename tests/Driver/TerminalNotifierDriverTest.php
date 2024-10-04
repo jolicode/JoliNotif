@@ -61,6 +61,13 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
             CLI;
     }
 
+    protected function getExpectedCommandLineForNotificationWithASound(): string
+    {
+        return <<<'CLI'
+            'terminal-notifier' '-message' 'I'\''m the notification body' '-sound' 'Frog'
+            CLI;
+    }
+
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
@@ -82,12 +89,12 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
             $iconDir = $this->getIconDir();
 
             return <<<CLI
-                'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-contentImage' '{$iconDir}/image.gif' '-open' 'https://google.com'
+                'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-contentImage' '{$iconDir}/image.gif' '-open' 'https://google.com' '-sound' 'Frog'
                 CLI;
         }
 
         return <<<'CLI'
-            'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com'
+            'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com' '-sound' 'Frog'
             CLI;
     }
 }

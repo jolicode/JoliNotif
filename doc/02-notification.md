@@ -55,7 +55,7 @@ $notification->addOption('subtitle', 'This is a subtitle');
 
 ### Sound
 
-Only works with AppleScriptDriver at the moment.
+Only works with AppleScriptDriver and TerminalNotifierDriver at the moment.
 
 Non-exhaustive list of sounds: Basso, Frog, Hero, Pop, Submarine, Blow, Funk,
 Morse, Purr, Tink, Bottle, Glass, Ping, Sosumi.

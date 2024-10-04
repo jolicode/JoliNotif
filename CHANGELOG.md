@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+* Added support for sound option on TerminalNotifier notifier
+
 ## 3.0.0 (2024-10-02)
 
 * Remove deprecated code:
