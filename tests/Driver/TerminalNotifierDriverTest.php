@@ -94,7 +94,7 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
         }
 
         return <<<'CLI'
-            'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com' '-sound' 'Frog' 
+            'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com' '-sound' 'Frog'
             CLI;
     }
 }
