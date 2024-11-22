@@ -1,10 +1,11 @@
 {
     "require": {
-        "friendsofphp/php-cs-fixer": "^3.54.0"
+        "friendsofphp/php-cs-fixer": "^3.64.0"
     },
     "config": {
+        "bump-after-update": true,
         "platform": {
-            "php": "8.1"
+            "php": "8.2"
         }
     }
 }

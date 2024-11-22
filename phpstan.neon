@@ -8,7 +8,7 @@ parameters:
         - jolinotif
     tmpDir: 'var/phpstan/tmp'
     inferPrivatePropertyTypeFromConstructor: true
-    checkGenericClassInNonGenericObjectType: false
+    # checkGenericClassInNonGenericObjectType: false
     excludePaths:
         analyse: []
     ignoreErrors:

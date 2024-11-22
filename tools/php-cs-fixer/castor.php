@@ -13,12 +13,17 @@ namespace qa\cs;
 
 use Castor\Attribute\AsTask;
 
+use function Castor\context;
 use function Castor\exit_code;
 use function Castor\run;
 
 #[AsTask(description: 'Fix CS', aliases: ['cs'])]
 function cs(bool $dryRun = false): int
 {
+    if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+        install();
+    }
+
     $command = [
         __DIR__ . '/vendor/bin/php-cs-fixer',
         'fix',
@@ -34,12 +39,11 @@ function cs(bool $dryRun = false): int
 #[AsTask(description: 'install dependencies')]
 function install(): void
 {
-    run(['composer', 'install'], workingDirectory: __DIR__);
+    run(['composer', 'install'], context: context()->withWorkingDirectory(__DIR__));
 }
 
 #[AsTask(description: 'Update dependencies')]
 function update(): void
 {
-    run(['composer', 'update'], workingDirectory: __DIR__);
-    run(['composer', 'bump'], workingDirectory: __DIR__);
+    run(['composer', 'update'], context: context()->withWorkingDirectory(__DIR__));
 }

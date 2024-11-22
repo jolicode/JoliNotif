@@ -31,5 +31,4 @@ function install(): void
 function update(): void
 {
     run(['composer', 'update']);
-    run(['composer', 'bump']);
 }

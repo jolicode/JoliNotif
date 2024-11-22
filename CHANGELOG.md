@@ -3,6 +3,9 @@
 ## Not released yet
 
 * Added support for sound option on TerminalNotifier notifier
+* Add support for PHP 8.4
+* Drop support for PHP 8.1
+* Drop support for Symfony 6.0 - 6.3, 7.0
 
 ## 3.0.0 (2024-10-02)
 

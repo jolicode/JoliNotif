@@ -10,14 +10,14 @@
     }
   ],
   "require": {
-    "humbug/box": ">=4.5.1"
+    "humbug/box": ">=4.6.2"
   },
   "config": {
+    "bump-after-update": true,
     "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true,
     "platform": {
-      "php": "8.1"
-    }
+      "php": "8.2"
+    },
+    "sort-packages": true
   }
 }

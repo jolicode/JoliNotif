@@ -21,15 +21,15 @@
         }
     },
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "jolicode/php-os-helper": "^0.1.0",
         "psr/log": "^1.0 || ^2.0 || ^3.0",
-        "symfony/process": "^5.4 || ^6.0 || ^7.0",
+        "symfony/process": "^5.4 || ^6.4 || ^7.1",
         "symfony/deprecation-contracts": "^3"
     },
     "require-dev": {
-        "symfony/finder": "^5.4 || ^6.0 || ^7.0",
-        "symfony/phpunit-bridge": "^5.4 || ^6.0 || ^7.0"
+        "symfony/finder": "^5.4 || ^6.4 || ^7.1",
+        "symfony/phpunit-bridge": "^5.4 || ^6.4 || ^7.1"
     },
     "suggest": {
         "ext-ffi": "Needed to send notifications via libnotify on Linux"
