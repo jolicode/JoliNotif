@@ -68,6 +68,7 @@ final class Cli
 
     public function __construct()
     {
+        // @phpstan-ignore offsetAccess.nonOffsetAccessible,assign.propertyType
         $this->command = $_SERVER['argv'][0];
     }
 
