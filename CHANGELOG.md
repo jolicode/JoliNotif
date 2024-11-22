@@ -3,6 +3,7 @@
 ## Not released yet
 
 * Added support for sound option on TerminalNotifier notifier
+* Drop support for PHP 8.1
 
 ## 3.0.0 (2024-10-02)
 

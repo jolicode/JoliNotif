@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "jolicode/php-os-helper": "^0.1.0",
         "psr/log": "^1.0 || ^2.0 || ^3.0",
         "symfony/process": "^5.4 || ^6.0 || ^7.0",
