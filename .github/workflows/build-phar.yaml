@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/actions/phar
 
       - name: Upload the PHAR
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: 'jolinotif'
           path: tools/phar/build/jolinotif.phar
