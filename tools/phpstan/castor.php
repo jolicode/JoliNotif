@@ -13,12 +13,17 @@ namespace qa\phpstan;
 
 use Castor\Attribute\AsTask;
 
+use function Castor\context;
 use function Castor\exit_code;
 use function Castor\run;
 
 #[AsTask(description: 'Run PHPStan', aliases: ['phpstan'])]
 function phpstan(bool $generateBaseline = false): int
 {
+    if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+        install();
+    }
+
     $command = [
         __DIR__ . '/vendor/bin/phpstan',
     ];
@@ -33,12 +38,11 @@ function phpstan(bool $generateBaseline = false): int
 #[AsTask(description: 'install dependencies')]
 function install(): void
 {
-    run(['composer', 'install'], workingDirectory: __DIR__);
+    run(['composer', 'install'], context: context()->withWorkingDirectory(__DIR__));
 }
 
 #[AsTask(description: 'update dependencies')]
 function update(): void
 {
-    run(['composer', 'update'], workingDirectory: __DIR__);
-    run(['composer', 'bump'], workingDirectory: __DIR__);
+    run(['composer', 'update'], context: context()->withWorkingDirectory(__DIR__));
 }
