@@ -102,6 +102,27 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
         $this->assertTrue($driver->send($notification));
     }
 
+    /**
+     * @requires extension ffi
+     */
+    public function testWithMultipleInstance()
+    {
+        $notification = (new Notification())
+            ->setBody('I\'m the notification body')
+            ->setTitle('I\'m the notification title')
+        ;
+
+        $result = (new LibNotifyDriver())->send($notification);
+
+        if (!$result) {
+            $this->markTestSkipped('Notification was not sent');
+        }
+
+        $this->assertTrue($result);
+        $this->assertTrue((new LibNotifyDriver())->send($notification));
+        $this->assertTrue((new LibNotifyDriver())->send($notification));
+    }
+
     protected function getDriver(): DriverInterface
     {
         static $driver;
