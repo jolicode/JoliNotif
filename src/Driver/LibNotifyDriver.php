@@ -26,14 +26,7 @@ class LibNotifyDriver implements DriverInterface
 {
     private const APP_NAME = 'JoliNotif';
 
-    private \FFI $ffi;
-
-    public function __destruct()
-    {
-        if (isset($this->ffi)) {
-            $this->ffi->notify_uninit();
-        }
-    }
+    private static \FFI $ffi;
 
     public static function isLibraryExists(): bool
     {
@@ -61,20 +54,20 @@ class LibNotifyDriver implements DriverInterface
         }
 
         $this->initialize();
-        $notification = $this->ffi->notify_notification_new(
+        $notification = self::$ffi->notify_notification_new(
             $notification->getTitle() ?? '',
             $notification->getBody(),
             $notification->getIcon()
         );
-        $value = $this->ffi->notify_notification_show($notification, null);
-        $this->ffi->g_object_unref($notification);
+        $value = self::$ffi->notify_notification_show($notification, null);
+        self::$ffi->g_object_unref($notification);
 
         return $value;
     }
 
-    private function initialize(): void
+    private static function initialize(): void
     {
-        if (isset($this->ffi)) {
+        if (isset(self::$ffi)) {
             return;
         }
 
@@ -90,13 +83,13 @@ class LibNotifyDriver implements DriverInterface
             throw new FFIRuntimeException('Unable to load libnotify');
         }
 
-        $this->ffi = $ffi;
+        self::$ffi = $ffi;
 
-        if (!$this->ffi->notify_init(self::APP_NAME)) {
+        if (!self::$ffi->notify_init(self::APP_NAME)) {
             throw new FFIRuntimeException('Unable to initialize libnotify');
         }
 
-        if (!$this->ffi->notify_is_initted()) {
+        if (!self::$ffi->notify_is_initted()) {
             throw new FFIRuntimeException('Libnotify has not been initialized');
         }
     }
