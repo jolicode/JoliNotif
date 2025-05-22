@@ -36,9 +36,10 @@ class LibNotifyDriver implements DriverInterface
 
     public function isSupported(): bool
     {
-        return OsHelper::isUnix()
-            && !OsHelper::isMacOS()
+        return 'cli' === \PHP_SAPI
             && class_exists(\FFI::class)
+            && OsHelper::isUnix()
+            && !OsHelper::isMacOS()
             && self::isLibraryExists();
     }
 
