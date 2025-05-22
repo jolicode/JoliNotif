@@ -2,6 +2,11 @@
 
 ## Not released yet
 
+## 3.1.1 (2025-05-22)
+
+* Fixed LibNotifyDriver when instanciated more than once
+* Fixed LibNotifyDriver to only be used on CLI SAPI
+
 ## 3.1.0 (2025-02-17)
 
 * Added support for sound option on TerminalNotifier notifier
