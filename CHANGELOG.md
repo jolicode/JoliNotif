@@ -3,6 +3,7 @@
 ## Not released yet
 
 * Add support for Symfony 8.0
+* Drop support for Symfony 5.4
 
 ## 3.1.1 (2025-05-22)
 
