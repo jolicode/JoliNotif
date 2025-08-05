@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+* Add support for Symfony 8.0
+
 ## 3.1.1 (2025-05-22)
 
 * Fixed LibNotifyDriver when instanciated more than once
