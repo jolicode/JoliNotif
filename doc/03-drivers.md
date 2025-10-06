@@ -108,6 +108,13 @@ wsl-notify-send can display notification with a body and a title.
 Icon is partially supported by `wsl-notify-send`, but it's not possible to set
 an icon for now.
 
+#### WslPowerShellDriver
+
+This driver uses `powershell.exe` from WSL, allowing JoliNotif to call the 
+native ToastNotificationManager from the host Windows 10 or 11.
+
+Only title and body are supported for now.
+
 ## Using custom drivers
 
 If you created your own driver, you can pass it in the `$additionnalDrivers`

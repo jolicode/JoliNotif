@@ -32,7 +32,7 @@ class WslNotifySendDriver extends AbstractCliBasedDriver implements BinaryProvid
 
     public function getPriority(): int
     {
-        return static::PRIORITY_HIGH;
+        return static::PRIORITY_MEDIUM;
     }
 
     public function canBeUsed(): bool

@@ -21,6 +21,7 @@ use Joli\JoliNotif\Driver\NotifySendDriver;
 use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
 use Joli\JoliNotif\Driver\WslNotifySendDriver;
+use Joli\JoliNotif\Driver\WslPowerShellDriver;
 use JoliCode\PhpOsHelper\OsHelper;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -98,6 +99,12 @@ class DefaultNotifier implements NotifierInterface
             $bestDriver = $driver;
         }
 
+        if ($bestDriver) {
+            $this->logger->debug(\sprintf('Selected %s as best driver.', $bestDriver::class));
+        } else {
+            $this->logger->debug('Could not find any suitable driver.');
+        }
+
         $this->driver = $bestDriver;
     }
 
@@ -139,6 +146,7 @@ class DefaultNotifier implements NotifierInterface
             new SnoreToastDriver(),
             new NotifuDriver(),
             new WslNotifySendDriver(),
+            new WslPowerShellDriver(),
         ];
     }
 }

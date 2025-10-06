@@ -32,7 +32,7 @@ class WslNotifySendDriverTest extends AbstractDriverTestCase
     {
         $driver = $this->getDriver();
 
-        $this->assertSame(DriverInterface::PRIORITY_HIGH, $driver->getPriority());
+        $this->assertSame(DriverInterface::PRIORITY_MEDIUM, $driver->getPriority());
     }
 
     protected function getDriver(): WslNotifySendDriver
