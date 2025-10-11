@@ -90,7 +90,7 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
             ->addOption('subtitle', 'I\'m the notification subtitle')
             ->addOption('sound', 'Frog')
             ->addOption('url', 'https://google.com')
-            ->setIcon($this->getIconDir() . '/image.gif')
+            ->setIcon(self::getIconDir() . '/image.gif')
         ;
 
         $result = $driver->send($notification);

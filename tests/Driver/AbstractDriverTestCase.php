@@ -16,9 +16,16 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractDriverTestCase extends TestCase
 {
-    public function getIconDir(): string
+    public static function getIconDir(): string
     {
-        return realpath(\dirname(__DIR__) . '/fixtures');
+        $iconDir = sys_get_temp_dir() . '/jolinotif-tests-fixtures';
+
+        if (!is_dir($iconDir)) {
+            mkdir($iconDir);
+            copy(\dirname(__DIR__) . '/fixtures/image.gif', $iconDir . '/image.gif');
+        }
+
+        return $iconDir;
     }
 
     abstract protected function getDriver(): DriverInterface;

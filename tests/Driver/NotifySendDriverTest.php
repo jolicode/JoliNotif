@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\NotifySendDriver;
+use Psr\Log\NullLogger;
 
 class NotifySendDriverTest extends AbstractDriverTestCase
 {
@@ -36,7 +37,7 @@ class NotifySendDriverTest extends AbstractDriverTestCase
 
     protected function getDriver(): NotifySendDriver
     {
-        return new NotifySendDriver();
+        return new NotifySendDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string
@@ -55,7 +56,7 @@ class NotifySendDriverTest extends AbstractDriverTestCase
 
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
         return <<<CLI
             'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification body'
@@ -64,7 +65,7 @@ class NotifySendDriverTest extends AbstractDriverTestCase
 
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
         return <<<CLI
             'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification title' 'I'\\''m the notification body'

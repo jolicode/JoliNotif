@@ -11,10 +11,15 @@
 
 use Joli\JoliNotif\DefaultNotifier;
 use Joli\JoliNotif\Notification;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$notifier = new DefaultNotifier();
+$logger = new Logger('jolinotif');
+$logger->pushHandler(new StreamHandler('php://stderr', Level::Warning));
+$notifier = new DefaultNotifier($logger);
 
 if (!$notifier->getDriver()) {
     echo 'No supported notifier', \PHP_EOL;

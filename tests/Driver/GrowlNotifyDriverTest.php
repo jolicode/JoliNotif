@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\GrowlNotifyDriver;
+use Psr\Log\NullLogger;
 
 class GrowlNotifyDriverTest extends AbstractDriverTestCase
 {
@@ -36,7 +37,7 @@ class GrowlNotifyDriverTest extends AbstractDriverTestCase
 
     protected function getDriver(): GrowlNotifyDriver
     {
-        return new GrowlNotifyDriver();
+        return new GrowlNotifyDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string
@@ -55,7 +56,7 @@ class GrowlNotifyDriverTest extends AbstractDriverTestCase
 
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
         return <<<CLI
             'growlnotify' '--message' 'I'\\''m the notification body' '--image' '{$iconDir}/image.gif'
@@ -64,7 +65,7 @@ class GrowlNotifyDriverTest extends AbstractDriverTestCase
 
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
         return <<<CLI
             'growlnotify' '--message' 'I'\\''m the notification body' '--title' 'I'\\''m the notification title' '--image' '{$iconDir}/image.gif'

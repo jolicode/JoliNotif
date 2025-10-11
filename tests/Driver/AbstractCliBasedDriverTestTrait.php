@@ -50,56 +50,54 @@ trait AbstractCliBasedDriverTestTrait
         }
     }
 
-    public function provideValidNotifications(): array
+    public function provideValidNotifications(): iterable
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
-        return [
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body'),
-                $this->getExpectedCommandLineForNotification(),
-            ],
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body')
-                    ->setTitle('I\'m the notification title'),
-                $this->getExpectedCommandLineForNotificationWithATitle(),
-            ],
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body')
-                    ->addOption('subtitle', 'I\'m the notification subtitle'),
-                $this->getExpectedCommandLineForNotificationWithASubtitle(),
-            ],
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body')
-                    ->addOption('sound', 'Frog'),
-                $this->getExpectedCommandLineForNotificationWithASound(),
-            ],
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body')
-                    ->addOption('url', 'https://google.com'),
-                $this->getExpectedCommandLineForNotificationWithAnUrl(),
-            ],
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body')
-                    ->setIcon($iconDir . '/image.gif'),
-                $this->getExpectedCommandLineForNotificationWithAnIcon(),
-            ],
-            [
-                (new Notification())
-                    ->setBody('I\'m the notification body')
-                    ->setTitle('I\'m the notification title')
-                    ->addOption('subtitle', 'I\'m the notification subtitle')
-                    ->addOption('sound', 'Frog')
-                    ->addOption('url', 'https://google.com')
-                    ->setIcon($iconDir . '/image.gif'),
-                $this->getExpectedCommandLineForNotificationWithAllOptions(),
-            ],
+        yield self::BINARY . '_getExpectedCommandLineForNotification' => [
+            (new Notification())
+                ->setBody('I\'m the notification body'),
+            $this->getExpectedCommandLineForNotification(),
+        ];
+        yield self::BINARY . '_getExpectedCommandLineForNotificationWithATitle' => [
+            (new Notification())
+                ->setBody('I\'m the notification body')
+                ->setTitle('I\'m the notification title'),
+            $this->getExpectedCommandLineForNotificationWithATitle(),
+        ];
+        yield self::BINARY . '_getExpectedCommandLineForNotificationWithASubtitle' => [
+            (new Notification())
+                ->setBody('I\'m the notification body')
+                ->addOption('subtitle', 'I\'m the notification subtitle'),
+            $this->getExpectedCommandLineForNotificationWithASubtitle(),
+        ];
+        yield self::BINARY . '_getExpectedCommandLineForNotificationWithASound' => [
+            (new Notification())
+                ->setBody('I\'m the notification body')
+                ->addOption('sound', 'Frog'),
+            $this->getExpectedCommandLineForNotificationWithASound(),
+        ];
+        yield self::BINARY . '_getExpectedCommandLineForNotificationWithAnUrl' => [
+            (new Notification())
+                ->setBody('I\'m the notification body')
+                ->addOption('url', 'https://google.com'),
+            $this->getExpectedCommandLineForNotificationWithAnUrl(),
+        ];
+        yield self::BINARY . '_getExpectedCommandLineForNotificationWithAnIcon' => [
+            (new Notification())
+                ->setBody('I\'m the notification body')
+                ->setIcon($iconDir . '/image.gif'),
+            $this->getExpectedCommandLineForNotificationWithAnIcon(),
+        ];
+        yield self::BINARY . '_getExpectedCommandLineForNotificationWithAllOptions' => [
+            (new Notification())
+                ->setBody('I\'m the notification body')
+                ->setTitle('I\'m the notification title')
+                ->addOption('subtitle', 'I\'m the notification subtitle')
+                ->addOption('sound', 'Frog')
+                ->addOption('url', 'https://google.com')
+                ->setIcon($iconDir . '/image.gif'),
+            $this->getExpectedCommandLineForNotificationWithAllOptions(),
         ];
     }
 

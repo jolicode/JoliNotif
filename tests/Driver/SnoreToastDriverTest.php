@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\SnoreToastDriver;
+use Psr\Log\NullLogger;
 
 class SnoreToastDriverTest extends AbstractDriverTestCase
 {
@@ -37,7 +38,7 @@ class SnoreToastDriverTest extends AbstractDriverTestCase
 
     protected function getDriver(): SnoreToastDriver
     {
-        return new SnoreToastDriver();
+        return new SnoreToastDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string
@@ -56,7 +57,7 @@ class SnoreToastDriverTest extends AbstractDriverTestCase
 
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
         return <<<CLI
             'snoretoast' '-m' 'I'\\''m the notification body' '-p' '{$iconDir}/image.gif'
@@ -65,7 +66,7 @@ class SnoreToastDriverTest extends AbstractDriverTestCase
 
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
-        $iconDir = $this->getIconDir();
+        $iconDir = self::getIconDir();
 
         return <<<CLI
             'snoretoast' '-m' 'I'\\''m the notification body' '-t' 'I'\\''m the notification title' '-p' '{$iconDir}/image.gif'
