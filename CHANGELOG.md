@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not released yet
+## 3.2.0 (2025-10-16)
 
 * Add support for Symfony 8.0
 * Drop support for Symfony 5.4
