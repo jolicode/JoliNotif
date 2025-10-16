@@ -21,7 +21,6 @@ use Joli\JoliNotif\Driver\NotifySendDriver;
 use Joli\JoliNotif\Driver\PowerShellDriver;
 use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
-use Joli\JoliNotif\Driver\WslNotifySendDriver;
 use Joli\JoliNotif\Exception\DriverFailureException;
 use JoliCode\PhpOsHelper\OsHelper;
 use Psr\Log\LoggerInterface;
@@ -153,7 +152,6 @@ class DefaultNotifier implements NotifierInterface
             new PowerShellDriver($this->logger),
             new SnoreToastDriver($this->logger),
             new NotifuDriver($this->logger),
-            new WslNotifySendDriver($this->logger),
         ];
     }
 }
