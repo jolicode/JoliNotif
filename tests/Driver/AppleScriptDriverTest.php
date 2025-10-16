@@ -14,6 +14,7 @@ namespace Joli\JoliNotif\tests\Driver;
 use Joli\JoliNotif\Driver\AppleScriptDriver;
 use Joli\JoliNotif\Driver\DriverInterface;
 use JoliCode\PhpOsHelper\OsHelper;
+use Psr\Log\NullLogger;
 
 class AppleScriptDriverTest extends AbstractDriverTestCase
 {
@@ -48,7 +49,7 @@ class AppleScriptDriverTest extends AbstractDriverTestCase
 
     protected function getDriver(): AppleScriptDriver
     {
-        return new AppleScriptDriver();
+        return new AppleScriptDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string

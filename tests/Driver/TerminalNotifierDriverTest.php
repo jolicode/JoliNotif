@@ -14,6 +14,7 @@ namespace Joli\JoliNotif\tests\Driver;
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
 use JoliCode\PhpOsHelper\OsHelper;
+use Psr\Log\NullLogger;
 
 class TerminalNotifierDriverTest extends AbstractDriverTestCase
 {
@@ -37,7 +38,7 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
 
     protected function getDriver(): TerminalNotifierDriver
     {
-        return new TerminalNotifierDriver();
+        return new TerminalNotifierDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string
@@ -71,7 +72,7 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
     protected function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $iconDir = $this->getIconDir();
+            $iconDir = self::getIconDir();
 
             return <<<CLI
                 'terminal-notifier' '-message' 'I'\\''m the notification body' '-contentImage' '{$iconDir}/image.gif'
@@ -86,7 +87,7 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
     protected function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $iconDir = $this->getIconDir();
+            $iconDir = self::getIconDir();
 
             return <<<CLI
                 'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-contentImage' '{$iconDir}/image.gif' '-open' 'https://google.com' '-sound' 'Frog'

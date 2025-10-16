@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\WslNotifySendDriver;
+use Psr\Log\NullLogger;
 
 class WslNotifySendDriverTest extends AbstractDriverTestCase
 {
@@ -32,12 +33,12 @@ class WslNotifySendDriverTest extends AbstractDriverTestCase
     {
         $driver = $this->getDriver();
 
-        $this->assertSame(DriverInterface::PRIORITY_HIGH, $driver->getPriority());
+        $this->assertSame(DriverInterface::PRIORITY_MEDIUM, $driver->getPriority());
     }
 
     protected function getDriver(): WslNotifySendDriver
     {
-        return new WslNotifySendDriver();
+        return new WslNotifySendDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string

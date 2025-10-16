@@ -18,9 +18,11 @@ use Joli\JoliNotif\Driver\KDialogDriver;
 use Joli\JoliNotif\Driver\LibNotifyDriver;
 use Joli\JoliNotif\Driver\NotifuDriver;
 use Joli\JoliNotif\Driver\NotifySendDriver;
+use Joli\JoliNotif\Driver\PowerShellDriver;
 use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
 use Joli\JoliNotif\Driver\WslNotifySendDriver;
+use Joli\JoliNotif\Exception\DriverFailureException;
 use JoliCode\PhpOsHelper\OsHelper;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -56,7 +58,13 @@ class DefaultNotifier implements NotifierInterface
             return false;
         }
 
-        return $this->driver->send($notification);
+        try {
+            return $this->driver->send($notification);
+        } catch (DriverFailureException $e) {
+            $this->logger->error('The notification could not be sent.', ['exception' => $e]);
+
+            return false;
+        }
     }
 
     protected function loadDriver(): void
@@ -98,6 +106,12 @@ class DefaultNotifier implements NotifierInterface
             $bestDriver = $driver;
         }
 
+        if ($bestDriver) {
+            $this->logger->debug(\sprintf('Selected %s as best driver.', $bestDriver::class));
+        } else {
+            $this->logger->debug('Could not find any suitable driver.');
+        }
+
         $this->driver = $bestDriver;
     }
 
@@ -122,11 +136,11 @@ class DefaultNotifier implements NotifierInterface
     {
         return [
             new LibNotifyDriver(),
-            new GrowlNotifyDriver(),
-            new TerminalNotifierDriver(),
-            new AppleScriptDriver(),
-            new KDialogDriver(),
-            new NotifySendDriver(),
+            new GrowlNotifyDriver($this->logger),
+            new TerminalNotifierDriver($this->logger),
+            new AppleScriptDriver($this->logger),
+            new KDialogDriver($this->logger),
+            new NotifySendDriver($this->logger),
         ];
     }
 
@@ -136,9 +150,10 @@ class DefaultNotifier implements NotifierInterface
     private function getWindowsDrivers(): array
     {
         return [
-            new SnoreToastDriver(),
-            new NotifuDriver(),
-            new WslNotifySendDriver(),
+            new PowerShellDriver($this->logger),
+            new SnoreToastDriver($this->logger),
+            new NotifuDriver($this->logger),
+            new WslNotifySendDriver($this->logger),
         ];
     }
 }

@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\KDialogDriver;
+use Psr\Log\NullLogger;
 
 class KDialogDriverTest extends AbstractDriverTestCase
 {
@@ -36,7 +37,7 @@ class KDialogDriverTest extends AbstractDriverTestCase
 
     protected function getDriver(): KDialogDriver
     {
-        return new KDialogDriver();
+        return new KDialogDriver(new NullLogger());
     }
 
     protected function getExpectedCommandLineForNotification(): string

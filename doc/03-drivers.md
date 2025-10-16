@@ -75,6 +75,18 @@ application sending the notification, in our case, the terminal.
 
 ### Windows
 
+#### PowerShellDriver
+
+This driver uses `powershell.exe` on WSL and Windows, allowing JoliNotif to call the
+native ToastNotificationManager from the host Windows 10 or 11.
+
+PowerShellDriver can display notification with a body, a title and an icon.
+
+> [!NOTE]
+> Inside WSL, the icon path must come from the Windows filesystem, so it should be
+> something like `C:\path\to\icon.png` or `/mnt/c/path/to/icon.png` in order to
+> be correctly displayed.
+
 #### SnoreToastDriver
 
 This driver uses the Windows application called SnoreToastDriver. It works on

@@ -15,6 +15,7 @@ use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\PharExtractor;
 use JoliCode\PhpOsHelper\OsHelper;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\Process;
 
 /**
@@ -31,6 +32,11 @@ abstract class AbstractCliBasedDriver implements DriverInterface
      * @var int One of the SUPPORT_XXX constants
      */
     private int $support = self::SUPPORT_UNKNOWN;
+
+    public function __construct(
+        protected readonly LoggerInterface $logger,
+    ) {
+    }
 
     public function isSupported(): bool
     {
@@ -128,6 +134,14 @@ abstract class AbstractCliBasedDriver implements DriverInterface
     protected function launchProcess(Process $process): void
     {
         $process->run();
+
+        if (!$process->isSuccessful()) {
+            $this->logger->error('Failed to send notification: ' . $process->getErrorOutput(), [
+                'driver' => self::class,
+                'command' => $process->getCommandLine(),
+                'exit_code' => $process->getExitCode(),
+            ]);
+        }
     }
 
     /**

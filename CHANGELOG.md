@@ -4,6 +4,7 @@
 
 * Add support for Symfony 8.0
 * Drop support for Symfony 5.4
+* Added a new PowerShell-based driver for Windows and WSL without dependency on third-party binaries
 
 ## 3.1.1 (2025-05-22)
 
