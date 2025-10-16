@@ -110,16 +110,6 @@ binaries in the system temp directory to be able to execute them.
 
 Toaster can display notification with a body, a title and an icon.
 
-#### WslNotifySendDriver
-
-This driver uses the executable `wsl-notify-send`.
-It permits to send notification from Windows Subsystem for Linux to Windows.
-
-wsl-notify-send can display notification with a body and a title.
-
-Icon is partially supported by `wsl-notify-send`, but it's not possible to set
-an icon for now.
-
 ## Using custom drivers
 
 If you created your own driver, you can pass it in the `$additionnalDrivers`

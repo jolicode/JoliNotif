@@ -5,6 +5,7 @@
 * Add support for Symfony 8.0
 * Drop support for Symfony 5.4
 * Added a new PowerShell-based driver for Windows and WSL without dependency on third-party binaries
+* Removed wsl-notify-send driver as it is now replaced by the new PowerShell-based driver
 
 ## 3.1.1 (2025-05-22)
 

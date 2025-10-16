@@ -20,7 +20,6 @@ use Joli\JoliNotif\Driver\NotifuDriver;
 use Joli\JoliNotif\Driver\NotifySendDriver;
 use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
-use Joli\JoliNotif\Driver\WslNotifySendDriver;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\tests\fixtures\ConfigurableDriver;
 use JoliCode\PhpOsHelper\OsHelper;
@@ -46,7 +45,6 @@ class DefaultNotifierTest extends TestCase
             $expectedDriverClasses = [
                 SnoreToastDriver::class,
                 NotifuDriver::class,
-                WslNotifySendDriver::class,
             ];
         }
 
