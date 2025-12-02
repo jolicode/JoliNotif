@@ -1,11 +1,11 @@
 {
     "require": {
-        "phpstan/phpstan": "^2.0.2"
+        "phpstan/phpstan": "^2.1.32"
     },
     "config": {
         "bump-after-update": true,
         "platform": {
-            "php": "8.2"
+            "php": "8.3"
         }
     }
 }

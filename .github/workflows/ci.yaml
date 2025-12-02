@@ -38,11 +38,11 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: ["8.3", "8.4"]
+                php-version: ["8.4", "8.5"]
                 composer-flags: [""]
                 name: [""]
                 include:
-                    - php-version: 8.2
+                    - php-version: 8.3
                       composer-flags: "--prefer-lowest"
                       name: "(prefer lowest dependencies)"
         steps:
@@ -76,7 +76,7 @@ jobs:
                 sudo apt-get install -y --no-install-recommends --no-install-suggests libnotify4
 
             - name: Run Tests
-              run: php vendor/bin/simple-phpunit
+              run: php vendor/bin/phpunit
 
     phar:
         name: Create a PHAR and ensure it is working

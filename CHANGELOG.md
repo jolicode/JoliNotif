@@ -1,5 +1,11 @@
 # Changes between versions
 
+## 3.3.0 (not released yet)
+
+* Drop support for PHP 8.2
+* Phar are built with PHP 8.3
+* Add support for PHP 8.5
+
 ## 3.2.0 (2025-10-16)
 
 * Add support for Symfony 8.0

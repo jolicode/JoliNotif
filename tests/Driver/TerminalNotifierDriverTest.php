@@ -41,35 +41,35 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
         return new TerminalNotifierDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'terminal-notifier' '-message' 'I'\''m the notification body'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnUrl(): string
+    protected static function getExpectedCommandLineForNotificationWithAnUrl(): string
     {
         return <<<'CLI'
             'terminal-notifier' '-message' 'I'\''m the notification body' '-open' 'https://google.com'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithASound(): string
+    protected static function getExpectedCommandLineForNotificationWithASound(): string
     {
         return <<<'CLI'
             'terminal-notifier' '-message' 'I'\''m the notification body' '-sound' 'Frog'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             $iconDir = self::getIconDir();
@@ -84,7 +84,7 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
             $iconDir = self::getIconDir();

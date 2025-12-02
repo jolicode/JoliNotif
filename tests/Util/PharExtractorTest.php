@@ -117,7 +117,6 @@ class PharExtractorTest extends TestCase
             ->in("{$rootPackage}/src")
             ->in("{$rootPackage}/tests/fixtures")
             ->in("{$rootPackage}/vendor")
-            ->notPath('vendor/symfony/phpunit-bridge/bin/simple-phpunit')
             ->files()
         ;
 

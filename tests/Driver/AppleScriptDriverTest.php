@@ -52,42 +52,42 @@ class AppleScriptDriverTest extends AbstractDriverTestCase
         return new AppleScriptDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'osascript' '-e' 'display notification "I'\''m the notification body"'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title"'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithASubtitle(): string
+    protected static function getExpectedCommandLineForNotificationWithASubtitle(): string
     {
         return <<<'CLI'
             'osascript' '-e' 'display notification "I'\''m the notification body" subtitle "I'\''m the notification subtitle"'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithASound(): string
+    protected static function getExpectedCommandLineForNotificationWithASound(): string
     {
         return <<<'CLI'
             'osascript' '-e' 'display notification "I'\''m the notification body" sound name "Frog"'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         return <<<'CLI'
             'osascript' '-e' 'display notification "I'\''m the notification body"'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         return <<<'CLI'
             'osascript' '-e' 'display notification "I'\''m the notification body" with title "I'\''m the notification title" subtitle "I'\''m the notification subtitle" sound name "Frog"'
