@@ -40,21 +40,21 @@ class GrowlNotifyDriverTest extends AbstractDriverTestCase
         return new GrowlNotifyDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'growlnotify' '--message' 'I'\''m the notification body'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'growlnotify' '--message' 'I'\''m the notification body' '--title' 'I'\''m the notification title'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = self::getIconDir();
 
@@ -63,7 +63,7 @@ class GrowlNotifyDriverTest extends AbstractDriverTestCase
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = self::getIconDir();
 

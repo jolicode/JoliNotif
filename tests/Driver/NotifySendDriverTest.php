@@ -40,21 +40,21 @@ class NotifySendDriverTest extends AbstractDriverTestCase
         return new NotifySendDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'notify-send' 'I'\''m the notification body'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'notify-send' 'I'\''m the notification title' 'I'\''m the notification body'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = self::getIconDir();
 
@@ -63,7 +63,7 @@ class NotifySendDriverTest extends AbstractDriverTestCase
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = self::getIconDir();
 

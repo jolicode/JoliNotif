@@ -40,28 +40,28 @@ class KDialogDriverTest extends AbstractDriverTestCase
         return new KDialogDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'kdialog' '--passivepopup' 'I'\''m the notification body' '5'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'kdialog' '--title' 'I'\''m the notification title' '--passivepopup' 'I'\''m the notification body' '5'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         return <<<'CLI'
             'kdialog' '--passivepopup' 'I'\''m the notification body' '5'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         return <<<'CLI'
             'kdialog' '--title' 'I'\''m the notification title' '--passivepopup' 'I'\''m the notification body' '5'

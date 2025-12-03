@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "jolicode/php-os-helper": "^0.3",
         "psr/log": "^1.0 || ^2.0 || ^3.0",
         "symfony/process": "^6.4 || ^7.3 || ^8.0",
@@ -30,7 +30,7 @@
     "require-dev": {
         "monolog/monolog": "^3.9",
         "symfony/finder": "^6.4 || ^7.3 || ^8.0",
-        "symfony/phpunit-bridge": "^7.3 || ^8.0"
+        "phpunit/phpunit": "^12.4.5"
     },
     "suggest": {
         "ext-ffi": "Needed to send notifications via libnotify on Linux"

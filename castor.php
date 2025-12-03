@@ -12,9 +12,12 @@
 use Castor\Attribute\AsRawTokens;
 use Castor\Attribute\AsTask;
 
+use function Castor\guard_min_version;
 use function Castor\import;
 use function Castor\mount;
 use function Castor\run;
+
+guard_min_version('1.0.0');
 
 import(__DIR__ . '/tools/php-cs-fixer/castor.php');
 import(__DIR__ . '/tools/phpstan/castor.php');
@@ -24,7 +27,7 @@ mount(__DIR__ . '/tools/phar');
 #[AsTask(description: 'Install dependencies')]
 function install(): void
 {
-    run(['composer', 'install'], workingDirectory: __DIR__);
+    run(['composer', 'install']);
     qa\cs\install();
     qa\phpstan\install();
 }
@@ -32,5 +35,5 @@ function install(): void
 #[AsTask(description: 'Run PHPUnit', ignoreValidationErrors: true)]
 function phpunit(#[AsRawTokens] array $rawTokens): void
 {
-    run(['vendor/bin/simple-phpunit', ...$rawTokens]);
+    run(['vendor/bin/phpunit', ...$rawTokens]);
 }

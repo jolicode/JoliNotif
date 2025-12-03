@@ -41,21 +41,21 @@ class NotifuDriverTest extends AbstractDriverTestCase
         return new NotifuDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'notifu' '/m' 'I'\''m the notification body'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'notifu' '/m' 'I'\''m the notification body' '/p' 'I'\''m the notification title'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = self::getIconDir();
 
@@ -64,7 +64,7 @@ class NotifuDriverTest extends AbstractDriverTestCase
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = self::getIconDir();
 

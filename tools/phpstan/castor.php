@@ -38,11 +38,11 @@ function phpstan(bool $generateBaseline = false): int
 #[AsTask(description: 'install dependencies')]
 function install(): void
 {
-    run(['composer', 'install'], context: context()->withWorkingDirectory(__DIR__));
+    run(['composer', 'install'], context()->withWorkingDirectory(__DIR__));
 }
 
 #[AsTask(description: 'update dependencies')]
 function update(): void
 {
-    run(['composer', 'update'], context: context()->withWorkingDirectory(__DIR__));
+    run(['composer', 'update'], context()->withWorkingDirectory(__DIR__));
 }

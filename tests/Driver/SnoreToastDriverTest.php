@@ -41,21 +41,21 @@ class SnoreToastDriverTest extends AbstractDriverTestCase
         return new SnoreToastDriver(new NullLogger());
     }
 
-    protected function getExpectedCommandLineForNotification(): string
+    protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
             'snoretoast' '-m' 'I'\''m the notification body'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithATitle(): string
+    protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
             'snoretoast' '-m' 'I'\''m the notification body' '-t' 'I'\''m the notification title'
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAnIcon(): string
+    protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
         $iconDir = self::getIconDir();
 
@@ -64,7 +64,7 @@ class SnoreToastDriverTest extends AbstractDriverTestCase
             CLI;
     }
 
-    protected function getExpectedCommandLineForNotificationWithAllOptions(): string
+    protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
         $iconDir = self::getIconDir();
 

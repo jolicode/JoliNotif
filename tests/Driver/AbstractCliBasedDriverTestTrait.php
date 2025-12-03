@@ -14,6 +14,7 @@ namespace Joli\JoliNotif\tests\Driver;
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Process\Process;
 
 /**
@@ -36,9 +37,7 @@ trait AbstractCliBasedDriverTestTrait
         $this->assertSame($supported, $this->getDriver()->isSupported());
     }
 
-    /**
-     * @dataProvider provideValidNotifications
-     */
+    #[DataProvider('provideValidNotifications')]
     public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, string $expectedCommandLine)
     {
         try {
@@ -50,44 +49,44 @@ trait AbstractCliBasedDriverTestTrait
         }
     }
 
-    public function provideValidNotifications(): iterable
+    public static function provideValidNotifications(): iterable
     {
         $iconDir = self::getIconDir();
 
         yield self::BINARY . '_getExpectedCommandLineForNotification' => [
             (new Notification())
                 ->setBody('I\'m the notification body'),
-            $this->getExpectedCommandLineForNotification(),
+            self::getExpectedCommandLineForNotification(),
         ];
         yield self::BINARY . '_getExpectedCommandLineForNotificationWithATitle' => [
             (new Notification())
                 ->setBody('I\'m the notification body')
                 ->setTitle('I\'m the notification title'),
-            $this->getExpectedCommandLineForNotificationWithATitle(),
+            self::getExpectedCommandLineForNotificationWithATitle(),
         ];
         yield self::BINARY . '_getExpectedCommandLineForNotificationWithASubtitle' => [
             (new Notification())
                 ->setBody('I\'m the notification body')
                 ->addOption('subtitle', 'I\'m the notification subtitle'),
-            $this->getExpectedCommandLineForNotificationWithASubtitle(),
+            self::getExpectedCommandLineForNotificationWithASubtitle(),
         ];
         yield self::BINARY . '_getExpectedCommandLineForNotificationWithASound' => [
             (new Notification())
                 ->setBody('I\'m the notification body')
                 ->addOption('sound', 'Frog'),
-            $this->getExpectedCommandLineForNotificationWithASound(),
+            self::getExpectedCommandLineForNotificationWithASound(),
         ];
         yield self::BINARY . '_getExpectedCommandLineForNotificationWithAnUrl' => [
             (new Notification())
                 ->setBody('I\'m the notification body')
                 ->addOption('url', 'https://google.com'),
-            $this->getExpectedCommandLineForNotificationWithAnUrl(),
+            self::getExpectedCommandLineForNotificationWithAnUrl(),
         ];
         yield self::BINARY . '_getExpectedCommandLineForNotificationWithAnIcon' => [
             (new Notification())
                 ->setBody('I\'m the notification body')
                 ->setIcon($iconDir . '/image.gif'),
-            $this->getExpectedCommandLineForNotificationWithAnIcon(),
+            self::getExpectedCommandLineForNotificationWithAnIcon(),
         ];
         yield self::BINARY . '_getExpectedCommandLineForNotificationWithAllOptions' => [
             (new Notification())
@@ -97,7 +96,7 @@ trait AbstractCliBasedDriverTestTrait
                 ->addOption('sound', 'Frog')
                 ->addOption('url', 'https://google.com')
                 ->setIcon($iconDir . '/image.gif'),
-            $this->getExpectedCommandLineForNotificationWithAllOptions(),
+            self::getExpectedCommandLineForNotificationWithAllOptions(),
         ];
     }
 
@@ -132,35 +131,35 @@ trait AbstractCliBasedDriverTestTrait
 
     abstract protected function getDriver(): DriverInterface;
 
-    abstract protected function getExpectedCommandLineForNotification(): string;
+    abstract protected static function getExpectedCommandLineForNotification(): string;
 
-    abstract protected function getExpectedCommandLineForNotificationWithATitle(): string;
+    abstract protected static function getExpectedCommandLineForNotificationWithATitle(): string;
 
     /**
      * Subtitle is supported only on few driver.
      */
-    protected function getExpectedCommandLineForNotificationWithASubtitle(): string
+    protected static function getExpectedCommandLineForNotificationWithASubtitle(): string
     {
-        return $this->getExpectedCommandLineForNotification();
+        return static::getExpectedCommandLineForNotification();
     }
 
     /**
      * Sound is supported only on few driver.
      */
-    protected function getExpectedCommandLineForNotificationWithASound(): string
+    protected static function getExpectedCommandLineForNotificationWithASound(): string
     {
-        return $this->getExpectedCommandLineForNotification();
+        return static::getExpectedCommandLineForNotification();
     }
 
     /**
      * Sound is supported only on few driver.
      */
-    protected function getExpectedCommandLineForNotificationWithAnUrl(): string
+    protected static function getExpectedCommandLineForNotificationWithAnUrl(): string
     {
-        return $this->getExpectedCommandLineForNotification();
+        return static::getExpectedCommandLineForNotification();
     }
 
-    abstract protected function getExpectedCommandLineForNotificationWithAnIcon(): string;
+    abstract protected static function getExpectedCommandLineForNotificationWithAnIcon(): string;
 
-    abstract protected function getExpectedCommandLineForNotificationWithAllOptions(): string;
+    abstract protected static function getExpectedCommandLineForNotificationWithAllOptions(): string;
 }
