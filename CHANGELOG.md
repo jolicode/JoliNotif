@@ -1,6 +1,6 @@
 # Changes between versions
 
-## 3.3.0 (not released yet)
+## 3.3.0 (2025-12-04)
 
 * Drop support for PHP 8.2
 * Phar are built with PHP 8.3
