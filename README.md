@@ -1,17 +1,26 @@
-<p align="center">
-    <img src=doc/images/demo.gif alt="JoliNotif demo" />
-</p>
+<h1 align="center">
+  <a href="https://github.com/jolicode/JoliNotif"><img src="https://jolicode.com/media/original/oss/headers/jolinotif.png" alt="JoliNotif"></a>
+  <br />
+  JoliNotif
+  <br />
+  <sub><em><h6>Display desktop notifications from your PHP scripts.</h6></em></sub>
+</h1>
 
-<p align="center">
+<div align="center">
     <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/downloads" alt="Total Downloads"></img></a>
     <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/v/stable" alt="Latest Stable Version"></img></a>
     <a href="https://packagist.org/packages/jolicode/jolinotif"><img src="https://poser.pugx.org/jolicode/jolinotif/v/unstable" alt="Latest Unstable Version"></img></a>
-</p>
+</div>
 
-# About JoliNotif
+<br />
+<br />
 
 JoliNotif is a cross-platform PHP library to display desktop notifications.
 It works on Linux, Windows (WSL included) or macOS.
+
+<p align="center">
+    <img src=doc/images/demo.gif alt="JoliNotif demo" />
+</p>
 
 Requires PHP >= 8.2 (support for previous PHP versions was available in older releases of this library).
 
@@ -87,3 +96,9 @@ And finally some meta documentation:
 
 JoliNotif is licensed under the MIT License - see the [LICENSE](LICENSE) file
 for details.
+
+
+<br><br>
+<div align="center">
+<a href="https://jolicode.com/"><img src="https://jolicode.com/media/original/oss/footer-github.png?v3" alt="JoliCode is sponsoring this project"></a>
+</div>
