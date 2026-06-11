@@ -86,6 +86,8 @@ abstract class AbstractCliBasedDriver implements DriverInterface
             $binary = $this->getBinary();
         }
 
+        $arguments = array_map(static fn ($argument) => (string) $argument, $arguments);
+
         $process = new Process(array_merge([$binary], $arguments));
         $this->launchProcess($process);
 

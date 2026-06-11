@@ -15,22 +15,27 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v5
 
-            - name: PHP-CS-Fixer
-              uses: docker://oskarstark/php-cs-fixer-ga
-              with:
-                  args: --config=.php-cs-fixer.php --diff --dry-run
+            - name: Setup Castor
+              uses: castor-php/setup-castor@v1.0.0
+
+            - name: Run CS check
+              run: castor cs --dry-run
 
     phpstan:
-      name: Static Analysis
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v5
+        name: Static Analysis
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v5
 
-        - name: PHPStan
-          uses: docker://oskarstark/phpstan-ga
-          env:
-              REQUIRE_DEV: true
+            - name: Setup Castor
+              uses: castor-php/setup-castor@v1.0.0
+
+            - name: Install dependencies
+              run: castor install
+
+            - name: Run PHPStan
+              run: castor phpstan
 
     ci:
         name: Test PHP ${{ matrix.php-version }} ${{ matrix.name }}
