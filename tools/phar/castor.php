@@ -16,7 +16,7 @@ use Castor\Attribute\AsTask;
 use function Castor\run;
 
 #[AsTask(description: 'Build phar')]
-function build()
+function build(): void
 {
     run('vendor/bin/box compile -c box.json');
 }

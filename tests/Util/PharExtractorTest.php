@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder;
 
 class PharExtractorTest extends TestCase
 {
-    public function testIsLocatedInsideAPhar()
+    public function testIsLocatedInsideAPhar(): void
     {
         $this->assertFalse(PharExtractor::isLocatedInsideAPhar('/var/www/my_file'));
         $this->assertFalse(PharExtractor::isLocatedInsideAPhar('http://example.com/index.php'));
@@ -25,7 +25,7 @@ class PharExtractorTest extends TestCase
         $this->assertTrue(PharExtractor::isLocatedInsideAPhar('phar:///var/www/test.phar/my_file'));
     }
 
-    public function testExtractFile()
+    public function testExtractFile(): void
     {
         $key = uniqid('', true);
         $pharPath = $this->getTestDir() . '/phar-extractor-' . $key . '.phar';
@@ -42,7 +42,7 @@ class PharExtractorTest extends TestCase
         unlink($extractedFilePath);
     }
 
-    public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified()
+    public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified(): void
     {
         $key = uniqid('', true);
         $pharPath = $this->getTestDir() . '/phar-extractor-no-overwrite-' . $key . '.phar';
@@ -64,7 +64,7 @@ class PharExtractorTest extends TestCase
         unlink($extractedFilePath);
     }
 
-    public function testExtractFileOverwritesExistingFileIfSpecified()
+    public function testExtractFileOverwritesExistingFileIfSpecified(): void
     {
         $key = uniqid('', true);
         $pharPath = $this->getTestDir() . '/phar-extractor-overwrite-' . $key . '.phar';
@@ -97,7 +97,7 @@ class PharExtractorTest extends TestCase
         return $testDir;
     }
 
-    private function generatePhar(string $pharPath, string $fileRelativePath, string $fileContent, bool $overwrite)
+    private function generatePhar(string $pharPath, string $fileRelativePath, string $fileContent, bool $overwrite): void
     {
         $rootPackage = \dirname(__DIR__, 2);
         $bootstrap = <<<'PHAR_BOOTSTRAP'

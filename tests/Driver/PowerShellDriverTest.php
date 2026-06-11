@@ -21,14 +21,14 @@ class PowerShellDriverTest extends AbstractDriverTestCase
 
     private const BINARY = 'powershell.exe';
 
-    public function testGetBinary()
+    public function testGetBinary(): void
     {
         $driver = $this->getDriver();
 
         $this->assertStringContainsString('powershell', $driver->getBinary());
     }
 
-    public function testGetPriority()
+    public function testGetPriority(): void
     {
         $driver = $this->getDriver();
 

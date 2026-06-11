@@ -28,7 +28,7 @@ use Psr\Log\LoggerInterface;
 
 class DefaultNotifierTest extends TestCase
 {
-    public function testCreateDefaultNotifier()
+    public function testCreateDefaultNotifier(): void
     {
         $notifier = new DefaultNotifier();
 
@@ -53,7 +53,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertContains($driver::class, $expectedDriverClasses);
     }
 
-    public function testUsesGivenDrivers()
+    public function testUsesGivenDrivers(): void
     {
         $notifier = new DefaultNotifier(null, [
             new ConfigurableDriver(true),
@@ -64,7 +64,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertInstanceOf(ConfigurableDriver::class, $driver);
     }
 
-    public function testWithNoSupportedDriversReturnsANativeNotifier()
+    public function testWithNoSupportedDriversReturnsANativeNotifier(): void
     {
         $notifier = new DefaultNotifier(null, [
             new ConfigurableDriver(false),
@@ -76,7 +76,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertNotNull($driver);
     }
 
-    public function testWithNoSupportedDriversReturnsANullDriverIfConfiguredWithOnlyAdditionalDrivers()
+    public function testWithNoSupportedDriversReturnsANullDriverIfConfiguredWithOnlyAdditionalDrivers(): void
     {
         $notifier = new DefaultNotifier(null, [
             new ConfigurableDriver(false),
@@ -88,7 +88,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertNull($driver);
     }
 
-    public function testItUsesTheOnlySupportedDriver()
+    public function testItUsesTheOnlySupportedDriver(): void
     {
         $expectedDriver = new ConfigurableDriver(true);
 
@@ -99,7 +99,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertSame($expectedDriver, $notifier->getDriver());
     }
 
-    public function testItUsesTheFirstSupportedDriverWhenNoPrioritiesAreGiven()
+    public function testItUsesTheFirstSupportedDriverWhenNoPrioritiesAreGiven(): void
     {
         $driver1 = new ConfigurableDriver(false);
         $driver2 = new ConfigurableDriver(true);
@@ -116,7 +116,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertSame($driver2, $notifier->getDriver());
     }
 
-    public function testItUsesTheBestSupportedDriver()
+    public function testItUsesTheBestSupportedDriver(): void
     {
         $driver1 = new ConfigurableDriver(false);
         $driver2 = new ConfigurableDriver(true, 5);
@@ -135,7 +135,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertSame($driver3, $notifier->getDriver());
     }
 
-    public function testItUsesTheFirstOfTheBestSupportedDrivers()
+    public function testItUsesTheFirstOfTheBestSupportedDrivers(): void
     {
         $driver1 = new ConfigurableDriver(false);
         $driver2 = new ConfigurableDriver(true, 5);
@@ -154,7 +154,7 @@ class DefaultNotifierTest extends TestCase
         $this->assertSame($driver3, $notifier->getDriver());
     }
 
-    public function testItLogsWhenNoDriverAvailable()
+    public function testItLogsWhenNoDriverAvailable(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger

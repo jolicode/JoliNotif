@@ -23,7 +23,7 @@ use Symfony\Component\Process\Process;
  */
 trait AbstractCliBasedDriverTestTrait
 {
-    public function testIsSupported()
+    public function testIsSupported(): void
     {
         if (OsHelper::isUnix()) {
             $commandLine = 'command -v ' . static::BINARY . ' >/dev/null 2>&1';
@@ -38,7 +38,7 @@ trait AbstractCliBasedDriverTestTrait
     }
 
     #[DataProvider('provideValidNotifications')]
-    public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, string $expectedCommandLine)
+    public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, string $expectedCommandLine): void
     {
         try {
             $arguments = $this->invokeMethod($this->getDriver(), 'getCommandLineArguments', [$notification]);
@@ -100,7 +100,7 @@ trait AbstractCliBasedDriverTestTrait
         ];
     }
 
-    public function testSendThrowsExceptionWhenNotificationDoesntHaveBody()
+    public function testSendThrowsExceptionWhenNotificationDoesntHaveBody(): void
     {
         $driver = $this->getDriver();
 
@@ -114,7 +114,7 @@ trait AbstractCliBasedDriverTestTrait
         }
     }
 
-    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
+    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody(): void
     {
         $driver = $this->getDriver();
 

@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "humbug/box": ">=4.6.10"
+    "humbug/box": ">=4.7.0"
   },
   "config": {
     "bump-after-update": true,
