@@ -26,6 +26,7 @@ function phpstan(bool $generateBaseline = false): int
 
     $command = [
         __DIR__ . '/vendor/bin/phpstan',
+        '-v',
     ];
 
     if ($generateBaseline) {
