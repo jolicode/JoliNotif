@@ -21,14 +21,14 @@ class KDialogDriverTest extends AbstractDriverTestCase
 
     private const BINARY = 'kdialog';
 
-    public function testGetBinary()
+    public function testGetBinary(): void
     {
         $driver = $this->getDriver();
 
         $this->assertSame(self::BINARY, $driver->getBinary());
     }
 
-    public function testGetPriority()
+    public function testGetPriority(): void
     {
         $driver = $this->getDriver();
 

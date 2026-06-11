@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder;
 
 class NotificationTest extends TestCase
 {
-    public function testItExtractsIconFromPhar()
+    public function testItExtractsIconFromPhar(): void
     {
         $key = (string) random_int(0, 10000);
         $iconContent = $key;
@@ -67,7 +67,7 @@ class NotificationTest extends TestCase
         $this->assertSame($iconContent, file_get_contents($extractedIconPath));
     }
 
-    public function testItResolvesRealPathToIcon()
+    public function testItResolvesRealPathToIcon(): void
     {
         $notification = new Notification();
         $notification->setIcon(__DIR__ . '/../tests/fixtures/image.gif');

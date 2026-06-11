@@ -18,14 +18,14 @@ use Joli\JoliNotif\Notification;
 
 class LibNotifyDriverTest extends AbstractDriverTestCase
 {
-    public function testGetPriority()
+    public function testGetPriority(): void
     {
         $driver = $this->getDriver();
 
         $this->assertSame(DriverInterface::PRIORITY_HIGH, $driver->getPriority());
     }
 
-    public function testSendWithEmptyBody()
+    public function testSendWithEmptyBody(): void
     {
         $driver = $this->getDriver();
 
@@ -37,7 +37,7 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
     /**
      * @requires extension ffi
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $driver = $this->getDriver();
 
@@ -48,7 +48,7 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
         $this->assertTrue($driver->isSupported());
     }
 
-    public function testSendThrowsExceptionWhenNotificationDoesntHaveBody()
+    public function testSendThrowsExceptionWhenNotificationDoesntHaveBody(): void
     {
         $driver = $this->getDriver();
 
@@ -62,7 +62,7 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
         }
     }
 
-    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody()
+    public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody(): void
     {
         $driver = $this->getDriver();
 
@@ -80,7 +80,7 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
     /**
      * @requires extension ffi
      */
-    public function testSendNotificationWithAllOptions()
+    public function testSendNotificationWithAllOptions(): void
     {
         $driver = $this->getDriver();
 
@@ -105,7 +105,7 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
     /**
      * @requires extension ffi
      */
-    public function testWithMultipleInstance()
+    public function testWithMultipleInstance(): void
     {
         $notification = (new Notification())
             ->setBody('I\'m the notification body')

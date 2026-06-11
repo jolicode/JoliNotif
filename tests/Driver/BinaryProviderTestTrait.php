@@ -18,7 +18,7 @@ use Joli\JoliNotif\Driver\BinaryProviderInterface;
  */
 trait BinaryProviderTestTrait
 {
-    public function testRootDirectoryExists()
+    public function testRootDirectoryExists(): void
     {
         /** @var BinaryProviderInterface $driver */
         $driver = $this->getDriver();
@@ -26,7 +26,7 @@ trait BinaryProviderTestTrait
         $this->assertDirectoryExists($driver->getRootDir());
     }
 
-    public function testEmbeddedBinaryExists()
+    public function testEmbeddedBinaryExists(): void
     {
         /** @var BinaryProviderInterface $driver */
         $driver = $this->getDriver();
@@ -34,7 +34,7 @@ trait BinaryProviderTestTrait
         $this->assertFileExists($driver->getRootDir() . \DIRECTORY_SEPARATOR . $driver->getEmbeddedBinary());
     }
 
-    public function testExtraFilesExist()
+    public function testExtraFilesExist(): void
     {
         /** @var BinaryProviderInterface $driver */
         $driver = $this->getDriver();
