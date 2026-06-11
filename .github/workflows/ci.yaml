@@ -13,10 +13,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                persist-credentials: false
 
             - name: Setup Castor
-              uses: castor-php/setup-castor@v1.0.0
+              uses: castor-php/setup-castor@827c7ae1be0bb45e42a6082cad943a2afe0ffd40 # v1.0.0
 
             - name: Run CS check
               run: castor cs --dry-run
@@ -26,10 +28,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                persist-credentials: false
 
             - name: Setup Castor
-              uses: castor-php/setup-castor@v1.0.0
+              uses: castor-php/setup-castor@827c7ae1be0bb45e42a6082cad943a2afe0ffd40 # v1.0.0
 
             - name: Install dependencies
               run: castor install
@@ -52,10 +56,12 @@ jobs:
                       name: "(prefer lowest dependencies)"
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                persist-credentials: false
 
             - name: Setup PHP, with composer and extensions
-              uses: shivammathur/setup-php@v2
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
               with:
                   php-version: ${{ matrix.php-version }}
                   extensions: mbstring, xml, ffi
@@ -66,7 +72,7 @@ jobs:
               run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
             - name: Cache composer dependencies
-              uses: actions/cache@v3
+              uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ github.sha }}
@@ -88,10 +94,12 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+              with:
+                persist-credentials: false
 
             - name: Setup PHP, with composer and extensions
-              uses: shivammathur/setup-php@v2
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
               with:
                   php-version: ${{ matrix.php-version }}
                   extensions: mbstring, xml, ffi
