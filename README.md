@@ -22,7 +22,7 @@ It works on Linux, Windows (WSL included) or macOS.
     <img src=doc/images/demo.gif alt="JoliNotif demo" />
 </p>
 
-Requires PHP >= 8.2 (support for previous PHP versions was available in older releases of this library).
+Requires PHP >= 8.3 (support for previous PHP versions was available in older releases of this library).
 
 > [!NOTE]
 > This library can not be used in a web context (FPM or equivalent). Use
