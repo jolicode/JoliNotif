@@ -78,7 +78,9 @@ application sending the notification, in our case, the terminal.
 #### PowerShellDriver
 
 This driver uses `powershell.exe` on WSL and Windows, allowing JoliNotif to call the
-native ToastNotificationManager from the host Windows 10 or 11.
+native ToastNotificationManager from the host Windows 10 or 11. Inside WSL, if
+`powershell.exe` is not available in `PATH`, JoliNotif falls back to
+`/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe`.
 
 PowerShellDriver can display notification with a body, a title and an icon.
 
