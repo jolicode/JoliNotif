@@ -1,6 +1,8 @@
 # Changes between versions
 
-## Next release
+## Not released yet
+
+## 3.3.1 (2026-07-22)
 
 * Fixed the PowerShell driver on WSL by falling back to `/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe` when `powershell.exe` is not available in `PATH`
 
