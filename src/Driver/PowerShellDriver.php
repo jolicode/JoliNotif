@@ -14,6 +14,7 @@ namespace Joli\JoliNotif\Driver;
 use Joli\JoliNotif\Exception\DriverFailureException;
 use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
+use Symfony\Component\Process\ExecutableFinder;
 
 /**
  * This driver allows native notification in Windows and WSL using PowerShell.
@@ -23,9 +24,24 @@ use JoliCode\PhpOsHelper\OsHelper;
  */
 class PowerShellDriver extends AbstractCliBasedDriver
 {
+    protected const BINARY = 'powershell.exe';
+
+    private static ?string $foundWslBinary = null;
+
     public function getBinary(): string
     {
-        return 'powershell.exe';
+        if ($this->isRunningInsideWsl() && null === self::$foundWslBinary) {
+            // Can be in the PATH, or in a default Windows directory.
+            self::$foundWslBinary = (new ExecutableFinder())->find(self::BINARY, extraDirs: [
+                '/mnt/c/Windows/System32/WindowsPowerShell/v1.0',
+            ]);
+        }
+
+        if ($this->isRunningInsideWsl()) {
+            return self::$foundWslBinary ?: self::BINARY;
+        }
+
+        return self::BINARY;
     }
 
     public function getPriority(): int
@@ -36,6 +52,11 @@ class PowerShellDriver extends AbstractCliBasedDriver
     public function isSupported(): bool
     {
         return (OsHelper::isWindows() && OsHelper::isWindowsTenOrHigher()) || OsHelper::isWindowsSubsystemForLinux();
+    }
+
+    protected function isRunningInsideWsl(): bool
+    {
+        return OsHelper::isWindowsSubsystemForLinux();
     }
 
     protected function getCommandLineArguments(Notification $notification): array
