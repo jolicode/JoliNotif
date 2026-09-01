@@ -18,7 +18,7 @@ jobs:
                 persist-credentials: false
 
             - name: Setup Castor
-              uses: castor-php/setup-castor@827c7ae1be0bb45e42a6082cad943a2afe0ffd40 # v1.0.0
+              uses: castor-php/setup-castor@2a495b8c91f00be6768ad8a040ba8634c797d386 # v1.1.0
 
             - name: Run CS check
               run: castor cs --dry-run
@@ -33,7 +33,7 @@ jobs:
                 persist-credentials: false
 
             - name: Setup Castor
-              uses: castor-php/setup-castor@827c7ae1be0bb45e42a6082cad943a2afe0ffd40 # v1.0.0
+              uses: castor-php/setup-castor@2a495b8c91f00be6768ad8a040ba8634c797d386 # v1.1.0
 
             - name: Install dependencies
               run: castor install
