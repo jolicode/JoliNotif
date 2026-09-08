@@ -12,6 +12,7 @@
 namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
+use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -102,31 +103,16 @@ trait AbstractCliBasedDriverTestTrait
 
     public function testSendThrowsExceptionWhenNotificationDoesntHaveBody(): void
     {
-        $driver = $this->getDriver();
+        $this->expectException(InvalidNotificationException::class);
 
-        $notification = new Notification();
-
-        try {
-            $driver->send($notification);
-            $this->fail('Expected a InvalidNotificationException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
-        }
+        $this->getDriver()->send(new Notification());
     }
 
     public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody(): void
     {
-        $driver = $this->getDriver();
+        $this->expectException(InvalidNotificationException::class);
 
-        $notification = new Notification();
-        $notification->setBody('');
-
-        try {
-            $driver->send($notification);
-            $this->fail('Expected a InvalidNotificationException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
-        }
+        $this->getDriver()->send((new Notification())->setBody(''));
     }
 
     abstract protected function getDriver(): DriverInterface;

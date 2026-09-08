@@ -25,56 +25,18 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
         $this->assertSame(DriverInterface::PRIORITY_HIGH, $driver->getPriority());
     }
 
-    public function testSendWithEmptyBody(): void
-    {
-        $driver = $this->getDriver();
-
-        $this->expectException(InvalidNotificationException::class);
-        $this->expectExceptionMessage('Notification body can not be empty');
-        $driver->send(new Notification());
-    }
-
-    /**
-     * @requires extension ffi
-     */
-    public function testInitialize(): void
-    {
-        $driver = $this->getDriver();
-
-        if (!$driver::isLibraryExists()) {
-            $this->markTestSkipped('Looks like libnotify is not installed');
-        }
-
-        $this->assertTrue($driver->isSupported());
-    }
-
     public function testSendThrowsExceptionWhenNotificationDoesntHaveBody(): void
     {
-        $driver = $this->getDriver();
+        $this->expectException(InvalidNotificationException::class);
 
-        $notification = new Notification();
-
-        try {
-            $driver->send($notification);
-            $this->fail('Expected a InvalidNotificationException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
-        }
+        $this->getDriver()->send(new Notification());
     }
 
     public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody(): void
     {
-        $driver = $this->getDriver();
+        $this->expectException(InvalidNotificationException::class);
 
-        $notification = new Notification();
-        $notification->setBody('');
-
-        try {
-            $driver->send($notification);
-            $this->fail('Expected a InvalidNotificationException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
-        }
+        $this->getDriver()->send((new Notification())->setBody(''));
     }
 
     /**

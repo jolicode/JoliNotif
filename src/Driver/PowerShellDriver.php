@@ -30,18 +30,14 @@ class PowerShellDriver extends AbstractCliBasedDriver
 
     public function getBinary(): string
     {
-        if ($this->isRunningInsideWsl() && null === self::$foundWslBinary) {
-            // Can be in the PATH, or in a default Windows directory.
-            self::$foundWslBinary = (new ExecutableFinder())->find(self::BINARY, extraDirs: [
-                '/mnt/c/Windows/System32/WindowsPowerShell/v1.0',
-            ]);
+        if (!$this->isRunningInsideWsl()) {
+            return self::BINARY;
         }
 
-        if ($this->isRunningInsideWsl()) {
-            return self::$foundWslBinary ?: self::BINARY;
-        }
-
-        return self::BINARY;
+        // Can be in the PATH, or in a default Windows directory.
+        return self::$foundWslBinary ??= (new ExecutableFinder())->find(self::BINARY, extraDirs: [
+            '/mnt/c/Windows/System32/WindowsPowerShell/v1.0',
+        ]) ?? self::BINARY;
     }
 
     public function getPriority(): int

@@ -3,10 +3,10 @@
 ## Not released yet
 
 * Fixed script injection in AppleScript and PowerShell drivers: notification content could break out of the generated script
-* Fixed `DefaultNotifier` re-evaluating drivers on each call when none is supported
 * Fixed driver class name in the CLI drivers error log
 * Fixed `PharExtractor` crashing when the file belongs to another phar
 * Fixed CLI warning when an option is not provided
+* `LibNotifyDriver` now relies on the dynamic linker to find libnotify instead of hardcoded paths, adding support for non x86_64 Linux distributions
 
 ## 3.3.1 (2026-07-22)
 

@@ -28,19 +28,19 @@ class LibNotifyDriver implements DriverInterface
 
     private static \FFI $ffi;
 
-    public static function isLibraryExists(): bool
-    {
-        return file_exists('/lib64/libnotify.so.4')
-            || file_exists('/lib/x86_64-linux-gnu/libnotify.so.4');
-    }
-
     public function isSupported(): bool
     {
-        return 'cli' === \PHP_SAPI
-            && class_exists(\FFI::class)
-            && OsHelper::isUnix()
-            && !OsHelper::isMacOS()
-            && self::isLibraryExists();
+        if ('cli' !== \PHP_SAPI || !class_exists(\FFI::class) || !OsHelper::isUnix() || OsHelper::isMacOS()) {
+            return false;
+        }
+
+        try {
+            self::initialize();
+        } catch (\Throwable) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getPriority(): int
@@ -54,14 +54,14 @@ class LibNotifyDriver implements DriverInterface
             throw new InvalidNotificationException($notification, 'Notification body can not be empty');
         }
 
-        $this->initialize();
-        $notification = self::$ffi->notify_notification_new(
+        self::initialize();
+        $native = self::$ffi->notify_notification_new(
             $notification->getTitle() ?? '',
             $notification->getBody(),
             $notification->getIcon()
         );
-        $value = self::$ffi->notify_notification_show($notification, null);
-        self::$ffi->g_object_unref($notification);
+        $value = self::$ffi->notify_notification_show($native, null);
+        self::$ffi->g_object_unref($native);
 
         return $value;
     }
@@ -78,7 +78,11 @@ class LibNotifyDriver implements DriverInterface
             $headerFile = PharExtractor::extractFile($headerFile);
         }
 
-        $ffi = \FFI::load($headerFile);
+        try {
+            $ffi = \FFI::load($headerFile);
+        } catch (\FFI\Exception $e) {
+            throw new FFIRuntimeException('Unable to load libnotify: ' . $e->getMessage(), 0, $e);
+        }
 
         if (!$ffi) {
             throw new FFIRuntimeException('Unable to load libnotify');
