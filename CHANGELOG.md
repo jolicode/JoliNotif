@@ -6,6 +6,7 @@
 * Fixed driver class name in the CLI drivers error log
 * Fixed `PharExtractor` crashing when the file belongs to another phar
 * Fixed CLI warning when an option is not provided
+* `DriverInterface` is not marked as `@internal` anymore, so custom drivers can safely implement it
 * `LibNotifyDriver` now relies on the dynamic linker to find libnotify instead of hardcoded paths, adding support for non x86_64 Linux distributions
 
 ## 3.3.1 (2026-07-22)

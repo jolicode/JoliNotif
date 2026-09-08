@@ -91,9 +91,9 @@ PowerShellDriver can display notification with a body, a title and an icon.
 
 #### SnoreToastDriver
 
-This driver uses the Windows application called SnoreToastDriver. It works on
-Windows 8 and higher. Because SnoreToastDriver is probably not installed on
-your system, JoliNotif embed the binaries inside the [bin/snoreToast](bin/snoreToast)
+This driver uses the Windows application called SnoreToast. It works on
+Windows 8 and higher. Because SnoreToast is probably not installed on
+your system, JoliNotif embed the binaries inside the [bin/snoreToast](../bin/snoreToast)
 directory.
 
 When you use JoliNotif inside a phar archive, we take care to extract those
@@ -101,21 +101,11 @@ binaries in the system temp directory to be able to execute them.
 
 SnoreToastDriver can display notification with a body, a title and an icon.
 
-#### ToasterDriver
-
-This driver uses the Windows application called Toaster. It works on Windows 8
-and higher. Because Toaster is probably not installed on your system, JoliNotif
-embed the binaries inside the [bin/toaster](bin/toaster) directory.
-
-When you use JoliNotif inside a phar archive, we take care to extract those
-binaries in the system temp directory to be able to execute them.
-
-Toaster can display notification with a body, a title and an icon.
-
 ## Using custom drivers
 
-If you created your own driver, you can pass it in the `$additionnalDrivers`
-parameter of the `DefaultNotifier` constructor:
+You can write your own driver by implementing
+`Joli\JoliNotif\Driver\DriverInterface`, then pass it in the `$additionalDrivers` parameter of the
+`DefaultNotifier` constructor:
 
 ```php
 use Joli\JoliNotif\DefaultNotifier;
@@ -128,16 +118,16 @@ $notifier->send(new Notification());
 
 If the driver is supported, it will be used in priority. If not, the native
 drivers of JoliNotif will be looked for. You can totally disable the native
-drivers by also passing `false` in the `$useOnlyAdditionalDrivers` parameter of
+drivers by also passing `true` in the `$useOnlyAdditionalDrivers` parameter of
 the constructor:
 
 ```php
 use Joli\JoliNotif\DefaultNotifier;
 use Joli\JoliNotif\Notification;
 
-$notifier = new DefaultNotifier(null, [new MyCustomDriver()], false);
+$notifier = new DefaultNotifier(null, [new MyCustomDriver()], true);
 
-// If MyCustomDriver is not supported, no native drivers will not be used
+// If MyCustomDriver is not supported, no native driver will be used
 // and the send method will always return false.
 $notifier->send(new Notification());
 ```
@@ -148,11 +138,11 @@ $notifier->send(new Notification());
 
 ## Next readings
 
-* [CRON usage](04-cron-usage.md)
-* [CLI usage](05-cli-usage.md)
+- [CRON usage](04-cron-usage.md)
+- [CLI usage](05-cli-usage.md)
 
 Previous pages:
 
-* [Notification](02-notification.md)
-* [Basic usage](01-basic-usage.md)
-* [README](../README.md)
+- [Notification](02-notification.md)
+- [Basic usage](01-basic-usage.md)
+- [README](../README.md)
