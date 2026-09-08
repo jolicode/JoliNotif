@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+* Fixed script injection in AppleScript and PowerShell drivers: notification content could break out of the generated script
+
 ## 3.3.1 (2026-07-22)
 
 * Fixed the PowerShell driver on WSL by falling back to `/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe` when `powershell.exe` is not available in `PATH`

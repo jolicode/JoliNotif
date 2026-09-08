@@ -61,10 +61,12 @@ class PowerShellDriver extends AbstractCliBasedDriver
 
     protected function getCommandLineArguments(Notification $notification): array
     {
-        // Avoid escaping issues
-        $body = str_replace('"', '""', (string) $notification->getBody());
-        $title = str_replace('"', '""', (string) $notification->getTitle());
-        $icon = str_replace('"', '""', (string) $notification->getIcon());
+        // Values are injected into single-quoted PowerShell strings: no variable
+        // expansion nor sub-expression evaluation happens there, only the quote
+        // itself needs to be escaped.
+        $body = str_replace("'", "''", (string) $notification->getBody());
+        $title = str_replace("'", "''", (string) $notification->getTitle());
+        $icon = str_replace("'", "''", (string) $notification->getIcon());
 
         if ($icon && OsHelper::isWindowsSubsystemForLinux() && !preg_match('@^[a-z]:@i', $icon) && !preg_match('@^/mnt/[a-z]@i', $icon)) {
             $this->logger->warning('Only images from Windows volume can be used for PowerShell notification icon inside WSL. Please use a path starting by something like "c:\" or "/mnt/c/".', [
@@ -84,16 +86,16 @@ class PowerShellDriver extends AbstractCliBasedDriver
 
             \$textNodes = \$template.GetElementsByTagName("text");
             \$textNodes.Item(0).AppendChild(
-                \$template.CreateTextNode("{$body}")
+                \$template.CreateTextNode('{$body}')
             ) | Out-Null;
 
             \$imageNodes = \$template.GetElementsByTagName("image");
 
-            if ("{$icon}" -ne "") {
-                \$imageNodes.Item(0).SetAttribute("src", "{$icon}") | Out-Null;
+            if ('{$icon}' -ne '') {
+                \$imageNodes.Item(0).SetAttribute("src", '{$icon}') | Out-Null;
             }
 
-            \$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("{$title}");
+            \$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('{$title}');
             \$notifier.Show([Windows.UI.Notifications.ToastNotification]::new(\$template))
             POWERSHELL;
 
