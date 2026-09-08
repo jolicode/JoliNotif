@@ -37,7 +37,14 @@ class PharExtractor
             return '';
         }
 
-        $relativeFilePath = substr($filePath, strpos($filePath, $pharPath) + \strlen($pharPath) + 1);
+        $pharPosition = strpos($filePath, $pharPath);
+
+        if (false === $pharPosition) {
+            // The file belongs to another phar than the running one
+            return '';
+        }
+
+        $relativeFilePath = substr($filePath, $pharPosition + \strlen($pharPath) + 1);
         $tmpDir = sys_get_temp_dir() . '/jolinotif';
         $extractedFilePath = $tmpDir . '/' . $relativeFilePath;
 

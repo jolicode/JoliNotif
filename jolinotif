@@ -86,7 +86,7 @@ final class Cli
 
     public function getOption(string $name): mixed
     {
-        return $this->arguments[$name] ?: false;
+        return $this->arguments[$name] ?? false;
     }
 
     public function getStringOption(string $name): string

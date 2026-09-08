@@ -139,7 +139,7 @@ abstract class AbstractCliBasedDriver implements DriverInterface
 
         if (!$process->isSuccessful()) {
             $this->logger->error('Failed to send notification: ' . $process->getErrorOutput(), [
-                'driver' => self::class,
+                'driver' => static::class,
                 'command' => $process->getCommandLine(),
                 'exit_code' => $process->getExitCode(),
             ]);

@@ -29,7 +29,8 @@ use Psr\Log\NullLogger;
 class DefaultNotifier implements NotifierInterface
 {
     private readonly LoggerInterface $logger;
-    private ?DriverInterface $driver;
+    private ?DriverInterface $driver = null;
+    private bool $driverLoaded = false;
 
     public function __construct(
         ?LoggerInterface $logger = null,
@@ -68,29 +69,28 @@ class DefaultNotifier implements NotifierInterface
 
     protected function loadDriver(): void
     {
-        if ($this->additionalDrivers) {
-            $this->doLoadDriver($this->additionalDrivers);
-        }
-
-        if ($this->additionalDrivers && $this->useOnlyAdditionalDrivers) {
-            $this->driver ??= null;
-
+        if ($this->driverLoaded) {
             return;
         }
 
-        $this->doLoadDriver($this->getDefaultDrivers());
+        $this->driverLoaded = true;
+
+        if ($this->additionalDrivers) {
+            $this->driver = $this->findBestDriver($this->additionalDrivers);
+
+            if ($this->driver || $this->useOnlyAdditionalDrivers) {
+                return;
+            }
+        }
+
+        $this->driver = $this->findBestDriver($this->getDefaultDrivers());
     }
 
     /**
      * @param list<DriverInterface> $drivers
      */
-    private function doLoadDriver(array $drivers): void
+    private function findBestDriver(array $drivers): ?DriverInterface
     {
-        if (isset($this->driver)) {
-            return;
-        }
-
-        /** @var ?DriverInterface $bestDriver */
         $bestDriver = null;
 
         foreach ($drivers as $driver) {
@@ -111,7 +111,7 @@ class DefaultNotifier implements NotifierInterface
             $this->logger->debug('Could not find any suitable driver.');
         }
 
-        $this->driver = $bestDriver;
+        return $bestDriver;
     }
 
     /**
