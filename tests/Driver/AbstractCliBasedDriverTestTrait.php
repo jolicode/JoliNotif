@@ -27,9 +27,9 @@ trait AbstractCliBasedDriverTestTrait
     public function testIsSupported(): void
     {
         if (OsHelper::isUnix()) {
-            $commandLine = 'command -v ' . static::BINARY . ' >/dev/null 2>&1';
+            $commandLine = 'command -v ' . self::BINARY . ' >/dev/null 2>&1';
         } else {
-            $commandLine = 'where ' . static::BINARY;
+            $commandLine = 'where ' . self::BINARY;
         }
 
         passthru($commandLine, $return);
@@ -41,15 +41,14 @@ trait AbstractCliBasedDriverTestTrait
     #[DataProvider('provideValidNotifications')]
     public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, string $expectedCommandLine): void
     {
-        try {
-            $arguments = $this->invokeMethod($this->getDriver(), 'getCommandLineArguments', [$notification]);
+        $arguments = array_map(strval(...), $this->getCommandLineArguments($this->getDriver(), $notification));
 
-            $this->assertSame($expectedCommandLine, (new Process(array_merge([self::BINARY], $arguments)))->getCommandLine());
-        } catch (\Exception $e) {
-            $this->fail($e->getMessage());
-        }
+        $this->assertSame($expectedCommandLine, (new Process([self::BINARY, ...$arguments]))->getCommandLine());
     }
 
+    /**
+     * @return iterable<string, array{Notification, string}>
+     */
     public static function provideValidNotifications(): iterable
     {
         $iconDir = self::getIconDir();

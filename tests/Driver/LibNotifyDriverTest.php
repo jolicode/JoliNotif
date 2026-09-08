@@ -46,6 +46,10 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
     {
         $driver = $this->getDriver();
 
+        if (!$driver->isSupported()) {
+            $this->markTestSkipped('libnotify is not available');
+        }
+
         $notification = (new Notification())
             ->setBody('I\'m the notification body')
             ->setTitle('I\'m the notification title')
@@ -69,6 +73,10 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
      */
     public function testWithMultipleInstance(): void
     {
+        if (!$this->getDriver()->isSupported()) {
+            $this->markTestSkipped('libnotify is not available');
+        }
+
         $notification = (new Notification())
             ->setBody('I\'m the notification body')
             ->setTitle('I\'m the notification title')
@@ -80,7 +88,6 @@ class LibNotifyDriverTest extends AbstractDriverTestCase
             $this->markTestSkipped('Notification was not sent');
         }
 
-        $this->assertTrue($result);
         $this->assertTrue((new LibNotifyDriver())->send($notification));
         $this->assertTrue((new LibNotifyDriver())->send($notification));
     }

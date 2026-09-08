@@ -18,6 +18,7 @@ use Joli\JoliNotif\Driver\KDialogDriver;
 use Joli\JoliNotif\Driver\LibNotifyDriver;
 use Joli\JoliNotif\Driver\NotifuDriver;
 use Joli\JoliNotif\Driver\NotifySendDriver;
+use Joli\JoliNotif\Driver\PowerShellDriver;
 use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
 use Joli\JoliNotif\Notification;
@@ -43,6 +44,7 @@ class DefaultNotifierTest extends TestCase
             ];
         } else {
             $expectedDriverClasses = [
+                PowerShellDriver::class,
                 SnoreToastDriver::class,
                 NotifuDriver::class,
             ];
@@ -50,6 +52,7 @@ class DefaultNotifierTest extends TestCase
 
         $driver = $notifier->getDriver();
 
+        $this->assertNotNull($driver);
         $this->assertContains($driver::class, $expectedDriverClasses);
     }
 

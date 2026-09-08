@@ -54,7 +54,7 @@ class AppleScriptDriverTest extends AbstractDriverTestCase
             ->setBody('a\" & (do shell script "id") & "')
         ;
 
-        $arguments = $this->invokeMethod($this->getDriver(), 'getCommandLineArguments', [$notification]);
+        $arguments = $this->getCommandLineArguments($this->getDriver(), $notification);
 
         $this->assertSame('display notification "a\\\\\" & (do shell script \"id\") & \""', $arguments[1]);
     }

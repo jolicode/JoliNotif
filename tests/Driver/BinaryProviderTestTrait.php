@@ -11,8 +11,6 @@
 
 namespace Joli\JoliNotif\tests\Driver;
 
-use Joli\JoliNotif\Driver\BinaryProviderInterface;
-
 /**
  * Classes using this trait should extend AbstractDriverTestCase.
  */
@@ -20,7 +18,6 @@ trait BinaryProviderTestTrait
 {
     public function testRootDirectoryExists(): void
     {
-        /** @var BinaryProviderInterface $driver */
         $driver = $this->getDriver();
 
         $this->assertDirectoryExists($driver->getRootDir());
@@ -28,7 +25,6 @@ trait BinaryProviderTestTrait
 
     public function testEmbeddedBinaryExists(): void
     {
-        /** @var BinaryProviderInterface $driver */
         $driver = $this->getDriver();
 
         $this->assertFileExists($driver->getRootDir() . \DIRECTORY_SEPARATOR . $driver->getEmbeddedBinary());
@@ -36,7 +32,6 @@ trait BinaryProviderTestTrait
 
     public function testExtraFilesExist(): void
     {
-        /** @var BinaryProviderInterface $driver */
         $driver = $this->getDriver();
 
         if (!$driver->getExtraFiles()) {

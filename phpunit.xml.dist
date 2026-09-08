@@ -2,7 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.4/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php">
   <php>
     <ini name="error_reporting" value="-1"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=13"/>
   </php>
   <testsuites>
     <testsuite name="JoliNotif Test Suite">
@@ -11,10 +10,7 @@
   </testsuites>
   <source>
     <include>
-      <directory>./</directory>
+      <directory>./src</directory>
     </include>
-    <exclude>
-      <directory>./vendor</directory>
-    </exclude>
   </source>
 </phpunit>
