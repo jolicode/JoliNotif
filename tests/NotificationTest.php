@@ -50,7 +50,7 @@ class NotificationTest extends TestCase
         ;
 
         $phar = new \Phar($pharPath);
-        $phar->buildFromIterator($files, $rootPackage);
+        $phar->buildFromIterator($files->getIterator(), $rootPackage);
         $phar->addFromString('bootstrap.php', str_replace(
             '{{ THE_ICON }}',
             $iconRelativePath,
@@ -72,6 +72,6 @@ class NotificationTest extends TestCase
         $notification = new Notification();
         $notification->setIcon(__DIR__ . '/../tests/fixtures/image.gif');
 
-        $this->assertFileEquals(__DIR__ . '/fixtures/image.gif', $notification->getIcon());
+        $this->assertSame(realpath(__DIR__ . '/fixtures/image.gif'), $notification->getIcon());
     }
 }

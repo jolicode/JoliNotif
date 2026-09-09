@@ -12,6 +12,7 @@
 namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
+use Joli\JoliNotif\Notification;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractDriverTestCase extends TestCase
@@ -25,25 +26,25 @@ abstract class AbstractDriverTestCase extends TestCase
             copy(\dirname(__DIR__) . '/fixtures/image.gif', $iconDir . '/image.gif');
         }
 
-        return $iconDir;
+        // Resolve symlinks (e.g. /var -> /private/var on macOS) to match Notification::setIcon()
+        return (string) realpath($iconDir);
     }
 
     abstract protected function getDriver(): DriverInterface;
 
     /**
-     * Call protected/private method of a class.
-     *
-     * @param object $object     instantiated object that we will run method on
-     * @param string $methodName Method name to call
-     * @param array  $parameters array of parameters to pass into method
-     *
-     * @return mixed method return
+     * @return list<string|int>
      */
-    protected function invokeMethod($object, string $methodName, array $parameters = [])
+    protected function getCommandLineArguments(DriverInterface $driver, Notification $notification): array
     {
-        $reflection = new \ReflectionClass($object::class);
-        $method = $reflection->getMethod($methodName);
+        $method = new \ReflectionMethod($driver, 'getCommandLineArguments');
 
-        return $method->invokeArgs($object, $parameters);
+        $arguments = $method->invoke($driver, $notification);
+        $this->assertIsList($arguments);
+
+        return array_map(static fn (mixed $argument): string|int => match (true) {
+            \is_int($argument), \is_string($argument) => $argument,
+            default => self::fail('Command line arguments must be strings or integers'),
+        }, $arguments);
     }
 }

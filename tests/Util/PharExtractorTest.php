@@ -121,7 +121,7 @@ class PharExtractorTest extends TestCase
         ;
 
         $phar = new \Phar($pharPath);
-        $phar->buildFromIterator($files, $rootPackage);
+        $phar->buildFromIterator($files->getIterator(), $rootPackage);
         $phar->addFromString('bootstrap.php', str_replace(
             [
                 '{{ THE_FILE }}',

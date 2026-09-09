@@ -14,8 +14,8 @@ namespace Joli\JoliNotif\Driver;
 use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\PharExtractor;
-use JoliCode\PhpOsHelper\OsHelper;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
 /**
@@ -111,26 +111,7 @@ abstract class AbstractCliBasedDriver implements DriverInterface
      */
     protected function isBinaryAvailable(): bool
     {
-        if (OsHelper::isUnix()) {
-            // Do not use the 'which' program to check if a binary exists.
-            // See also http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-            $process = new Process([
-                'sh',
-                '-c',
-                'command -v $0',
-                $this->getBinary(),
-            ]);
-        } else {
-            // 'where' is available on Windows since Server 2003
-            $process = new Process([
-                'where',
-                $this->getBinary(),
-            ]);
-        }
-
-        $process->run();
-
-        return $process->isSuccessful();
+        return null !== (new ExecutableFinder())->find($this->getBinary());
     }
 
     protected function launchProcess(Process $process): void
@@ -139,7 +120,7 @@ abstract class AbstractCliBasedDriver implements DriverInterface
 
         if (!$process->isSuccessful()) {
             $this->logger->error('Failed to send notification: ' . $process->getErrorOutput(), [
-                'driver' => self::class,
+                'driver' => static::class,
                 'command' => $process->getCommandLine(),
                 'exit_code' => $process->getExitCode(),
             ]);

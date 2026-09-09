@@ -12,6 +12,7 @@
 namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
+use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -26,9 +27,9 @@ trait AbstractCliBasedDriverTestTrait
     public function testIsSupported(): void
     {
         if (OsHelper::isUnix()) {
-            $commandLine = 'command -v ' . static::BINARY . ' >/dev/null 2>&1';
+            $commandLine = 'command -v ' . self::BINARY . ' >/dev/null 2>&1';
         } else {
-            $commandLine = 'where ' . static::BINARY;
+            $commandLine = 'where ' . self::BINARY;
         }
 
         passthru($commandLine, $return);
@@ -40,15 +41,14 @@ trait AbstractCliBasedDriverTestTrait
     #[DataProvider('provideValidNotifications')]
     public function testConfigureProcessAcceptAnyValidNotification(Notification $notification, string $expectedCommandLine): void
     {
-        try {
-            $arguments = $this->invokeMethod($this->getDriver(), 'getCommandLineArguments', [$notification]);
+        $arguments = array_map(strval(...), $this->getCommandLineArguments($this->getDriver(), $notification));
 
-            $this->assertSame($expectedCommandLine, (new Process(array_merge([self::BINARY], $arguments)))->getCommandLine());
-        } catch (\Exception $e) {
-            $this->fail($e->getMessage());
-        }
+        $this->assertSame($expectedCommandLine, (new Process([self::BINARY, ...$arguments]))->getCommandLine());
     }
 
+    /**
+     * @return iterable<string, array{Notification, string}>
+     */
     public static function provideValidNotifications(): iterable
     {
         $iconDir = self::getIconDir();
@@ -102,31 +102,16 @@ trait AbstractCliBasedDriverTestTrait
 
     public function testSendThrowsExceptionWhenNotificationDoesntHaveBody(): void
     {
-        $driver = $this->getDriver();
+        $this->expectException(InvalidNotificationException::class);
 
-        $notification = new Notification();
-
-        try {
-            $driver->send($notification);
-            $this->fail('Expected a InvalidNotificationException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
-        }
+        $this->getDriver()->send(new Notification());
     }
 
     public function testSendThrowsExceptionWhenNotificationHasAnEmptyBody(): void
     {
-        $driver = $this->getDriver();
+        $this->expectException(InvalidNotificationException::class);
 
-        $notification = new Notification();
-        $notification->setBody('');
-
-        try {
-            $driver->send($notification);
-            $this->fail('Expected a InvalidNotificationException');
-        } catch (\Exception $e) {
-            $this->assertInstanceOf('Joli\JoliNotif\Exception\InvalidNotificationException', $e);
-        }
+        $this->getDriver()->send((new Notification())->setBody(''));
     }
 
     abstract protected function getDriver(): DriverInterface;

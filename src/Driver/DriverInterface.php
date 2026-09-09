@@ -15,9 +15,6 @@ use Joli\JoliNotif\Exception\ExceptionInterface;
 use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
 
-/**
- * @internal
- */
 interface DriverInterface
 {
     public const PRIORITY_LOW = 0;

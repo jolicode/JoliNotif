@@ -2,6 +2,13 @@
 
 ## Not released yet
 
+* Fixed script injection in AppleScript and PowerShell drivers: notification content could break out of the generated script
+* Fixed driver class name in the CLI drivers error log
+* Fixed `PharExtractor` crashing when the file belongs to another phar
+* Fixed CLI warning when an option is not provided
+* `DriverInterface` is not marked as `@internal` anymore, so custom drivers can safely implement it
+* `LibNotifyDriver` now relies on the dynamic linker to find libnotify instead of hardcoded paths, adding support for non x86_64 Linux distributions
+
 ## 3.3.1 (2026-07-22)
 
 * Fixed the PowerShell driver on WSL by falling back to `/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe` when `powershell.exe` is not available in `PATH`

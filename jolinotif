@@ -34,17 +34,17 @@ final class Cli
         ],
         'subtitle' => [
             'name'     => 'subtitle',
-            'info'     => 'Notification subtitle. Only works on macOS (AppleScriptNotifier).',
+            'info'     => 'Notification subtitle. Only works on macOS (AppleScriptDriver).',
             'required' => false,
         ],
         'sound'    => [
             'name'     => 'sound',
-            'info'     => 'Notification sound. Only works on macOS (AppleScriptNotifier).',
+            'info'     => 'Notification sound. Only works on macOS (AppleScriptDriver and TerminalNotifierDriver).',
             'required' => false,
         ],
         'url'      => [
             'name'     => 'url',
-            'info'     => 'Notification url. Only works on macOS (TerminalNotifierNotifier).',
+            'info'     => 'Notification url. Only works on macOS (TerminalNotifierDriver).',
             'required' => false,
         ],
         'help'     => [
@@ -86,7 +86,7 @@ final class Cli
 
     public function getOption(string $name): mixed
     {
-        return $this->arguments[$name] ?: false;
+        return $this->arguments[$name] ?? false;
     }
 
     public function getStringOption(string $name): string

@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\AppleScriptDriver;
 use Joli\JoliNotif\Driver\DriverInterface;
+use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
 use Psr\Log\NullLogger;
 
@@ -45,6 +46,17 @@ class AppleScriptDriverTest extends AbstractDriverTestCase
         $driver = $this->getDriver();
 
         $this->assertSame(DriverInterface::PRIORITY_LOW, $driver->getPriority());
+    }
+
+    public function testItEscapesBackslashesAndQuotes(): void
+    {
+        $notification = (new Notification())
+            ->setBody('a\" & (do shell script "id") & "')
+        ;
+
+        $arguments = $this->getCommandLineArguments($this->getDriver(), $notification);
+
+        $this->assertSame('display notification "a\\\\\" & (do shell script \"id\") & \""', $arguments[1]);
     }
 
     protected function getDriver(): AppleScriptDriver

@@ -42,23 +42,32 @@ class AppleScriptDriver extends AbstractCliBasedDriver
 
     protected function getCommandLineArguments(Notification $notification): array
     {
-        $script = 'display notification "' . str_replace('"', '\"', $notification->getBody() ?? '') . '"';
+        $script = 'display notification ' . self::quote($notification->getBody() ?? '');
 
         if ($notification->getTitle()) {
-            $script .= ' with title "' . str_replace('"', '\"', $notification->getTitle()) . '"';
+            $script .= ' with title ' . self::quote($notification->getTitle());
         }
 
         if ($notification->getOption('subtitle')) {
-            $script .= ' subtitle "' . str_replace('"', '\"', (string) $notification->getOption('subtitle')) . '"';
+            $script .= ' subtitle ' . self::quote((string) $notification->getOption('subtitle'));
         }
 
         if ($notification->getOption('sound')) {
-            $script .= ' sound name "' . str_replace('"', '\"', (string) $notification->getOption('sound')) . '"';
+            $script .= ' sound name ' . self::quote((string) $notification->getOption('sound'));
         }
 
         return [
             '-e',
             $script,
         ];
+    }
+
+    /**
+     * Escape both backslashes and double quotes, otherwise a crafted value
+     * could break out of the string and inject arbitrary AppleScript.
+     */
+    private static function quote(string $value): string
+    {
+        return '"' . addcslashes($value, '"\\') . '"';
     }
 }
