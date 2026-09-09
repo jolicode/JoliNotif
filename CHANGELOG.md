@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+## 3.4.0 (2026-09-09)
+
 * Fixed script injection in AppleScript and PowerShell drivers: notification content could break out of the generated script
 * Fixed driver class name in the CLI drivers error log
 * Fixed `PharExtractor` crashing when the file belongs to another phar
