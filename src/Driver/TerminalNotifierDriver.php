@@ -12,11 +12,9 @@
 namespace Joli\JoliNotif\Driver;
 
 use Joli\JoliNotif\Notification;
-use JoliCode\PhpOsHelper\OsHelper;
 
 /**
- * This driver can be used on Mac OS X 10.8, or higher, using the
- * terminal-notifier binary.
+ * This driver can be used on macOS using the terminal-notifier binary.
  *
  * @internal
  */
@@ -44,7 +42,7 @@ class TerminalNotifierDriver extends AbstractCliBasedDriver
             $arguments[] = $notification->getTitle();
         }
 
-        if ($notification->getIcon() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+        if ($notification->getIcon()) {
             $arguments[] = '-contentImage';
             $arguments[] = $notification->getIcon();
         }

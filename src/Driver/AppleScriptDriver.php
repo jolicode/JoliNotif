@@ -15,7 +15,7 @@ use Joli\JoliNotif\Notification;
 use JoliCode\PhpOsHelper\OsHelper;
 
 /**
- * This driver can be used on Mac OS X 10.9+.
+ * This driver can be used on macOS.
  *
  * @internal
  */
@@ -23,11 +23,7 @@ class AppleScriptDriver extends AbstractCliBasedDriver
 {
     public function isSupported(): bool
     {
-        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            return parent::isSupported();
-        }
-
-        return false;
+        return OsHelper::isMacOS() && parent::isSupported();
     }
 
     public function getBinary(): string

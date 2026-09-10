@@ -13,7 +13,6 @@ namespace Joli\JoliNotif\Driver;
 
 use Joli\JoliNotif\Exception\InvalidNotificationException;
 use Joli\JoliNotif\Notification;
-use Joli\JoliNotif\Util\PharExtractor;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -26,7 +25,6 @@ abstract class AbstractCliBasedDriver implements DriverInterface
     public const SUPPORT_NONE = -1;
     public const SUPPORT_UNKNOWN = 0;
     public const SUPPORT_NATIVE = 1;
-    public const SUPPORT_BINARY_PROVIDED = 2;
 
     /**
      * @var int One of the SUPPORT_XXX constants
@@ -50,12 +48,6 @@ abstract class AbstractCliBasedDriver implements DriverInterface
             return true;
         }
 
-        if ($this instanceof BinaryProviderInterface && $this->canBeUsed()) {
-            $this->support = self::SUPPORT_BINARY_PROVIDED;
-
-            return true;
-        }
-
         $this->support = self::SUPPORT_NONE;
 
         return false;
@@ -69,26 +61,9 @@ abstract class AbstractCliBasedDriver implements DriverInterface
 
         $arguments = $this->getCommandLineArguments($notification);
 
-        if (self::SUPPORT_BINARY_PROVIDED === $this->support && $this instanceof BinaryProviderInterface) {
-            $dir = rtrim($this->getRootDir(), '/') . '/';
-            $embeddedBinary = $dir . $this->getEmbeddedBinary();
-
-            if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {
-                $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
-
-                foreach ($this->getExtraFiles() as $file) {
-                    PharExtractor::extractFile($dir . $file);
-                }
-            }
-
-            $binary = $embeddedBinary;
-        } else {
-            $binary = $this->getBinary();
-        }
-
         $arguments = array_map(static fn ($argument) => (string) $argument, $arguments);
 
-        $process = new Process(array_merge([$binary], $arguments));
+        $process = new Process([$this->getBinary(), ...$arguments]);
         $this->launchProcess($process);
 
         return $this->handleExitCode($process);

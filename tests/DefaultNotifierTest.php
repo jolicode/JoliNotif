@@ -13,13 +13,10 @@ namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\DefaultNotifier;
 use Joli\JoliNotif\Driver\AppleScriptDriver;
-use Joli\JoliNotif\Driver\GrowlNotifyDriver;
 use Joli\JoliNotif\Driver\KDialogDriver;
 use Joli\JoliNotif\Driver\LibNotifyDriver;
-use Joli\JoliNotif\Driver\NotifuDriver;
 use Joli\JoliNotif\Driver\NotifySendDriver;
 use Joli\JoliNotif\Driver\PowerShellDriver;
-use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\tests\fixtures\ConfigurableDriver;
@@ -36,7 +33,6 @@ class DefaultNotifierTest extends TestCase
         if (OsHelper::isUnix()) {
             $expectedDriverClasses = [
                 LibNotifyDriver::class,
-                GrowlNotifyDriver::class,
                 TerminalNotifierDriver::class,
                 AppleScriptDriver::class,
                 KDialogDriver::class,
@@ -45,8 +41,6 @@ class DefaultNotifierTest extends TestCase
         } else {
             $expectedDriverClasses = [
                 PowerShellDriver::class,
-                SnoreToastDriver::class,
-                NotifuDriver::class,
             ];
         }
 

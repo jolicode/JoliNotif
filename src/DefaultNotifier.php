@@ -13,13 +13,10 @@ namespace Joli\JoliNotif;
 
 use Joli\JoliNotif\Driver\AppleScriptDriver;
 use Joli\JoliNotif\Driver\DriverInterface;
-use Joli\JoliNotif\Driver\GrowlNotifyDriver;
 use Joli\JoliNotif\Driver\KDialogDriver;
 use Joli\JoliNotif\Driver\LibNotifyDriver;
-use Joli\JoliNotif\Driver\NotifuDriver;
 use Joli\JoliNotif\Driver\NotifySendDriver;
 use Joli\JoliNotif\Driver\PowerShellDriver;
-use Joli\JoliNotif\Driver\SnoreToastDriver;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
 use Joli\JoliNotif\Exception\DriverFailureException;
 use JoliCode\PhpOsHelper\OsHelper;
@@ -135,7 +132,6 @@ class DefaultNotifier implements NotifierInterface
     {
         return [
             new LibNotifyDriver(),
-            new GrowlNotifyDriver($this->logger),
             new TerminalNotifierDriver($this->logger),
             new AppleScriptDriver($this->logger),
             new KDialogDriver($this->logger),
@@ -150,8 +146,6 @@ class DefaultNotifier implements NotifierInterface
     {
         return [
             new PowerShellDriver($this->logger),
-            new SnoreToastDriver($this->logger),
-            new NotifuDriver($this->logger),
         ];
     }
 }

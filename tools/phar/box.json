@@ -1,7 +1,6 @@
 {
   "base-path": "../../",
   "directories": [
-      "bin",
       "src",
       "vendor"
   ],

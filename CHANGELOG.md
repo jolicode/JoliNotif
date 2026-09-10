@@ -2,6 +2,11 @@
 
 ## Not released yet
 
+* Drop support for Windows < 10: removed the SnoreToast and Notifu drivers and their embedded binaries, Windows notifications now rely only on the PowerShell driver
+* Removed the Growl driver as Growl is discontinued since 2020
+* Removed `Joli\JoliNotif\Driver\BinaryProviderInterface` and the `AbstractCliBasedDriver::SUPPORT_BINARY_PROVIDED` constant
+* `AppleScriptDriver` no longer checks for macOS 10.9 or higher
+
 ## 3.4.0 (2026-09-09)
 
 * Fixed script injection in AppleScript and PowerShell drivers: notification content could break out of the generated script
