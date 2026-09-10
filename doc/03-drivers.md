@@ -13,8 +13,7 @@ false otherwise.
 ## Supported drivers
 
 JoliNotif supports different kinds of drivers. Some driver load a C library
-while most of the others execute a binary (whether it is available on your
-system or provided by JoliNotif directly).
+while most of the others execute a binary available on your system.
 
 Here is the full list of supported drivers, grouped by platform:
 
@@ -48,26 +47,15 @@ needs to be part of the command line.
 
 ### Mac OS
 
-#### GrowlNotifyDriver
-
-This driver uses the `growlnotify` executable. It can be used when available
-alongside growl, which can be installed on Mac OS X.
-
-growl can display notification with a body, a title and an icon.
-
 #### TerminalNotifierDriver
 
-This driver uses the `terminal-notifier` executable and works on Mac OS X 10.8
-and higher.
+This driver uses the `terminal-notifier` executable on macOS.
 
-terminal-notifier can display notification with a body and a title. An icon can
-only be displayed on Mac OS X 10.9 and higher.
+terminal-notifier can display notification with a body, a title and an icon.
 
 #### AppleScriptDriver
 
 This driver is based on AppleScript and uses the `osascript` binary.
-AppleScript can display notification since Mac OS X 10.9, so this driver
-requires this version or higher.
 
 AppleScript can display notification with only a body and a title. AppleScript
 don't support to set an icon and will always use instead the icon of the
@@ -88,18 +76,6 @@ PowerShellDriver can display notification with a body, a title and an icon.
 > Inside WSL, the icon path must come from the Windows filesystem, so it should be
 > something like `C:\path\to\icon.png` or `/mnt/c/path/to/icon.png` in order to
 > be correctly displayed.
-
-#### SnoreToastDriver
-
-This driver uses the Windows application called SnoreToast. It works on
-Windows 8 and higher. Because SnoreToast is probably not installed on
-your system, JoliNotif embed the binaries inside the [bin/snoreToast](../bin/snoreToast)
-directory.
-
-When you use JoliNotif inside a phar archive, we take care to extract those
-binaries in the system temp directory to be able to execute them.
-
-SnoreToastDriver can display notification with a body, a title and an icon.
 
 ## Using custom drivers
 

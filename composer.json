@@ -1,7 +1,7 @@
 {
     "name": "jolicode/jolinotif",
     "description": "Send desktop notifications on Windows, Linux, MacOS.",
-    "keywords": ["notification", "windows", "linux", "mac", "growl"],
+    "keywords": ["notification", "windows", "linux", "mac"],
     "license": "MIT",
     "type": "library",
     "authors": [

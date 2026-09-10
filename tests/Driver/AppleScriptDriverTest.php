@@ -27,7 +27,7 @@ class AppleScriptDriverTest extends AbstractDriverTestCase
     {
         $driver = $this->getDriver();
 
-        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
+        if (OsHelper::isMacOS()) {
             $this->assertTrue($driver->isSupported());
         } else {
             $this->assertFalse($driver->isSupported());

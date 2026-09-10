@@ -13,7 +13,6 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\TerminalNotifierDriver;
-use JoliCode\PhpOsHelper\OsHelper;
 use Psr\Log\NullLogger;
 
 class TerminalNotifierDriverTest extends AbstractDriverTestCase
@@ -71,31 +70,19 @@ class TerminalNotifierDriverTest extends AbstractDriverTestCase
 
     protected static function getExpectedCommandLineForNotificationWithAnIcon(): string
     {
-        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $iconDir = self::getIconDir();
+        $iconDir = self::getIconDir();
 
-            return <<<CLI
-                'terminal-notifier' '-message' 'I'\\''m the notification body' '-contentImage' '{$iconDir}/image.gif'
-                CLI;
-        }
-
-        return <<<'CLI'
-            'terminal-notifier' '-message' 'I'\''m the notification body'
+        return <<<CLI
+            'terminal-notifier' '-message' 'I'\\''m the notification body' '-contentImage' '{$iconDir}/image.gif'
             CLI;
     }
 
     protected static function getExpectedCommandLineForNotificationWithAllOptions(): string
     {
-        if (OsHelper::isMacOS() && version_compare(OsHelper::getMacOSVersion(), '10.9.0', '>=')) {
-            $iconDir = self::getIconDir();
+        $iconDir = self::getIconDir();
 
-            return <<<CLI
-                'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-contentImage' '{$iconDir}/image.gif' '-open' 'https://google.com' '-sound' 'Frog'
-                CLI;
-        }
-
-        return <<<'CLI'
-            'terminal-notifier' '-message' 'I'\''m the notification body' '-title' 'I'\''m the notification title' '-open' 'https://google.com' '-sound' 'Frog'
+        return <<<CLI
+            'terminal-notifier' '-message' 'I'\\''m the notification body' '-title' 'I'\\''m the notification title' '-contentImage' '{$iconDir}/image.gif' '-open' 'https://google.com' '-sound' 'Frog'
             CLI;
     }
 }
