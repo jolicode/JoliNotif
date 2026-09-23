@@ -3,6 +3,7 @@
 ## Not released yet
 
 * PHAR resources are now extracted to a private directory in the current user's home folder
+* Fixed argument injection in `NotifySendDriver`: notification titles and bodies could be interpreted as `notify-send` options, potentially causing denial of service
 
 ## 3.4.0 (2026-09-09)
 

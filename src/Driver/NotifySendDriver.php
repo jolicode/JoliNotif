@@ -40,6 +40,8 @@ class NotifySendDriver extends AbstractCliBasedDriver
             $arguments[] = $notification->getIcon();
         }
 
+        $arguments[] = '--';
+
         if ($notification->getTitle()) {
             $arguments[] = $notification->getTitle();
         }
