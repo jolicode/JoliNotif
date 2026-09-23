@@ -2,6 +2,8 @@
 
 ## Not released yet
 
+* PHAR resources are now extracted to a private directory in the current user's home folder
+
 ## 3.4.0 (2026-09-09)
 
 * Fixed script injection in AppleScript and PowerShell drivers: notification content could break out of the generated script
