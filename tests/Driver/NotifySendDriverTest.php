@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests\Driver;
 
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Driver\NotifySendDriver;
+use Joli\JoliNotif\Notification;
 use Psr\Log\NullLogger;
 
 class NotifySendDriverTest extends AbstractDriverTestCase
@@ -35,6 +36,18 @@ class NotifySendDriverTest extends AbstractDriverTestCase
         $this->assertSame(DriverInterface::PRIORITY_MEDIUM, $driver->getPriority());
     }
 
+    public function testNotificationContentCannotBeParsedAsOptions(): void
+    {
+        $notification = (new Notification())
+            ->setTitle('--version')
+            ->setBody('--wait');
+
+        $this->assertSame(
+            ['--', '--version', '--wait'],
+            $this->getCommandLineArguments($this->getDriver(), $notification),
+        );
+    }
+
     protected function getDriver(): NotifySendDriver
     {
         return new NotifySendDriver(new NullLogger());
@@ -43,14 +56,14 @@ class NotifySendDriverTest extends AbstractDriverTestCase
     protected static function getExpectedCommandLineForNotification(): string
     {
         return <<<'CLI'
-            'notify-send' 'I'\''m the notification body'
+            'notify-send' '--' 'I'\''m the notification body'
             CLI;
     }
 
     protected static function getExpectedCommandLineForNotificationWithATitle(): string
     {
         return <<<'CLI'
-            'notify-send' 'I'\''m the notification title' 'I'\''m the notification body'
+            'notify-send' '--' 'I'\''m the notification title' 'I'\''m the notification body'
             CLI;
     }
 
@@ -59,7 +72,7 @@ class NotifySendDriverTest extends AbstractDriverTestCase
         $iconDir = self::getIconDir();
 
         return <<<CLI
-            'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification body'
+            'notify-send' '--icon' '{$iconDir}/image.gif' '--' 'I'\\''m the notification body'
             CLI;
     }
 
@@ -68,7 +81,7 @@ class NotifySendDriverTest extends AbstractDriverTestCase
         $iconDir = self::getIconDir();
 
         return <<<CLI
-            'notify-send' '--icon' '{$iconDir}/image.gif' 'I'\\''m the notification title' 'I'\\''m the notification body'
+            'notify-send' '--icon' '{$iconDir}/image.gif' '--' 'I'\\''m the notification title' 'I'\\''m the notification body'
             CLI;
     }
 }
