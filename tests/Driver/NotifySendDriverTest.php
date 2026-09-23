@@ -40,7 +40,8 @@ class NotifySendDriverTest extends AbstractDriverTestCase
     {
         $notification = (new Notification())
             ->setTitle('--version')
-            ->setBody('--wait');
+            ->setBody('--wait')
+        ;
 
         $this->assertSame(
             ['--', '--version', '--wait'],
