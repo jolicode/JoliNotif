@@ -30,6 +30,16 @@ page](https://github.com/jolicode/JoliNotif/releases):
 curl https://github.com/jolicode/JoliNotif/releases/latest/download/jolinotif.phar && sudo mv jolinotif.phar /usr/local/bin/jolinotif
 ```
 
+### PHAR resource cache
+
+When running from a PHAR, JoliNotif extracts embedded binaries and icons into a
+per-user cache:
+
+* Linux, macOS, and other Unix systems: `$HOME/.jolinotif`.
+* Windows: `%LOCALAPPDATA%\JoliNotif`.
+
+The base location must be trusted and writable by the current user.
+
 ## Usage
 
 ```bash
