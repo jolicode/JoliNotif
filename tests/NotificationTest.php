@@ -29,7 +29,8 @@ class NotificationTest extends TestCase
         $homeDir = $testDir . '/home';
         $pharPath = $testDir . '/notification-extract-icon-' . $key . '.phar';
 
-        mkdir($homeDir, 0o700, true);
+        $filesystem = new Filesystem();
+        $filesystem->mkdir($homeDir, 0o700);
 
         $bootstrap = <<<'PHAR_BOOTSTRAP'
             <?php
@@ -85,7 +86,7 @@ class NotificationTest extends TestCase
                 \Phar::unlinkArchive($pharPath);
             }
 
-            (new Filesystem())->remove($testDir);
+            $filesystem->remove($testDir);
         }
     }
 

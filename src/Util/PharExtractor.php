@@ -12,6 +12,7 @@
 namespace Joli\JoliNotif\Util;
 
 use Joli\JoliNotif\Exception\PharExtractionException;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -53,6 +54,7 @@ class PharExtractor
         $extractionDir = self::getExtractionDirectory($pharPath);
         $extractedFilePath = $extractionDir . '/' . $relativeFilePath;
         $lockPath = $extractionDir . '/.lock';
+        $filesystem = new Filesystem();
         $lock = fopen($lockPath, 'c');
 
         if (false === $lock) {
@@ -65,12 +67,16 @@ class PharExtractor
             }
 
             // Mark the directory as still in use, so it does not get pruned.
-            touch($lockPath);
+            try {
+                $filesystem->touch($lockPath);
+            } catch (IOException) {
+                // At worst, the directory will be extracted again after being pruned.
+            }
 
             // Check after acquiring the lock: another process may have extracted the file.
             clearstatcache(true, $extractedFilePath);
 
-            if (!file_exists($extractedFilePath) || $overwrite) {
+            if (!$filesystem->exists($extractedFilePath) || $overwrite) {
                 $phar = new \Phar($pharPath);
                 $phar->extractTo($extractionDir, $relativeFilePath, $overwrite);
             }
@@ -174,7 +180,11 @@ class PharExtractor
     private static function createPrivateDirectory(string $directory): void
     {
         // A concurrent creator is fine; validate the resulting directory in either case.
-        @mkdir($directory, 0o700, true);
+        try {
+            (new Filesystem())->mkdir($directory, 0o700);
+        } catch (IOException) {
+        }
+
         clearstatcache(true, $directory);
         $stat = @lstat($directory);
 

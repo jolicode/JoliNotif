@@ -27,13 +27,15 @@ class PharExtractorTest extends TestCase
      */
     private array $pharPaths = [];
 
+    private Filesystem $filesystem;
+
     protected function setUp(): void
     {
         $this->testDir = sys_get_temp_dir() . '/jolinotif-' . bin2hex(random_bytes(8));
         $this->homeDir = $this->testDir . '/home';
         $this->tmpDir = $this->testDir . '/tmp';
-        mkdir($this->homeDir, 0o700, true);
-        mkdir($this->tmpDir, 0o700);
+        $this->filesystem = new Filesystem();
+        $this->filesystem->mkdir([$this->homeDir, $this->tmpDir], 0o700);
     }
 
     protected function tearDown(): void
@@ -42,7 +44,7 @@ class PharExtractorTest extends TestCase
             \Phar::unlinkArchive($pharPath);
         }
 
-        (new Filesystem())->remove($this->testDir);
+        $this->filesystem->remove($this->testDir);
     }
 
     public function testIsLocatedInsideAPhar(): void
@@ -74,7 +76,7 @@ class PharExtractorTest extends TestCase
         $pharPath = $this->generatePhar('contents');
         $this->getProcess($pharPath)->mustRun();
         $extractedFilePath = $this->getExtractedFilePath($pharPath);
-        file_put_contents($extractedFilePath, 'cached contents');
+        $this->filesystem->dumpFile($extractedFilePath, 'cached contents');
 
         $this->getProcess($pharPath)->mustRun();
 
@@ -86,7 +88,7 @@ class PharExtractorTest extends TestCase
         $pharPath = $this->generatePhar('contents');
         $this->getProcess($pharPath)->mustRun();
         $extractedFilePath = $this->getExtractedFilePath($pharPath);
-        file_put_contents($extractedFilePath, 'cached contents');
+        $this->filesystem->dumpFile($extractedFilePath, 'cached contents');
 
         $this->getProcess($pharPath, ['--overwrite'])->mustRun();
 
@@ -139,8 +141,8 @@ class PharExtractorTest extends TestCase
             self::markTestSkipped('The temporary directory is always used on Windows.');
         }
 
-        mkdir($this->getCacheDirectory(), 0o777, true);
-        chmod($this->getCacheDirectory(), 0o777);
+        $this->filesystem->mkdir($this->getCacheDirectory());
+        $this->filesystem->chmod($this->getCacheDirectory(), 0o777);
         $pharPath = $this->generatePhar('contents');
         $process = $this->getProcess($pharPath);
         $process->mustRun();
@@ -155,8 +157,8 @@ class PharExtractorTest extends TestCase
         }
 
         $targetDir = $this->testDir . '/untrusted';
-        mkdir($targetDir, 0o700);
-        symlink($targetDir, $this->getFallbackCacheDirectory());
+        $this->filesystem->mkdir($targetDir, 0o700);
+        $this->filesystem->symlink($targetDir, $this->getFallbackCacheDirectory());
         $process = $this->getProcess($this->generatePhar('contents'), [], ['HOME' => false]);
 
         $this->assertExtractionFails($process, 'not a real directory');
@@ -169,8 +171,8 @@ class PharExtractorTest extends TestCase
         }
 
         $cacheDir = $this->getFallbackCacheDirectory();
-        mkdir($cacheDir, 0o700);
-        chmod($cacheDir, 0o777);
+        $this->filesystem->mkdir($cacheDir, 0o700);
+        $this->filesystem->chmod($cacheDir, 0o777);
         $process = $this->getProcess($this->generatePhar('contents'), [], ['HOME' => false]);
 
         $this->assertExtractionFails($process, 'permissions 0700');
@@ -181,13 +183,10 @@ class PharExtractorTest extends TestCase
     {
         $staleDir = $this->getCacheDirectory() . '/stale';
         $recentDir = $this->getCacheDirectory() . '/recent';
-        mkdir($staleDir . '/path', 0o700, true);
-        mkdir($recentDir, 0o700);
-        touch($staleDir . '/path/file.txt');
-        touch($staleDir . '/.lock', time() - 40 * 24 * 3600);
-        touch($staleDir, time() - 40 * 24 * 3600);
-        touch($recentDir . '/.lock', time() - 40 * 24 * 3600);
-        touch($recentDir . '/.lock');
+        $this->filesystem->mkdir([$staleDir . '/path', $recentDir], 0o700);
+        $this->filesystem->touch($staleDir . '/path/file.txt');
+        $this->filesystem->touch([$staleDir . '/.lock', $staleDir], time() - 40 * 24 * 3600);
+        $this->filesystem->touch($recentDir . '/.lock');
 
         $this->getProcess($this->generatePhar('contents'))->mustRun();
 
@@ -250,6 +249,9 @@ class PharExtractorTest extends TestCase
         $bootstrap = <<<'PHAR_BOOTSTRAP'
             <?php
 
+            require __DIR__.'/vendor/symfony/filesystem/Exception/ExceptionInterface.php';
+            require __DIR__.'/vendor/symfony/filesystem/Exception/IOExceptionInterface.php';
+            require __DIR__.'/vendor/symfony/filesystem/Exception/IOException.php';
             require __DIR__.'/vendor/symfony/filesystem/Filesystem.php';
             require __DIR__.'/src/Exception/ExceptionInterface.php';
             require __DIR__.'/src/Exception/PharExtractionException.php';
@@ -267,6 +269,9 @@ class PharExtractorTest extends TestCase
         $phar = new \Phar($pharPath);
 
         $files = [
+            'vendor/symfony/filesystem/Exception/ExceptionInterface.php',
+            'vendor/symfony/filesystem/Exception/IOExceptionInterface.php',
+            'vendor/symfony/filesystem/Exception/IOException.php',
             'vendor/symfony/filesystem/Filesystem.php',
             'src/Exception/ExceptionInterface.php',
             'src/Exception/PharExtractionException.php',
