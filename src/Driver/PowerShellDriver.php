@@ -57,12 +57,7 @@ class PowerShellDriver extends AbstractCliBasedDriver
 
     protected function getCommandLineArguments(Notification $notification): array
     {
-        // Values are injected into single-quoted PowerShell strings: no variable
-        // expansion nor sub-expression evaluation happens there, only the quote
-        // itself needs to be escaped.
-        $body = str_replace("'", "''", (string) $notification->getBody());
-        $title = str_replace("'", "''", (string) $notification->getTitle());
-        $icon = str_replace("'", "''", (string) $notification->getIcon());
+        $icon = (string) $notification->getIcon();
 
         if ($icon && OsHelper::isWindowsSubsystemForLinux() && !preg_match('@^[a-z]:@i', $icon) && !preg_match('@^/mnt/[a-z]@i', $icon)) {
             $this->logger->warning('Only images from Windows volume can be used for PowerShell notification icon inside WSL. Please use a path starting by something like "c:\" or "/mnt/c/".', [
@@ -75,23 +70,35 @@ class PowerShellDriver extends AbstractCliBasedDriver
             $icon = 'file:///' . str_replace('\\', '/', $icon);
         }
 
+        // Values are injected as Base64 and decoded by PowerShell itself: the
+        // Base64 alphabet contains no character that PowerShell could interpret
+        // (it accepts several Unicode quotes as string delimiters), so the
+        // notification content can never break out of the string.
+        $encodedBody = base64_encode((string) $notification->getBody());
+        $encodedTitle = base64_encode((string) $notification->getTitle());
+        $encodedIcon = base64_encode($icon);
+
         $command = <<<POWERSHELL
+            \$body = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('{$encodedBody}'));
+            \$title = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('{$encodedTitle}'));
+            \$icon = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('{$encodedIcon}'));
+
             [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null;
 
             \$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastImageAndText01);
 
             \$textNodes = \$template.GetElementsByTagName("text");
             \$textNodes.Item(0).AppendChild(
-                \$template.CreateTextNode('{$body}')
+                \$template.CreateTextNode(\$body)
             ) | Out-Null;
 
             \$imageNodes = \$template.GetElementsByTagName("image");
 
-            if ('{$icon}' -ne '') {
-                \$imageNodes.Item(0).SetAttribute("src", '{$icon}') | Out-Null;
+            if (\$icon -ne '') {
+                \$imageNodes.Item(0).SetAttribute("src", \$icon) | Out-Null;
             }
 
-            \$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('{$title}');
+            \$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier(\$title);
             \$notifier.Show([Windows.UI.Notifications.ToastNotification]::new(\$template))
             POWERSHELL;
 

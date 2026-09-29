@@ -3,6 +3,7 @@
 ## Not released yet
 
 * Fixed argument injection in `NotifySendDriver`: notification titles and bodies could be interpreted as `notify-send` options, potentially causing denial of service
+* Fixed script injection in `PowerShellDriver`: Unicode quotes in notification content could break out of the generated script and execute arbitrary commands
 
 ## 3.4.0 (2026-09-09)
 
