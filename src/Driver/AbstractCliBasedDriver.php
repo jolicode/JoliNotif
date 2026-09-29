@@ -11,7 +11,9 @@
 
 namespace Joli\JoliNotif\Driver;
 
+use Joli\JoliNotif\Exception\DriverFailureException;
 use Joli\JoliNotif\Exception\InvalidNotificationException;
+use Joli\JoliNotif\Exception\PharExtractionException;
 use Joli\JoliNotif\Notification;
 use Joli\JoliNotif\Util\PharExtractor;
 use Psr\Log\LoggerInterface;
@@ -74,10 +76,14 @@ abstract class AbstractCliBasedDriver implements DriverInterface
             $embeddedBinary = $dir . $this->getEmbeddedBinary();
 
             if (PharExtractor::isLocatedInsideAPhar($embeddedBinary)) {
-                $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
+                try {
+                    $embeddedBinary = PharExtractor::extractFile($embeddedBinary);
 
-                foreach ($this->getExtraFiles() as $file) {
-                    PharExtractor::extractFile($dir . $file);
+                    foreach ($this->getExtraFiles() as $file) {
+                        PharExtractor::extractFile($dir . $file);
+                    }
+                } catch (PharExtractionException $e) {
+                    throw new DriverFailureException($notification, 'Unable to extract the embedded binary: ' . $e->getMessage(), 0, $e);
                 }
             }
 

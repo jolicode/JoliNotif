@@ -13,12 +13,14 @@ namespace Joli\JoliNotif\tests\Util;
 
 use Joli\JoliNotif\Util\PharExtractor;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 class PharExtractorTest extends TestCase
 {
     private string $testDir;
     private string $homeDir;
+    private string $tmpDir;
 
     /**
      * @var list<string>
@@ -29,7 +31,9 @@ class PharExtractorTest extends TestCase
     {
         $this->testDir = sys_get_temp_dir() . '/jolinotif-' . bin2hex(random_bytes(8));
         $this->homeDir = $this->testDir . '/home';
+        $this->tmpDir = $this->testDir . '/tmp';
         mkdir($this->homeDir, 0o700, true);
+        mkdir($this->tmpDir, 0o700);
     }
 
     protected function tearDown(): void
@@ -38,22 +42,7 @@ class PharExtractorTest extends TestCase
             \Phar::unlinkArchive($pharPath);
         }
 
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->testDir, \FilesystemIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST,
-        );
-
-        foreach ($files as $file) {
-            $this->assertInstanceOf(\SplFileInfo::class, $file);
-
-            if ($file->isDir() && !$file->isLink()) {
-                rmdir($file->getPathname());
-            } else {
-                unlink($file->getPathname());
-            }
-        }
-
-        rmdir($this->testDir);
+        (new Filesystem())->remove($this->testDir);
     }
 
     public function testIsLocatedInsideAPhar(): void
@@ -116,17 +105,59 @@ class PharExtractorTest extends TestCase
         $this->assertSame('second archive', file_get_contents($this->getExtractedFilePath($secondPhar)));
     }
 
+    public function testUsesXdgCacheHome(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('The temporary directory is always used on Windows.');
+        }
+
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath, [], ['XDG_CACHE_HOME' => $this->testDir . '/xdg']);
+        $process->mustRun();
+
+        $this->assertSame($this->getExtractedFilePath($pharPath, $this->testDir . '/xdg/jolinotif'), $process->getOutput());
+    }
+
+    public function testFallsBackToTheTemporaryDirectoryWithoutHome(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('The temporary directory is always used on Windows.');
+        }
+
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath, [], ['HOME' => false]);
+        $process->mustRun();
+        $extractedFilePath = $this->getExtractedFilePath($pharPath, $this->getFallbackCacheDirectory());
+
+        $this->assertSame($extractedFilePath, $process->getOutput());
+        $this->assertSame('contents', file_get_contents($extractedFilePath));
+    }
+
+    public function testFallsBackToTheTemporaryDirectoryWithUnusableHome(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('The temporary directory is always used on Windows.');
+        }
+
+        mkdir($this->getCacheDirectory(), 0o777, true);
+        chmod($this->getCacheDirectory(), 0o777);
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath);
+        $process->mustRun();
+
+        $this->assertSame($this->getExtractedFilePath($pharPath, $this->getFallbackCacheDirectory()), $process->getOutput());
+    }
+
     public function testRejectsASymlinkCacheDirectory(): void
     {
         if ('Windows' === \PHP_OS_FAMILY) {
             self::markTestSkipped('Creating symbolic links requires additional privileges on Windows.');
         }
 
-        $cacheDir = $this->getCacheDirectory();
         $targetDir = $this->testDir . '/untrusted';
         mkdir($targetDir, 0o700);
-        symlink($targetDir, $cacheDir);
-        $process = $this->getProcess($this->generatePhar('contents'));
+        symlink($targetDir, $this->getFallbackCacheDirectory());
+        $process = $this->getProcess($this->generatePhar('contents'), [], ['HOME' => false]);
 
         $this->assertExtractionFails($process, 'not a real directory');
     }
@@ -137,22 +168,45 @@ class PharExtractorTest extends TestCase
             self::markTestSkipped('POSIX permissions are not available on Windows.');
         }
 
-        $cacheDir = $this->getCacheDirectory();
-        mkdir($cacheDir, 0o700, true);
+        $cacheDir = $this->getFallbackCacheDirectory();
+        mkdir($cacheDir, 0o700);
         chmod($cacheDir, 0o777);
-        $process = $this->getProcess($this->generatePhar('contents'));
+        $process = $this->getProcess($this->generatePhar('contents'), [], ['HOME' => false]);
 
         $this->assertExtractionFails($process, 'permissions 0700');
         $this->assertSame(0o777, fileperms($cacheDir) & 0o777);
     }
 
+    public function testPrunesStaleDirectories(): void
+    {
+        $staleDir = $this->getCacheDirectory() . '/stale';
+        $recentDir = $this->getCacheDirectory() . '/recent';
+        mkdir($staleDir . '/path', 0o700, true);
+        mkdir($recentDir, 0o700);
+        touch($staleDir . '/path/file.txt');
+        touch($staleDir . '/.lock', time() - 40 * 24 * 3600);
+        touch($staleDir, time() - 40 * 24 * 3600);
+        touch($recentDir . '/.lock', time() - 40 * 24 * 3600);
+        touch($recentDir . '/.lock');
+
+        $this->getProcess($this->generatePhar('contents'))->mustRun();
+
+        $this->assertDirectoryDoesNotExist($staleDir);
+        $this->assertDirectoryExists($recentDir);
+    }
+
     private function getCacheDirectory(): string
     {
         if ('Windows' === \PHP_OS_FAMILY) {
-            return str_replace('\\', '/', $this->homeDir) . '/JoliNotif';
+            return $this->tmpDir . '/jolinotif';
         }
 
-        return $this->homeDir . '/.jolinotif';
+        return $this->homeDir . '/.cache/jolinotif';
+    }
+
+    private function getFallbackCacheDirectory(): string
+    {
+        return $this->tmpDir . '/jolinotif-' . fileowner($this->testDir);
     }
 
     private function assertExtractionFails(Process $process, string $expectedMessage): void
@@ -164,20 +218,29 @@ class PharExtractorTest extends TestCase
         $this->assertStringContainsString($expectedMessage, $output);
     }
 
-    private function getExtractedFilePath(string $pharPath): string
+    private function getExtractedFilePath(string $pharPath, ?string $cacheDir = null): string
     {
-        return $this->getCacheDirectory() . '/' . hash_file('sha256', $pharPath) . '/path/to/file.txt';
+        $hash = strtolower((new \Phar($pharPath))->getSignature()['hash']);
+
+        return ($cacheDir ?? $this->getCacheDirectory()) . '/' . $hash . '/path/to/file.txt';
     }
 
     /**
-     * @param list<string> $arguments
+     * @param list<string>                $arguments
+     * @param array<string, string|false> $env
      */
-    private function getProcess(string $pharPath, array $arguments = []): Process
+    private function getProcess(string $pharPath, array $arguments = [], array $env = []): Process
     {
         return new Process(
             [\PHP_BINARY, $pharPath, ...$arguments],
             $this->testDir,
-            ['HOME' => $this->homeDir, 'LOCALAPPDATA' => $this->homeDir],
+            $env + [
+                'HOME' => $this->homeDir,
+                'XDG_CACHE_HOME' => false,
+                'TMPDIR' => $this->tmpDir,
+                'TMP' => $this->tmpDir,
+                'TEMP' => $this->tmpDir,
+            ],
         );
     }
 
@@ -187,6 +250,9 @@ class PharExtractorTest extends TestCase
         $bootstrap = <<<'PHAR_BOOTSTRAP'
             <?php
 
+            require __DIR__.'/vendor/symfony/filesystem/Filesystem.php';
+            require __DIR__.'/src/Exception/ExceptionInterface.php';
+            require __DIR__.'/src/Exception/PharExtractionException.php';
             require __DIR__.'/src/Util/PharExtractor.php';
 
             // The cache must remain private even with a permissive umask.
@@ -199,7 +265,18 @@ class PharExtractorTest extends TestCase
             PHAR_BOOTSTRAP;
 
         $phar = new \Phar($pharPath);
-        $phar->addFile(\dirname(__DIR__, 2) . '/src/Util/PharExtractor.php', 'src/Util/PharExtractor.php');
+
+        $files = [
+            'vendor/symfony/filesystem/Filesystem.php',
+            'src/Exception/ExceptionInterface.php',
+            'src/Exception/PharExtractionException.php',
+            'src/Util/PharExtractor.php',
+        ];
+
+        foreach ($files as $file) {
+            $phar->addFile(\dirname(__DIR__, 2) . '/' . $file, $file);
+        }
+
         $phar->addFromString('bootstrap.php', $bootstrap);
         $phar->addFromString('path/to/file.txt', $fileContent);
         $phar->setStub($phar->createDefaultStub('bootstrap.php'));

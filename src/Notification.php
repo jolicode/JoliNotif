@@ -11,6 +11,7 @@
 
 namespace Joli\JoliNotif;
 
+use Joli\JoliNotif\Exception\PharExtractionException;
 use Joli\JoliNotif\Util\PharExtractor;
 use JoliCode\PhpOsHelper\OsHelper;
 
@@ -55,7 +56,12 @@ class Notification
     {
         // This makes the icon accessible for native commands when it's embedded inside a phar
         if (PharExtractor::isLocatedInsideAPhar($icon)) {
-            $icon = PharExtractor::extractFile($icon);
+            try {
+                $icon = PharExtractor::extractFile($icon);
+            } catch (PharExtractionException) {
+                // A notification without icon is better than no notification
+                $icon = null;
+            }
         } else {
             // Makes the icon path absolute (expanding all symbolic links and resolving references like "/../")
             $icon = OsHelper::isWindowsSubsystemForLinux()

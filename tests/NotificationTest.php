@@ -13,6 +13,7 @@ namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Notification;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
@@ -66,7 +67,7 @@ class NotificationTest extends TestCase
             $process = new Process(
                 [\PHP_BINARY, $pharPath],
                 $testDir,
-                ['HOME' => $homeDir, 'LOCALAPPDATA' => $homeDir],
+                ['HOME' => $homeDir, 'XDG_CACHE_HOME' => false, 'TMPDIR' => $homeDir, 'TMP' => $homeDir, 'TEMP' => $homeDir],
             );
             $process->mustRun();
             $extractedIconPath = $process->getOutput();
@@ -84,22 +85,7 @@ class NotificationTest extends TestCase
                 \Phar::unlinkArchive($pharPath);
             }
 
-            $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($testDir, \FilesystemIterator::SKIP_DOTS),
-                \RecursiveIteratorIterator::CHILD_FIRST,
-            );
-
-            foreach ($files as $file) {
-                $this->assertInstanceOf(\SplFileInfo::class, $file);
-
-                if ($file->isDir() && !$file->isLink()) {
-                    rmdir($file->getPathname());
-                } else {
-                    unlink($file->getPathname());
-                }
-            }
-
-            rmdir($testDir);
+            (new Filesystem())->remove($testDir);
         }
     }
 

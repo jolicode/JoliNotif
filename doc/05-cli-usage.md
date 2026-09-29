@@ -35,10 +35,14 @@ curl https://github.com/jolicode/JoliNotif/releases/latest/download/jolinotif.ph
 When running from a PHAR, JoliNotif extracts embedded binaries and icons into a
 per-user cache:
 
-* Linux, macOS, and other Unix systems: `$HOME/.jolinotif`.
-* Windows: `%LOCALAPPDATA%\JoliNotif`.
+* Linux, macOS, and other Unix systems: `$XDG_CACHE_HOME/jolinotif`, which
+  defaults to `$HOME/.cache/jolinotif`. If it can not be used, JoliNotif falls
+  back to a `jolinotif-<uid>` directory inside the system temporary directory.
+* Windows: a `jolinotif` directory inside the user temporary directory.
 
-The base location must be trusted and writable by the current user.
+On Unix systems, the cache directory must be owned by the current user with
+permissions `0700`. Directories left by other versions of the PHAR are removed
+when they have not been used for 30 days.
 
 ## Usage
 
