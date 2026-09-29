@@ -14,6 +14,7 @@ namespace Joli\JoliNotif\tests\Driver;
 use Joli\JoliNotif\Driver\DriverInterface;
 use Joli\JoliNotif\Notification;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 abstract class AbstractDriverTestCase extends TestCase
 {
@@ -21,10 +22,7 @@ abstract class AbstractDriverTestCase extends TestCase
     {
         $iconDir = sys_get_temp_dir() . '/jolinotif-tests-fixtures';
 
-        if (!is_dir($iconDir)) {
-            mkdir($iconDir);
-            copy(\dirname(__DIR__) . '/fixtures/image.gif', $iconDir . '/image.gif');
-        }
+        (new Filesystem())->copy(\dirname(__DIR__) . '/fixtures/image.gif', $iconDir . '/image.gif');
 
         // Resolve symlinks (e.g. /var -> /private/var on macOS) to match Notification::setIcon()
         return (string) realpath($iconDir);
