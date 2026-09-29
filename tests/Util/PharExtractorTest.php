@@ -13,10 +13,38 @@ namespace Joli\JoliNotif\tests\Util;
 
 use Joli\JoliNotif\Util\PharExtractor;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
 class PharExtractorTest extends TestCase
 {
+    private string $testDir;
+    private string $homeDir;
+    private string $tmpDir;
+
+    /**
+     * @var list<string>
+     */
+    private array $pharPaths = [];
+
+    protected function setUp(): void
+    {
+        $this->testDir = sys_get_temp_dir() . '/jolinotif-' . bin2hex(random_bytes(8));
+        $this->homeDir = $this->testDir . '/home';
+        $this->tmpDir = $this->testDir . '/tmp';
+        mkdir($this->homeDir, 0o700, true);
+        mkdir($this->tmpDir, 0o700);
+    }
+
+    protected function tearDown(): void
+    {
+        foreach ($this->pharPaths as $pharPath) {
+            \Phar::unlinkArchive($pharPath);
+        }
+
+        (new Filesystem())->remove($this->testDir);
+    }
+
     public function testIsLocatedInsideAPhar(): void
     {
         $this->assertFalse(PharExtractor::isLocatedInsideAPhar('/var/www/my_file'));
@@ -27,113 +55,233 @@ class PharExtractorTest extends TestCase
 
     public function testExtractFile(): void
     {
-        $key = uniqid('', true);
-        $pharPath = $this->getTestDir() . '/phar-extractor-' . $key . '.phar';
-        $relativeFilePath = 'path/to/file-' . $key . '.txt';
-        $extractedFilePath = sys_get_temp_dir() . '/jolinotif/' . $relativeFilePath;
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath);
+        $process->mustRun();
+        $extractedFilePath = $this->getExtractedFilePath($pharPath);
 
-        $this->generatePhar($pharPath, $relativeFilePath, $key, false);
-        $this->assertFileExists($pharPath);
-        exec('php ' . $pharPath);
-        \Phar::unlinkArchive($pharPath);
+        $this->assertSame($extractedFilePath, $process->getOutput());
+        $this->assertSame('contents', file_get_contents($extractedFilePath));
 
-        $this->assertFileExists($extractedFilePath);
-        $this->assertSame($key, file_get_contents($extractedFilePath));
-        unlink($extractedFilePath);
+        if ('Windows' !== \PHP_OS_FAMILY) {
+            $this->assertSame(0o700, fileperms($this->getCacheDirectory()) & 0o777);
+            $this->assertSame(0o700, fileperms(\dirname($extractedFilePath, 3)) & 0o777);
+        }
     }
 
     public function testExtractFileDoesntOverwriteExistingFileIfNotSpecified(): void
     {
-        $key = uniqid('', true);
-        $pharPath = $this->getTestDir() . '/phar-extractor-no-overwrite-' . $key . '.phar';
-        $relativeFilePath = 'path/to/file-' . $key . '.txt';
-        $extractedFilePath = sys_get_temp_dir() . '/jolinotif/' . $relativeFilePath;
+        $pharPath = $this->generatePhar('contents');
+        $this->getProcess($pharPath)->mustRun();
+        $extractedFilePath = $this->getExtractedFilePath($pharPath);
+        file_put_contents($extractedFilePath, 'cached contents');
 
-        $this->generatePhar($pharPath, $relativeFilePath, $key, false);
-        $this->assertFileExists($pharPath);
-        exec('php ' . $pharPath);
-        \Phar::unlinkArchive($pharPath);
+        $this->getProcess($pharPath)->mustRun();
 
-        $this->generatePhar($pharPath, $relativeFilePath, 'new content', false);
-        $this->assertFileExists($pharPath);
-        exec('php ' . $pharPath);
-        \Phar::unlinkArchive($pharPath);
-
-        $this->assertFileExists($extractedFilePath);
-        $this->assertSame($key, file_get_contents($extractedFilePath));
-        unlink($extractedFilePath);
+        $this->assertSame('cached contents', file_get_contents($extractedFilePath));
     }
 
     public function testExtractFileOverwritesExistingFileIfSpecified(): void
     {
-        $key = uniqid('', true);
-        $pharPath = $this->getTestDir() . '/phar-extractor-overwrite-' . $key . '.phar';
-        $relativeFilePath = 'path/to/file-' . $key . '.txt';
-        $extractedFilePath = sys_get_temp_dir() . '/jolinotif/' . $relativeFilePath;
+        $pharPath = $this->generatePhar('contents');
+        $this->getProcess($pharPath)->mustRun();
+        $extractedFilePath = $this->getExtractedFilePath($pharPath);
+        file_put_contents($extractedFilePath, 'cached contents');
 
-        $this->generatePhar($pharPath, $relativeFilePath, $key, false);
-        $this->assertFileExists($pharPath);
-        exec('php ' . $pharPath);
-        \Phar::unlinkArchive($pharPath);
+        $this->getProcess($pharPath, ['--overwrite'])->mustRun();
 
-        $this->generatePhar($pharPath, $relativeFilePath, 'new content', true);
-        $this->assertFileExists($pharPath);
-        exec('php ' . $pharPath);
-        \Phar::unlinkArchive($pharPath);
-
-        $this->assertFileExists($extractedFilePath);
-        $this->assertSame('new content', file_get_contents($extractedFilePath));
-        unlink($extractedFilePath);
+        $this->assertSame('contents', file_get_contents($extractedFilePath));
     }
 
-    private function getTestDir(): string
+    public function testDifferentArchivesDoNotShareExtractedFiles(): void
     {
-        $testDir = sys_get_temp_dir() . '/test-jolinotif';
+        $firstPhar = $this->generatePhar('first archive');
+        $secondPhar = $this->generatePhar('second archive');
+        $this->getProcess($firstPhar)->mustRun();
+        $this->getProcess($secondPhar)->mustRun();
 
-        if (!is_dir($testDir)) {
-            mkdir($testDir);
+        $this->assertNotSame($this->getExtractedFilePath($firstPhar), $this->getExtractedFilePath($secondPhar));
+        $this->assertSame('first archive', file_get_contents($this->getExtractedFilePath($firstPhar)));
+        $this->assertSame('second archive', file_get_contents($this->getExtractedFilePath($secondPhar)));
+    }
+
+    public function testUsesXdgCacheHome(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('The temporary directory is always used on Windows.');
         }
 
-        return $testDir;
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath, [], ['XDG_CACHE_HOME' => $this->testDir . '/xdg']);
+        $process->mustRun();
+
+        $this->assertSame($this->getExtractedFilePath($pharPath, $this->testDir . '/xdg/jolinotif'), $process->getOutput());
     }
 
-    private function generatePhar(string $pharPath, string $fileRelativePath, string $fileContent, bool $overwrite): void
+    public function testFallsBackToTheTemporaryDirectoryWithoutHome(): void
     {
-        $rootPackage = \dirname(__DIR__, 2);
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('The temporary directory is always used on Windows.');
+        }
+
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath, [], ['HOME' => false]);
+        $process->mustRun();
+        $extractedFilePath = $this->getExtractedFilePath($pharPath, $this->getFallbackCacheDirectory());
+
+        $this->assertSame($extractedFilePath, $process->getOutput());
+        $this->assertSame('contents', file_get_contents($extractedFilePath));
+    }
+
+    public function testFallsBackToTheTemporaryDirectoryWithUnusableHome(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('The temporary directory is always used on Windows.');
+        }
+
+        mkdir($this->getCacheDirectory(), 0o777, true);
+        chmod($this->getCacheDirectory(), 0o777);
+        $pharPath = $this->generatePhar('contents');
+        $process = $this->getProcess($pharPath);
+        $process->mustRun();
+
+        $this->assertSame($this->getExtractedFilePath($pharPath, $this->getFallbackCacheDirectory()), $process->getOutput());
+    }
+
+    public function testRejectsASymlinkCacheDirectory(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('Creating symbolic links requires additional privileges on Windows.');
+        }
+
+        $targetDir = $this->testDir . '/untrusted';
+        mkdir($targetDir, 0o700);
+        symlink($targetDir, $this->getFallbackCacheDirectory());
+        $process = $this->getProcess($this->generatePhar('contents'), [], ['HOME' => false]);
+
+        $this->assertExtractionFails($process, 'not a real directory');
+    }
+
+    public function testRejectsAWorldWritableCacheDirectory(): void
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            self::markTestSkipped('POSIX permissions are not available on Windows.');
+        }
+
+        $cacheDir = $this->getFallbackCacheDirectory();
+        mkdir($cacheDir, 0o700);
+        chmod($cacheDir, 0o777);
+        $process = $this->getProcess($this->generatePhar('contents'), [], ['HOME' => false]);
+
+        $this->assertExtractionFails($process, 'permissions 0700');
+        $this->assertSame(0o777, fileperms($cacheDir) & 0o777);
+    }
+
+    public function testPrunesStaleDirectories(): void
+    {
+        $staleDir = $this->getCacheDirectory() . '/stale';
+        $recentDir = $this->getCacheDirectory() . '/recent';
+        mkdir($staleDir . '/path', 0o700, true);
+        mkdir($recentDir, 0o700);
+        touch($staleDir . '/path/file.txt');
+        touch($staleDir . '/.lock', time() - 40 * 24 * 3600);
+        touch($staleDir, time() - 40 * 24 * 3600);
+        touch($recentDir . '/.lock', time() - 40 * 24 * 3600);
+        touch($recentDir . '/.lock');
+
+        $this->getProcess($this->generatePhar('contents'))->mustRun();
+
+        $this->assertDirectoryDoesNotExist($staleDir);
+        $this->assertDirectoryExists($recentDir);
+    }
+
+    private function getCacheDirectory(): string
+    {
+        if ('Windows' === \PHP_OS_FAMILY) {
+            return $this->tmpDir . '/jolinotif';
+        }
+
+        return $this->homeDir . '/.cache/jolinotif';
+    }
+
+    private function getFallbackCacheDirectory(): string
+    {
+        return $this->tmpDir . '/jolinotif-' . fileowner($this->testDir);
+    }
+
+    private function assertExtractionFails(Process $process, string $expectedMessage): void
+    {
+        $process->run();
+        $output = $process->getErrorOutput() . $process->getOutput();
+
+        $this->assertFalse($process->isSuccessful(), $output);
+        $this->assertStringContainsString($expectedMessage, $output);
+    }
+
+    private function getExtractedFilePath(string $pharPath, ?string $cacheDir = null): string
+    {
+        $hash = strtolower((new \Phar($pharPath))->getSignature()['hash']);
+
+        return ($cacheDir ?? $this->getCacheDirectory()) . '/' . $hash . '/path/to/file.txt';
+    }
+
+    /**
+     * @param list<string>                $arguments
+     * @param array<string, string|false> $env
+     */
+    private function getProcess(string $pharPath, array $arguments = [], array $env = []): Process
+    {
+        return new Process(
+            [\PHP_BINARY, $pharPath, ...$arguments],
+            $this->testDir,
+            $env + [
+                'HOME' => $this->homeDir,
+                'XDG_CACHE_HOME' => false,
+                'TMPDIR' => $this->tmpDir,
+                'TMP' => $this->tmpDir,
+                'TEMP' => $this->tmpDir,
+            ],
+        );
+    }
+
+    private function generatePhar(string $fileContent): string
+    {
+        $pharPath = $this->testDir . '/archive-' . bin2hex(random_bytes(8)) . '.phar';
         $bootstrap = <<<'PHAR_BOOTSTRAP'
             <?php
 
-            require __DIR__.'/vendor/autoload.php';
+            require __DIR__.'/vendor/symfony/filesystem/Filesystem.php';
+            require __DIR__.'/src/Exception/ExceptionInterface.php';
+            require __DIR__.'/src/Exception/PharExtractionException.php';
+            require __DIR__.'/src/Util/PharExtractor.php';
 
-            $filePath = '/{{ THE_FILE }}';
-            $overwrite = {{ OVERWRITE }};
+            // The cache must remain private even with a permissive umask.
+            umask(0);
 
-            \Joli\JoliNotif\Util\PharExtractor::extractFile(__DIR__.$filePath, $overwrite);
-
-            ?>
+            echo \Joli\JoliNotif\Util\PharExtractor::extractFile(
+                __DIR__.'/path/to/file.txt',
+                in_array('--overwrite', $argv, true),
+            );
             PHAR_BOOTSTRAP;
 
-        $files = (new Finder())
-            ->in("{$rootPackage}/src")
-            ->in("{$rootPackage}/tests/fixtures")
-            ->in("{$rootPackage}/vendor")
-            ->files()
-        ;
-
         $phar = new \Phar($pharPath);
-        $phar->buildFromIterator($files->getIterator(), $rootPackage);
-        $phar->addFromString('bootstrap.php', str_replace(
-            [
-                '{{ THE_FILE }}',
-                '{{ OVERWRITE }}',
-            ],
-            [
-                $fileRelativePath,
-                $overwrite ? 'true' : 'false',
-            ],
-            $bootstrap
-        ));
-        $phar->addFromString($fileRelativePath, $fileContent);
+
+        $files = [
+            'vendor/symfony/filesystem/Filesystem.php',
+            'src/Exception/ExceptionInterface.php',
+            'src/Exception/PharExtractionException.php',
+            'src/Util/PharExtractor.php',
+        ];
+
+        foreach ($files as $file) {
+            $phar->addFile(\dirname(__DIR__, 2) . '/' . $file, $file);
+        }
+
+        $phar->addFromString('bootstrap.php', $bootstrap);
+        $phar->addFromString('path/to/file.txt', $fileContent);
         $phar->setStub($phar->createDefaultStub('bootstrap.php'));
+        $this->pharPaths[] = $pharPath;
+
+        return $pharPath;
     }
 }

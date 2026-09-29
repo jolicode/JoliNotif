@@ -13,23 +13,23 @@ namespace Joli\JoliNotif\tests;
 
 use Joli\JoliNotif\Notification;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Process\Process;
 
 class NotificationTest extends TestCase
 {
     public function testItExtractsIconFromPhar(): void
     {
-        $key = (string) random_int(0, 10000);
+        $key = bin2hex(random_bytes(8));
         $iconContent = $key;
         $rootPackage = \dirname(__DIR__);
         $iconRelativePath = 'Resources/notification/icon-' . $key . '.png';
-        $testDir = sys_get_temp_dir() . '/test-jolinotif';
+        $testDir = sys_get_temp_dir() . '/jolinotif-notification-' . $key;
+        $homeDir = $testDir . '/home';
         $pharPath = $testDir . '/notification-extract-icon-' . $key . '.phar';
-        $extractedIconPath = sys_get_temp_dir() . '/jolinotif/' . $iconRelativePath;
 
-        if (!is_dir($testDir)) {
-            mkdir($testDir);
-        }
+        mkdir($homeDir, 0o700, true);
 
         $bootstrap = <<<'PHAR_BOOTSTRAP'
             <?php
@@ -40,6 +40,8 @@ class NotificationTest extends TestCase
             $notification = new \Joli\JoliNotif\Notification();
             $notification->setBody('My notification');
             $notification->setIcon(__DIR__.$iconPath);
+
+            echo $notification->getIcon();
             PHAR_BOOTSTRAP;
 
         $files = (new Finder())
@@ -49,22 +51,42 @@ class NotificationTest extends TestCase
             ->files()
         ;
 
-        $phar = new \Phar($pharPath);
-        $phar->buildFromIterator($files->getIterator(), $rootPackage);
-        $phar->addFromString('bootstrap.php', str_replace(
-            '{{ THE_ICON }}',
-            $iconRelativePath,
-            $bootstrap
-        ));
-        $phar->addFromString($iconRelativePath, $iconContent);
-        $phar->setStub($phar->createDefaultStub('bootstrap.php'));
+        try {
+            $phar = new \Phar($pharPath);
+            $phar->buildFromIterator($files->getIterator(), $rootPackage);
+            $phar->addFromString('bootstrap.php', str_replace(
+                '{{ THE_ICON }}',
+                $iconRelativePath,
+                $bootstrap
+            ));
+            $phar->addFromString($iconRelativePath, $iconContent);
+            $phar->setStub($phar->createDefaultStub('bootstrap.php'));
 
-        $this->assertFileExists($pharPath);
+            $this->assertFileExists($pharPath);
 
-        exec('php ' . $pharPath);
+            $process = new Process(
+                [\PHP_BINARY, $pharPath],
+                $testDir,
+                ['HOME' => $homeDir, 'XDG_CACHE_HOME' => false, 'TMPDIR' => $homeDir, 'TMP' => $homeDir, 'TEMP' => $homeDir],
+            );
+            $process->mustRun();
+            $extractedIconPath = $process->getOutput();
 
-        $this->assertFileExists($extractedIconPath);
-        $this->assertSame($iconContent, file_get_contents($extractedIconPath));
+            $this->assertStringStartsWith(
+                str_replace('\\', '/', $homeDir) . '/',
+                str_replace('\\', '/', $extractedIconPath),
+            );
+            $this->assertFileExists($extractedIconPath);
+            $this->assertSame($iconContent, file_get_contents($extractedIconPath));
+        } finally {
+            unset($phar);
+
+            if (file_exists($pharPath)) {
+                \Phar::unlinkArchive($pharPath);
+            }
+
+            (new Filesystem())->remove($testDir);
+        }
     }
 
     public function testItResolvesRealPathToIcon(): void

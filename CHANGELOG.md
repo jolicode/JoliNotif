@@ -2,6 +2,7 @@
 
 ## Not released yet
 
+* Fixed PHAR resources being extracted to a predictable directory shared between users: another local user could tamper with the extracted binaries and FFI header. They are now extracted to a private per-user cache directory
 * Fixed argument injection in `NotifySendDriver`: notification titles and bodies could be interpreted as `notify-send` options, potentially causing denial of service
 * Fixed script injection in `PowerShellDriver`: Unicode quotes in notification content could break out of the generated script and execute arbitrary commands
 
